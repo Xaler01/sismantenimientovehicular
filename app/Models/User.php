@@ -50,14 +50,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function updateRol()
-    {
-        $user = User::find(1); // Obtén el usuario con ID 1
-
-        if ($user) {
-            $user->rol = 'Encargado'; // Actualiza el valor de la columna "rol"
-            $user->save(); // Guarda los cambios en la base de datos
-        }
-    }
 }

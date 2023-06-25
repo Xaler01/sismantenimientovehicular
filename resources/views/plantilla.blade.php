@@ -25,7 +25,9 @@
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/bootstrap-daterangepicker/daterangepicker.css">
- 
+  <!-- bootstral wysihtml5 text editor -->
+  <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
   <!-- Datatables-->
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
@@ -44,7 +46,7 @@
 @if(Auth::user())
  
   @include('modulos.cabecera')
-  @if ('auth()->user()->rol==Encargado')
+  @if (auth()->user()->rol == "Encargado")
     @include('modulos.menuEncargado')
   @endif
 
@@ -54,9 +56,9 @@
   @yield('contenido')
 @endif
 <!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);
@@ -68,8 +70,11 @@
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/morris.js/morris.min.js"></script>
 <!-- Sparkline -->
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="http://localhost/sismantenimientovehicular/public/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>  
 <!-- daterangepicker -->
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/moment/min/moment.min.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -124,41 +129,46 @@
     <script type="text/javascript">
 
         Swal.fire(
-
-          'El personal ha sido registrado','','success'
-          
+          'El policia ha sido registrado','','success'
         )
 
     </script>
+  @elseif(session('agregado') == 'Si')
+  <script type="text/javascript">
+    Swal.fire(
+      'El vehiculo ha sido agregado','','success'
+      )
+  </script>
       
 @endif
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      $('.table').on('click', 'EliminaPolicia', function(){
+    $('.table').on('click', 'EliminarPolicia', function(){
+ 
+      var Pid = $(this).attr('Pid');
 
-        var Pid = $(this).attr('Did');
+      Swal.fire({
 
-        Swal.fire({
+        title: '¿Seguro que desea eliminar el Policia?',
+        icon: 'Warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor : '#d33',
+        confirmButtonText: 'Eliminar',
+        confirmButtonColor: '#3085d6'
 
-          title: '¿Seguro que desea eliminar el Policia?',
-          icon: 'Warning',
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          cancelButtonColor : '#d33',
-          confirmButtonText: 'Eliminar',
-          confirmButtonColor: '#3085d6'
+      }).then((result)=> {
 
-        }).then((result)=> {
+          if(result.isConfirmed){
 
-            if(result.isConfirm){
+            //window.location = "Inicio";
+            window.location = "Eliminar-Policia/"+Pid;
+          }
+      })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+    })
 
-              window.location = "Eliminar-Policia/"+Pid;
-            }
-        }) 
-      })
-
-    </script>
+  </script>
 
 </body>
 </html>

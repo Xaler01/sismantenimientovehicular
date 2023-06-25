@@ -1,5 +1,5 @@
 <header class="main-header">   
-    <a ref="{{ url('Inicio') }}" class="logo">
+    <a href="{{ url('Inicio') }}" class="logo">
         <span class="logo-mini"><b>S M V</b></span>
         <span class="logo-lg"><b>Mant. Vehicular</b></span>
     </a>
@@ -29,7 +29,7 @@
                             <div class="pull-right">
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger btn-flat">Cerrar Sesión</a>
                             </div>
-                            <form  id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form  method="post" id="logout-form" action="{{ route('logout') }}"  >
                                 @csrf
                             </form>
                         </li>

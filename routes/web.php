@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\DependenciasController;
 use App\Http\Controllers\PoliciasController;
+use App\Http\Controllers\VehiculosController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Dependencias;
 use App\Models\Policias;
@@ -31,4 +32,7 @@ Route::get('Policias', [PoliciasController::class, 'index']);
 Route::post('Policias', [PoliciasController::class,'store']);
 Route::get('Eliminar-Policia/{id}',[PoliciasController::class, 'destroy']);
 
+Route::get('Vehiculos', [VehiculosController::class, 'index']);
+Route::get('Crear-Vehiculo', [VehiculosController::class, 'create']);
+Route::post('Crear-Vehiculo', [VehiculosController::class, 'store']);
 

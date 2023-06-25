@@ -22,12 +22,13 @@
                             <th>Rango</th>
                             <th>Dependencia</th>
                             <th>Rol</th>
-                            <th></th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
+                    
                     <tbody>   
                         @foreach($policias as $policia)
-                            @if ($policia->rol=="Conductor")
+                            @if ($policia->rol=="Policia")
                             <tr>
                                 <td>{{ $policia -> id }}</td>
                                 <td>{{ $policia -> name }}</td>
@@ -50,7 +51,7 @@
                                 <td>{{ $policia -> dependenciaid -> dependencia }}</td> 
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
-                                    <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" ><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>                             
                             @endif                          
@@ -62,7 +63,7 @@
     </section>
 </div>
 <div id="CrearPolicia" class="modal fade">
-    <div class="modal dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form method="post">
                 @csrf

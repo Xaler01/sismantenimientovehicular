@@ -38,7 +38,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box" style="background-color:darkcyan; color:white;">
                 <div class="inner">
-                    <h3>Conductor</h3>
+                    <h3>Policia</h3>
                     <p>Iniciar Sesión</p>
                 </div>
                 <div class="icon">

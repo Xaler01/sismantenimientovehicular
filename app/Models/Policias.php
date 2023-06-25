@@ -27,7 +27,7 @@ class Policias extends Model
 
     ];
 
-    public $timestamp = false;
+    //public $timestamps = false;
 
     public function dependenciaid()
     {

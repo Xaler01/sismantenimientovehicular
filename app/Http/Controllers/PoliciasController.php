@@ -44,18 +44,28 @@ class PoliciasController extends Controller
             'name' => ['required'],
             'email' => ['required','string','email','unique:users'],
             'password' => ['required','string','min:3'],
+            'cedula' => ['required', 'min:10'],
+            'fecha_nacimiento' => ['required', 'date'],
+            'tipo_sangre' => ['required'],
+            'ciudad_nacimiento' => ['required'],
+            'celular' => ['required', 'min:10'],
             'rango' => ['required'],
-            'id_dependencia' => ['required']    
+            'id_dependencia' => ['required']   
+
         ]);
+        
         Policias::create([
             'name' => $datos['name'],
             'email' => $datos['email'],
             'password' => Hash::make($datos['password']),
-            'cedula' => '',
-            'celular' =>  '',
-            'rango'=> $datos['rango'],
+            'cedula' => $datos['cedula'],
+            'fecha_nacimiento' => $datos['fecha_nacimiento'],
+            'tipo_sangre' => $datos['tipo_sangre'],
+            'ciudad_nacimiento' => $datos['ciudad_nacimiento'],
+            'celular' => $datos['celular'],
+            'rango' => $datos['rango'],
             'id_dependencia' => $datos['id_dependencia'],
-            'rol'=>'Conductor'
+            'rol' => 'Policia'
         ]);
 
             return redirect('Policias')->with('registrado', 'Si');
