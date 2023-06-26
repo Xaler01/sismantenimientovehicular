@@ -29,28 +29,31 @@
                             <th>Edital / Borrar</th>
                         </tr>
                     </thead>
-                    
-                    <tbody>   
-                       
-                            <tr>
-                                <td>1</td>
-                                <td>Moto</td>
-                                <td>A123BC</td>
-                                <td>abc12345678xyz</td>
-                                <td>Suzuki</td>
-                                <td>2023</td>
-                                <td>abc234234xyz</td>
-                                <td>2000</td>
-                                <td>650cc</td>
-                                <td>200kg</td>
-                                <td>2</td>
-                                <td>
+
+                    <tbody>
+                        @foreach($vehiculos as $vehiculo)
+                        <tr>
+                            <td>{{ $vehiculo->id }}</td>
+                            <td>{{ $vehiculo->tipo_vehiculo }}</td>
+                            <td>{{ $vehiculo->placa }}</td>
+                            <td>{{ $vehiculo->chasis }}</td>
+                            <td>{{ $vehiculo->marca }}</td>
+                            <td>{{ $vehiculo->modelo }}</td>
+                            <td>{{ $vehiculo->motor }}</td>
+                            <td>{{ $vehiculo->kilometraje }}</td>
+                            <td>{{ $vehiculo->cilindraje }}</td>
+                            <td>{{ $vehiculo->capacidad_carga }}</td>
+                            <td>{{ $vehiculo->capacidad_pasajeros }}</td>
+                            <td>
+                                <a href="Editar-Vehiculo/{{ $vehiculo->id}}">
                                     <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>                             
-                            
+                                </a>
+                                <button class="btn btn-danger EliminarVehiculo" Vid="{{ $vehiculo->id}}" Placa="{{ $vehiculo->placa}}"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr> 
+                        @endforeach
                     </tbody>
+                    
                 </table>
             </div>
         </div>

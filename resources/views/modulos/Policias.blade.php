@@ -51,7 +51,7 @@
                                 <td>{{ $policia -> dependenciaid -> dependencia }}</td> 
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
-                                    <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>                             
                             @endif                          

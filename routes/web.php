@@ -35,4 +35,7 @@ Route::get('Eliminar-Policia/{id}',[PoliciasController::class, 'destroy']);
 Route::get('Vehiculos', [VehiculosController::class, 'index']);
 Route::get('Crear-Vehiculo', [VehiculosController::class, 'create']);
 Route::post('Crear-Vehiculo', [VehiculosController::class, 'store']);
+Route::get('Editar-Vehiculo/{id}', [VehiculosController::class,'edit']);
+Route::put('Actualizar-Vehiculo/{id}', [VehiculosController::class,'update']);
+Route::get('EliminarVehiculo/{id}',[VehiculosController::class, 'destroy']);
 
