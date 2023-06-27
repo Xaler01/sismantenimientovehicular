@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Dependencias;
 use App\Models\Policias;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\PersonalSubcircuito; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +55,22 @@ class PoliciasController extends Controller
             'id_dependencia' => ['required']   
 
         ]);
+
+        $user = User::create([
+            'name' => $datos['name'],
+            'email' => $datos['email'],
+            'password' => Hash::make($datos['password']),
+            'rol' => 'Policia'
+        ]);
+
+        // Obtener el ID del usuario creado
+        $user_id = $user->id;
+
+         // Guardar en la tabla 'personal_subcircuito'
+        $personal_subcircuito = PersonalSubcircuito::create([
+            'id_user' => $user_id,
+            'id_dependencia' => $datos['id_dependencia']
+        ]);
         
         Policias::create([
             'name' => $datos['name'],
@@ -68,7 +86,7 @@ class PoliciasController extends Controller
             'rol' => 'Policia'
         ]);
 
-            return redirect('Policias')->with('registrado', 'Si');
+          return redirect('Policias')->with('registrado', 'Si');
           /**$policias = new Policias(); */
         
     }

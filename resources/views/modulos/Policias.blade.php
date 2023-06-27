@@ -48,7 +48,7 @@
                                     @endif
                                 
                                 <td>{{ $policia -> rango }}</td>
-                                <td>{{ $policia -> dependenciaid -> dependencia }}</td> 
+                                <td>Vilcabamba</td>
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
                                     <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
@@ -108,7 +108,7 @@
                         </div> 
                         <div class="form-group">
                             <h2>Ciudad de nacimiento: </h2>
-                            <input type= "text" class="form-control input-lg" name="ciudad_nacimiento" required=¨¨>
+                            <input type= "text" class="form-control input-lg" name="ciudad_nacimiento" required=¨¨ oninput="this.value = this.value.toUpperCase()">
                         </div> 
                         <div class="form-group">
                             <h2>Celular: </h2>
@@ -142,7 +142,7 @@
                             <select class="form-control input-lg" name="id_dependencia" required=¨¨>
                                 <option value="">Seleccionar...</option>
                                 @foreach($dependencias as $dependencia)
-                                <option value="{{$dependencia->id}}">{{$dependencia->dependencia}}</option>
+                                <option value="{{$dependencia->id}}">{{$dependencia->nombre_subcircuito}}</option>
                                 @endforeach
                              </select>                                
                         </div> 
