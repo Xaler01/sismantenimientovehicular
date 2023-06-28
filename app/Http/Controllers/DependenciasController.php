@@ -31,10 +31,29 @@ class DependenciasController extends Controller
         return view('modulos.Dependencias') -> with('dependencias', $dependencias);
     }
 
-  
+    public function store(Request $request)
+    {
+        $request->validate([
+            'provincia' => 'required',
+            'num_distritos' => 'required|integer',
+            'parroquia' => 'required',
+            'cod_distrito' => 'required|integer',
+            'nombre_distrito' => 'required',
+            'num_circuitos' => 'required|integer',
+            'cod_circuito' => 'required|integer',
+            'nombre_circuito' => 'required',
+            'num_subcircuitos' => 'required|integer',
+            'cod_subcircuito' => 'required|integer',
+            'nombre_subcircuito' => 'required',
+        ]);
+
+        Dependencias::create($request->all());
+
+        return redirect('Dependencias');
+    }
     /**
      * Store a newly created resource in storage.
-     */
+     
     public function store(Request $request)
     {
         $request->validate(['
@@ -45,27 +64,35 @@ class DependenciasController extends Controller
 
         return redirect('Dependencias');
     }
-  
-    /**
-     * Display the specified resource.
-     
-    public function show(Dependencias $dependencias)
-    {
-        //
-    }   
     */
-
-    /**
-     * Show the form for editing the specified resource.
-     
-    public function edit(Dependencias $dependencias)
+    public function update(Request $request)
     {
-        //
-    }*/
+        $request->validate([
+            'id' => 'required|integer',
+            'provinciaE' => 'required',
+            'num_distritosE' => 'required|integer',
+            'parroquiaE' => 'required',
+            'cod_distritoE' => 'required|integer',
+            'nombre_distritoE' => 'required',
+            'num_circuitosE' => 'required|integer',
+            'cod_circuitoE' => 'required|integer',
+            'nombre_circuitoE' => 'required',
+            'num_subcircuitosE' => 'required|integer',
+            'cod_subcircuitoE' => 'required|integer',
+            'nombre_subcircuitoE' => 'required',
+        ]);
+
+        $id = $request->input('id');
+        $dependencia = $request->except(['id', '_token']);
+
+        DB::table('dependencias')->where('id', $id)->update($dependencia);
+
+        return redirect('Dependencias');
+    }
 
     /**
      * Update the specified resource in storage.
-     */
+     
     public function update(Request $request)
     {
         $request->validate([
@@ -75,14 +102,14 @@ class DependenciasController extends Controller
         $id = $request->input('id');
         $dependencia = $request->input('dependenciaE');
 
-         /**dd(Request('id'));*/
+        
         DB::table('dependencias')-> where('id',$id)-> update(['dependencia' => $dependencia]) ;
 
         return redirect('Dependencias');
 
 
         
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -93,19 +120,3 @@ class DependenciasController extends Controller
         return redirect('Dependencias');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

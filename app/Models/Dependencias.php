@@ -13,12 +13,17 @@ class Dependencias extends Model
      
 
     protected $fillable = [ 
-        'dependencia',
-        'idProvincia',
-        'idParroquia',
-        'idDistrito',
-        'idCircuito',
-        'idSubcircuito',        
+        'provincia',
+        'num_distritos',
+        'parroquia',
+        'cod_distrito',
+        'nombre_distrito',
+        'num_circuitos',
+        'cod_circuito',
+        'nombre_circuito',
+        'num_subcircuitos',
+        'cod_subcircuito',
+        'nombre_subcircuito',       
     ];
 
     public $timestamp = false;

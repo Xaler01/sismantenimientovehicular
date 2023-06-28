@@ -48,7 +48,7 @@
                                     @endif
                                 
                                 <td>{{ $policia -> rango }}</td>
-                                <td>Vilcabamba</td>
+                                <!--<th>Dependencia</th>-->
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
                                     <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
