@@ -125,7 +125,7 @@
 <div id="ModificarDependencia" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post">
+            <form method="put">
                 @csrf
                 @method('put')
                 <div class="modal-body">

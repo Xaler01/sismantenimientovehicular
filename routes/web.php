@@ -25,7 +25,7 @@ Route::get('Inicio', [InicioController::class, 'index']);
 
 Route::get('Dependencias', [DependenciasController::class, 'index']);
 Route::post('Dependencias', [DependenciasController::class, 'store']);
-Route::put('Dependencia/{id}', [DependenciasController::class, 'update']);
+Route::put('dependencia/{id}', [DependenciasController::class, 'update']);
 Route::delete('borrar-Dependencia/{id}', [DependenciasController::class,'destroy']);
 
 Route::get('Policias', [PoliciasController::class, 'index']); 

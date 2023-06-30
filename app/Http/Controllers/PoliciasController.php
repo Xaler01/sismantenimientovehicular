@@ -51,11 +51,12 @@ class PoliciasController extends Controller
             'tipo_sangre' => ['required'],
             'ciudad_nacimiento' => ['required'],
             'celular' => ['required', 'min:10'],
-            'rango' => ['required'],
-            'id_dependencia' => ['required']   
+            'rango' => ['required']
+            /**,
+            'id_dependencia' => ['required']    */
 
         ]);
-
+        /**
         $user = User::create([
             'name' => $datos['name'],
             'email' => $datos['email'],
@@ -70,7 +71,7 @@ class PoliciasController extends Controller
         $personal_subcircuito = PersonalSubcircuito::create([
             'id_user' => $user_id,
             'id_dependencia' => $datos['id_dependencia']
-        ]);
+        ]);*/
         
         Policias::create([
             'name' => $datos['name'],
@@ -82,7 +83,7 @@ class PoliciasController extends Controller
             'ciudad_nacimiento' => $datos['ciudad_nacimiento'],
             'celular' => $datos['celular'],
             'rango' => $datos['rango'],
-            'id_dependencia' => $datos['id_dependencia'],
+            /**'id_dependencia' => $datos['id_dependencia'],*/
             'rol' => 'Policia'
         ]);
 

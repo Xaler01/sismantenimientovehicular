@@ -22,13 +22,14 @@ class Policias extends Model
         'ciudad_nacimiento',
         'celular',
         'rango',
+        'id_dependencia',
         'rol'
 
     ];
 
     //public $timestamps = false;
 
-    public function dependencia()
+    public function dependenciaid()
     {
         return $this->belongsTo(Dependencias::class,'id_dependencia');
     }

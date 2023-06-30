@@ -20,7 +20,6 @@
                             <th>Fecha de Nacimiento</th>
                             <th>Celular</th> 
                             <th>Rango</th>
-                            <th>Dependencia</th>
                             <th>Rol</th>
                             <th>Eliminar</th>
                         </tr>
@@ -41,14 +40,14 @@
                                 
                                 <td>{{ $policia -> fecha_nacimiento }}</td>
 
-                                    @if ($policia-> celular!= "")
+                                    @if ($policia-> fecha_nacimiento!= "")
                                         <td>{{ $policia -> celular }}</td>
                                     @else
                                     <td>No registrado</td>
                                     @endif
                                 
                                 <td>{{ $policia -> rango }}</td>
-                                <!--<th>Dependencia</th>-->
+                                
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
                                     <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
@@ -137,15 +136,7 @@
                                 <option value="Policia">Policía</option>    
                              </select>                                
                         </div> 
-                        <div class="form-group">
-                            <h2>Dependencia: </h2>
-                            <select class="form-control input-lg" name="id_dependencia" required=¨¨>
-                                <option value="">Seleccionar...</option>
-                                @foreach($dependencias as $dependencia)
-                                <option value="{{$dependencia->id}}">{{$dependencia->nombre_subcircuito}}</option>
-                                @endforeach
-                             </select>                                
-                        </div> 
+                        
 
                     </div>                    
                 </div>
