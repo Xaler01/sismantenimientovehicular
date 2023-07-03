@@ -23,7 +23,8 @@ class Dependencias extends Model
         'nombre_circuito',
         'num_subcircuitos',
         'cod_subcircuito',
-        'nombre_subcircuito',       
+        'nombre_subcircuito',
+        'estado'     
     ];
 
     public $timestamp = false;

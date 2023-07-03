@@ -29,7 +29,7 @@ class PoliciasController extends Controller
 
         $dependencias = Dependencias::all();
 
-        $policias = Policias::all();
+        $policias = Policias::where('estado', 'activo')->get();
 
         return view('modulos.Policias', compact('dependencias','policias'));
         /**
@@ -56,22 +56,6 @@ class PoliciasController extends Controller
             'id_dependencia' => ['required']    */
 
         ]);
-        /**
-        $user = User::create([
-            'name' => $datos['name'],
-            'email' => $datos['email'],
-            'password' => Hash::make($datos['password']),
-            'rol' => 'Policia'
-        ]);
-
-        // Obtener el ID del usuario creado
-        $user_id = $user->id;
-
-         // Guardar en la tabla 'personal_subcircuito'
-        $personal_subcircuito = PersonalSubcircuito::create([
-            'id_user' => $user_id,
-            'id_dependencia' => $datos['id_dependencia']
-        ]);*/
         
         Policias::create([
             'name' => $datos['name'],
@@ -92,14 +76,71 @@ class PoliciasController extends Controller
         
     }
 
-    /**
-     * Remove the specified resource from storage.
+    
+        /**
+     * Show the form for editing the specified resource.
      */
+    public function edit($id)
+    {
+        // Verificar el rol del usuario
+        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado" && auth()->user()->rol != "Policia") {
+            return redirect('Inicio');
+        }
+
+        // Obtener el policía por ID
+        $policia = Policias::find($id);
+
+        // Pasar los datos a la vista
+        return view('modulos.Editar-Policia')->with('policia', $policia);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        // Validar los datos actualizados del formulario
+        //$datos = $request->validate([
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email',
+            'cedula' => 'required|min:10',
+            'fecha_nacimiento' => 'required|date',
+            'tipo_sangre' => 'required',
+            'ciudad_nacimiento' => 'required',
+            'celular' => 'required|min:10',
+            'rango' => 'required'
+        ]);
+
+        // Buscar el policía por ID
+        $policia = User::find($id);
+
+        // Actualizar los campos con los nuevos valores
+        $policia->name = $request['name'];
+        $policia->email = $request['email'];
+        $policia->cedula = $request['cedula'];
+        $policia->fecha_nacimiento = $request['fecha_nacimiento'];
+        $policia->tipo_sangre = $request['tipo_sangre'];
+        $policia->ciudad_nacimiento = $request['ciudad_nacimiento'];
+        $policia->celular = $request['celular'];
+        $policia->rango = $request['rango'];
+        $policia->save();
+
+        // Redirigir a la página de visualización de policías
+        return redirect('Policias')->with('actualizadoP', 'Si');
+    }
+
     public function destroy($id)
     {
-        DB::table('users')->whereId($id)->delete();
+        // Buscar el usuario por su ID
+        $policia = User::find($id);
 
-        return redirect('Policias');
-        
+        if ($policia) {
+            // Cambiar el estado del usuario a "Eliminado"
+            $policia->estado = 'Eliminado';
+            $policia->save();
+        }
+        return redirect('Policias')->with('eliminadoP', true);
+      
     }
 }

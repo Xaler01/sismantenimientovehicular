@@ -44,7 +44,7 @@
 <!-- ./wrapper -->
 
 @if(Auth::user())
- 
+
   @include('modulos.cabecera')
   @if (auth()->user()->rol == "Encargado")
     @include('modulos.menuEncargado')
@@ -133,6 +133,15 @@
         )
 
     </script>
+  @elseif(session('registradoD') == 'Si')
+  <script type="text/javascript">
+  Swal.fire({
+    title: 'Subcircuito creado correctamente',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+  });
+</script>
   @elseif(session('agregado') == 'Si')
   <script type="text/javascript">
     Swal.fire(
@@ -148,7 +157,59 @@
           timer: 1500
       });
   </script>
-      
+  @elseif(session('actualizadoP'))
+  <script>
+      Swal.fire({
+          icon: 'success',
+          title: 'Personal policial actualizado!',
+          showConfirmButton: false,
+          timer: 1500
+      });
+  </script>
+    @elseif(session('actualizadoDep'))
+  <script>
+      Swal.fire({
+          icon: 'success',
+          title: 'Subcircuito actualizado!',
+          showConfirmButton: false,
+          timer: 1500
+      });
+  </script>
+  
+  @elseif(session('eliminadoV'))
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Vehículo eliminado',
+            showConfirmButton: false,
+            timer: 5500
+        });
+    }, 500);   
+  </script>
+  @elseif(session('eliminadoP'))
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Policia eliminado',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }, 500);   
+  </script>     
+
+  @elseif(session('eliminadoDep'))   
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Subcircuito eliminado',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }, 500);   
+  </script>
 @endif
 
   <script type="text/javascript">
@@ -200,10 +261,38 @@
         //window.location = "Inicio";
         window.location = "EliminarVehiculo/"+Vid;
       }
+    }) 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+  })
+
+  $('.table').on('click', '.EliminarDependencia', function(){
+ 
+    var Did = $(this).attr('Did');
+    var nombre = $(this).attr('nombre');
+
+    Swal.fire({
+
+      title: '¿Seguro que desea eliminar el subcircuito '+nombre+'?',
+      icon: 'Warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor : '#d33',
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: '#3085d6'
+
+    }).then((result)=> {
+
+      if(result.isConfirmed){
+
+        //window.location = "Inicio";
+        window.location = "Eliminar-Dependencia/"+Did;
+      }
     })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
   })
 
   </script>
+
+
 
 </body>
 </html>

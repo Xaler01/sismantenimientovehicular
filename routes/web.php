@@ -25,11 +25,14 @@ Route::get('Inicio', [InicioController::class, 'index']);
 
 Route::get('Dependencias', [DependenciasController::class, 'index']);
 Route::post('Dependencias', [DependenciasController::class, 'store']);
-Route::put('dependencia/{id}', [DependenciasController::class, 'update']);
-Route::delete('borrar-Dependencia/{id}', [DependenciasController::class,'destroy']);
+Route::get('Editar-Dependencia/{id}', [DependenciasController::class,'edit']);
+Route::put('Actualizar-Dependencia/{id}', [DependenciasController::class, 'update']);
+Route::get('Eliminar-Dependencia/{id}', [DependenciasController::class,'destroy']);
 
 Route::get('Policias', [PoliciasController::class, 'index']); 
 Route::post('Policias', [PoliciasController::class,'store']);
+Route::get('Editar-Policia/{id}', [PoliciasController::class,'edit']);
+Route::put('Actualizar-Policia/{id}', [PoliciasController::class,'update']);
 Route::get('Eliminar-Policia/{id}',[PoliciasController::class, 'destroy']);
 
 Route::get('Vehiculos', [VehiculosController::class, 'index']);

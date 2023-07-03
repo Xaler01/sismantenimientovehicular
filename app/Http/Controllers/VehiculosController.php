@@ -23,7 +23,7 @@ class VehiculosController extends Controller
             return redirect('Inicio');
 
         }
-        $vehiculos = DB::select('select * from vehiculos');
+        $vehiculos = DB::select('select * from vehiculos where estado = "Activo"');
         return view('modulos.Vehiculos')->with('vehiculos',$vehiculos);
     }
 
@@ -80,7 +80,6 @@ class VehiculosController extends Controller
             return redirect('Inicio');
 
         }
-        /**dd($id->id);*/
         $vehiculo = Vehiculos::find($id->id);
         return view('modulos.Editar-Vehiculo')->with('vehiculo', $vehiculo);
     }
@@ -111,14 +110,14 @@ class VehiculosController extends Controller
         return redirect('/Vehiculos')->with('actualizado', 'Si');
     }
 
+    
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        Vehiculos::destroy($id);
+        $vehiculo = Vehiculos::findOrFail($id);
+        $vehiculo->estado = 'Eliminado';
+        $vehiculo->save();
 
-        return redirect('Vehiculos');
+        return redirect('Vehiculos')->with('eliminadoV', true);
     }
 }

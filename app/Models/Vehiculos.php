@@ -21,7 +21,8 @@ class Vehiculos extends Model
         'kilometraje',
         'cilindraje',
         'capacidad_carga',
-        'capacidad_pasajeros'
+        'capacidad_pasajeros',
+        'estado'
     ];
     
     public $timestamp = false;

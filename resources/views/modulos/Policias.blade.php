@@ -20,6 +20,7 @@
                             <th>Fecha de Nacimiento</th>
                             <th>Celular</th> 
                             <th>Rango</th>
+                            <th>Tipo de sangre</th>
                             <th>Rol</th>
                             <th>Eliminar</th>
                         </tr>
@@ -47,9 +48,12 @@
                                     @endif
                                 
                                 <td>{{ $policia -> rango }}</td>
-                                
+                                <td>{{ $policia -> tipo_sangre }}</td>
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
+                                <a href="Editar-Policia/{{ $policia->id}}">
+                                    <button class="btn btn-success" nombre = "{{ $policia -> name }}"><i class="fa fa-pencil"></i></button>
+                                </a>
                                     <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>                             
@@ -117,24 +121,24 @@
                             <h2>Rango: </h2>
                             <select class="form-control input-lg" name="rango" required=¨¨>
                                 <option value="">Seleccionar...</option>
-                                <option value="GeneralSuperior">General Superior</option>
-                                <option value="GeneralInspector">General Inspector</option>
-                                <option value="GeneraldeDistrito">General de Distrito</option>
-                                <option value="CoroneldePolicía">Coronel de Policía</option>
-                                <option value="TenienteCoroneldePolicía">Teniente Coronel de Policía</option>
-                                <option value="MayordePolicía">Mayor de Policía</option>
-                                <option value="CapitandePolicía">Capitán de Policía</option>
-                                <option value="TenientedePolicía">Teniente de Policía</option>
-                                <option value="SubtenientedePolicía">Subteniente de Policía</option>
-                                <option value="SuboficialMayor">Suboficial Mayor</option>
-                                <option value="SuboficialPrimero">Suboficial Primero</option>
-                                <option value="SuboficialSegundo">Suboficial Segundo</option>
-                                <option value="SargentoPrimero">Sargento Primero</option>
-                                <option value="SargentoSegundo">Sargento Segundo</option>
-                                <option value="CaboPrimero">Cabo Primero</option>
+                                <option value="Policia">Policía</option> 
                                 <option value="CaboSegundo">Cabo Segundo</option>
-                                <option value="Policia">Policía</option>    
-                             </select>                                
+                                <option value="CaboPrimero">Cabo Primero</option>
+                                <option value="SargentoSegundo">Sargento Segundo</option>
+                                <option value="SargentoPrimero">Sargento Primero</option>
+                                <option value="SuboficialSegundo">Suboficial Segundo</option>
+                                <option value="SuboficialPrimero">Suboficial Primero</option>
+                                <option value="SuboficialMayor">Suboficial Mayor</option>
+                                <option value="SubtenientedePolicía">Subteniente de Policía</option>
+                                <option value="TenientedePolicía">Teniente de Policía</option>
+                                <option value="CapitandePolicía">Capitán de Policía</option>
+                                <option value="MayordePolicía">Mayor de Policía</option>
+                                <option value="TenienteCoroneldePolicía">Teniente Coronel de Policía</option>
+                                <option value="CoroneldePolicía">Coronel de Policía</option>
+                                <option value="GeneraldeDistrito">General de Distrito</option>
+                                <option value="GeneralInspector">General Inspector</option>
+                                <option value="GeneralSuperior">General Superior</option>   
+                            </select>                                
                         </div> 
                         
 

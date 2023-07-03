@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('cilindraje');
             $table->integer('capacidad_carga');
             $table->integer('capacidad_pasajeros');
+            $table->string('estado')->default('ACTIVO');
             $table->timestamps();
         });
     }

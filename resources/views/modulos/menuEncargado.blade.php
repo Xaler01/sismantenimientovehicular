@@ -12,17 +12,17 @@
                     <i class="fa fa-users"></i>
                     <span>Policias</span>
                 </a>
+            </li>   
+            <li>
+                <a href="{{ url('Vehiculos') }}">
+                    <i class="fa fa-car"></i>
+                    <span>Vehiculos</span> 
+                </a>
             </li>
             <li>
                 <a href="{{ url('Dependencias') }}">
                     <i class="fa fa-list"></i>
                     <span>Dependencias</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ url('Vehiculos') }}">
-                    <i class="fa fa-car"></i>
-                    <span>Vehiculos</span> 
                 </a>
             </li>
         </ul>

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('rango');
             $table->integer('id_dependencia');
             $table->string('rol');
+            $table->string('estado')->default('ACTIVO');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -22,7 +22,8 @@ class Policias extends Model
         'ciudad_nacimiento',
         'celular',
         'rango',
-        'rol'
+        'rol',
+        'estado'
 
     ];
 
