@@ -52,7 +52,7 @@
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
                                 <a href="Editar-Policia/{{ $policia->id}}">
-                                    <button class="btn btn-success" nombre = "{{ $policia -> name }}"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-primary btn-lg" nombre = "{{ $policia -> name }}">Guardar</button>
                                 </a>
                                     <button class="btn btn-danger EliminarPolicia" Pid = "{{ $policia -> id }}" nombre = "{{ $policia -> name }}"><i class="fa fa-trash"></i></button>
                                 </td>

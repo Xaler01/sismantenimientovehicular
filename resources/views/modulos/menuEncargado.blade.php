@@ -25,6 +25,12 @@
                     <span>Dependencias</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ url('PersonalSubcircuito') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Asignar personal a subcircuito</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

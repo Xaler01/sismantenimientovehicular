@@ -9,5 +9,11 @@ class PersonalSubcircuito extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_user'];
+    protected $table = 'personal_subcircuito';
+    protected $fillable = [
+        'user_id',
+        'subcircuito_id'
+    ];
+    
+
 }

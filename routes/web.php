@@ -5,6 +5,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\DependenciasController;
 use App\Http\Controllers\PoliciasController;
 use App\Http\Controllers\VehiculosController;
+use App\Http\Controllers\PersonalSubcircuitoController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Dependencias;
 use App\Models\Policias;
@@ -41,4 +42,6 @@ Route::post('Crear-Vehiculo', [VehiculosController::class, 'store']);
 Route::get('Editar-Vehiculo/{id}', [VehiculosController::class,'edit']);
 Route::put('Actualizar-Vehiculo/{id}', [VehiculosController::class,'update']);
 Route::get('EliminarVehiculo/{id}',[VehiculosController::class, 'destroy']);
+
+Route::get('PersonalSubcircuito', [PersonalSubcircuitoController::class, 'index']);
 
