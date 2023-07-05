@@ -45,3 +45,5 @@ Route::get('EliminarVehiculo/{id}',[VehiculosController::class, 'destroy']);
 
 Route::get('PersonalSubcircuito', [PersonalSubcircuitoController::class, 'index']);
 
+Route::get('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'edit']);
+Route::put('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'update'])->name('PersonalSubcircuito.update');

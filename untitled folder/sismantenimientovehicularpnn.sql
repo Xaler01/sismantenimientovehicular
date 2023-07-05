@@ -18,6 +18,7 @@ CREATE TABLE users (
   celular VARCHAR(255),
   rango VARCHAR(255),
   rol VARCHAR(255),
+  estado VARCHAR(15),
   remember_token VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -36,6 +37,7 @@ CREATE TABLE vehiculos (
   cilindraje INT,
   capacidad_carga INT,
   capacidad_pasajeros INT,
+  estado VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -54,6 +56,7 @@ CREATE TABLE dependencias (
   num_subcircuitos INT,
   cod_subcircuito VARCHAR(255),
   nombre_subcircuito VARCHAR(255),
+  estado VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -62,22 +65,24 @@ CREATE TABLE dependencias (
 CREATE TABLE personal_subcircuito (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT,
-  subcircuito_id INT,
+  dependencia_id INT,
+  fecha_asignacion DATE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (subcircuito_id) REFERENCES dependencias(id)
+  FOREIGN KEY (dependencia_id) REFERENCES dependencias(id)
 );
 
 -- Crear la tabla "vehiculo_subcircuito" para vincular los vehículos a subcircuitos
 CREATE TABLE vehiculo_subcircuito (
   id INT PRIMARY KEY AUTO_INCREMENT,
   vehiculo_id INT,
-  subcircuito_id INT,
+  dependencia_id INT,
+  fecha_asignacion DATE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
-  FOREIGN KEY (subcircuito_id) REFERENCES dependencias(id)
+  FOREIGN KEY (dependencia_id) REFERENCES dependencias(id)
 );
 
 -- Crear la tabla "solicitudes_mantenimiento" para gestionar las solicitudes de mantenimiento

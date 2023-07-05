@@ -27,7 +27,6 @@ class User extends Authenticatable
         'ciudad_nacimiento',
         'celular',
         'rango',
-        'id_dependencia',
         'rol'
     ];
 
@@ -50,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function personalSubcircuito()
+    {
+        return $this->hasOne(PersonalSubcircuito::class, 'user_id', 'id')->with('dependencia');
+    }
 }

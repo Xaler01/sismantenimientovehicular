@@ -23,6 +23,7 @@ class Policias extends Model
         'celular',
         'rango',
         'rol',
+        'dependencia_id',
         'estado'
 
     ];
@@ -31,6 +32,7 @@ class Policias extends Model
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencias::class,'id_dependencia');
+        return $this->belongsTo(Dependencia::class, 'dependencia_id');
     }
+    
 }

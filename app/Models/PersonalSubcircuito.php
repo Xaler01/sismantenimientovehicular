@@ -12,8 +12,11 @@ class PersonalSubcircuito extends Model
     protected $table = 'personal_subcircuito';
     protected $fillable = [
         'user_id',
-        'subcircuito_id'
+        'dependencia_id'
     ];
-    
 
+    public function dependencia()
+    {
+        return $this->belongsTo(Dependencia::class, 'dependencia_id');
+    }
 }

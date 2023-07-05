@@ -2,54 +2,107 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Gestor de Personal a Subcircuito</h3>
+        <h3>Gestor de Personal Policial</h3>
     </section>
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped dt-responsive">
+                <table class="table">
                     <thead>
-                        <tr>                        
-                           
-                            <th>Nombre y Apellido</th>
-                            <th>Email</th> 
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
                             <th>Cédula</th>
-                            <th>Subcircuito</th>
+                            <th>Rango</th>
+                            <th>Asignado a</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    
-                    <tbody>   
-                    @foreach($asignapersonalsubcircuito as $asignacion)
+                    <tbody>
+                        @foreach($policias as $policia)
+                            @if ($policia->rol=="Policia" && $policia->estado=="Activo")
+                                <tr>
+                                    <td>{{ $policia->name }}</td>
+                                    <td>{{ $policia->email }}</td>
+                                    <td>{{ $policia->cedula }}</td>
+                                    <td>{{ $policia->rango }}</td>
+                                    
+                                    <td>
+                                        @if($policia->dependencia)
+                                            {{ $policia->dependencia->nombre_subcircuito }}
+                                        @else
+                                            No asignado
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#EditarSubcircuito{{ $policia->id }}"><i class="fa fa-pencil"></i></button>
+                                        <!--<button class="btn btn-success" data-toggle="modal" data-target="#EditarSubcircuito" id_personal= "$policia->id"><i class="fa fa-pencil"></i></button>-->
 
-                            @if ($asignapersonalsubcircuito->policia->rol=="Policia")
-                            <tr>
-                                
-                                <td>{{ $asignacion->policia->name }}</td>
-                                <td>{{ $asignacion->policia->email }}</td>
-                                <td>{{ $asignacion->policia->cedula }}</td>
-                                <td>
-                                    <select class="form-control input-lg" name="subcircuito_id" required>
-                                        <option value="">Seleccionar...</option>
-                                        @foreach($subcircuitos as $subcircuito)
-                                            <option value="{{ $subcircuito->id }}">{{ $subcircuito->nombre_subcircuito }}</option>
-                                        @endforeach
-                                    </select>   
-                                </td>  
-
-                                <td>
-                                    <a href="Editar-Policia/{{ $asignapersonalsubcircuito->policia->id }}">
-                                        <button class="btn btn-success" nombre="{{ $asignapersonalsubcircuito->policia->name }}"><i class="fa fa-pencil"></i></button>
-                                    </a>
-                                    <button class="btn btn-danger EliminarPolicia" Pid="{{ $asignapersonalsubcircuito->policia->id }}" nombre="{{ $asignapersonalsubcircuito->policia->name }}"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>                             
-                            @endif                          
-                        @endforeach 
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 </div>
+@foreach($policias as $policia)
+    @if ($policia->rol=="Policia" && $policia->estado=="Activo")
+    
+    <div class="modal fade" id="EditarSubcircuito{{ $policia->id }}" tabindex="-1" role="dialog" aria-labelledby="EditarSubcircuito{{ $policia->id }}Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title" id="EditarSubcircuito{{ $policia->id }}Label">Asignar Subcircuito</h3>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('PersonalSubcircuito.update', $policia->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="name">Nombre y apellido:</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $policia->name }}" disabled>
+                                </div>                                
+                                <div class="form-group">
+                                    <label for="correo">Correo:</label>
+                                    <input type="text" class="form-control" id="correo" name="correo" value="{{ $policia->email }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cedula">Cédula:</label>
+                                    <input type="text" class="form-control" id="cedula" name="cedula" value="{{ $policia->cedula }}" disabled>
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="rango">Rango:</label>
+                                    <input type="text" class="form-control" id="rango" name="rango" value="{{ $policia->rango }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dependencia">Dependencia:</label>
+                                    <select class="form-control" id="dependencia" name="dependencia">
+                                        <option value="">Seleccionar dependencia</option>
+                                        @foreach($dependencias as $dependencia)
+                                            <option value="{{ $dependencia->id }}" {{ $policia->dependencia_id == $dependencia->id ? 'selected' : '' }}>
+                                                {{ $dependencia->nombre_subcircuito }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endforeach
 @endsection

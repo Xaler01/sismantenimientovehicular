@@ -148,6 +148,21 @@
       'El vehiculo ha sido agregado','','success'
       )
   </script>
+
+
+    @elseif(session('asignadoDep'))
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Subcircuito asignado a policia',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }, 500);   
+  </script>  
+
+
   @elseif(session('actualizado'))
   <script>
       Swal.fire({
