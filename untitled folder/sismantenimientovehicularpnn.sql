@@ -17,6 +17,7 @@ CREATE TABLE users (
   ciudad_nacimiento VARCHAR(255),
   celular VARCHAR(255),
   rango VARCHAR(255),
+  dependencia_id INT NOT NULL,
   rol VARCHAR(255),
   estado VARCHAR(15),
   remember_token VARCHAR(100),

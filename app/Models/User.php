@@ -50,8 +50,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+  
     public function personalSubcircuito()
     {
         return $this->hasOne(PersonalSubcircuito::class, 'user_id', 'id')->with('dependencia');
+    } 
+
+    public function dependencia()
+    {
+        return $this->belongsTo(Dependencias::class, 'dependencia_id');
     }
 }

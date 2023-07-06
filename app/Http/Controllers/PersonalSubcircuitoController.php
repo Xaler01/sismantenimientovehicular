@@ -9,15 +9,24 @@ use App\Models\Dependencias;
 
 class PersonalSubcircuitoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
+        if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"){
+
+            return redirect('Inicio');
+
+        }
         $policias = Policias::all();
         $dependencias = Dependencias::all();
 
         return view('modulos.PersonalSubcircuito', compact('policias', 'dependencias'));
     }
 
-    
     public function edit($id)
     {
         $policia = Policias::findOrFail($id);
@@ -27,13 +36,15 @@ class PersonalSubcircuitoController extends Controller
         return view('modulos.PersonalSubcircuito', compact('policia', 'personalSubcircuito', 'dependencias'));
     }
 
-    
-    
     public function update(Request $request, $id)
     {
         $policia = Policias::findOrFail($id);
         $dependencia_id = $request->input('dependencia');
         
+        // Actualizar el campo dependencia_id en la tabla users
+        $policia->dependencia_id = $dependencia_id;
+        $policia->save();
+
         // Verificar si ya existe una asignación en la tabla personal_subcircuito para el policía
         $personalSubcircuito = PersonalSubcircuito::where('user_id', $policia->id)->first();
         

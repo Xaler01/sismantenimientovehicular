@@ -7,9 +7,12 @@
     <section class="content">
         <div class="box">
             <div class="box-header">
+            @if(auth()->user()->rol != "Policia")
                 <a href="Crear-Vehiculo">
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearVehiculo">Agregar Vehiculo </button>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearVehiculo">Agregar Vehiculo</button>
                 </a>
+                @endif
+                
             </div>
             <div class="box-body">
                 <table class="table table-bordered table-hover table-striped dt-responsive">
@@ -48,7 +51,9 @@
                                 <a href="Editar-Vehiculo/{{ $vehiculo->id}}">
                                     <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
                                 </a>
+                                @if(auth()->user()->rol != "Policia")
                                 <button class="btn btn-danger EliminarVehiculo" Vid="{{ $vehiculo->id}}" Placa="{{ $vehiculo->placa}}"><i class="fa fa-trash"></i></button>
+                                @endif
                             </td>
                         </tr> 
                         @endforeach

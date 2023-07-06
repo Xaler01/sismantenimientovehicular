@@ -22,8 +22,15 @@ class Vehiculos extends Model
         'cilindraje',
         'capacidad_carga',
         'capacidad_pasajeros',
+        'dependencia_id',
         'estado'
     ];
     
     public $timestamp = false;
+
+    public function dependencia()
+    {
+        return $this->belongsTo(Dependencias::class, 'dependencia_id');
+    }
+    
 }

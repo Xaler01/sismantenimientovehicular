@@ -6,6 +6,8 @@ use App\Http\Controllers\DependenciasController;
 use App\Http\Controllers\PoliciasController;
 use App\Http\Controllers\VehiculosController;
 use App\Http\Controllers\PersonalSubcircuitoController;
+use App\Http\Controllers\VehiculoSubcircuitoController;
+use App\Http\Controllers\SolicitudMantenimientoController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Dependencias;
 use App\Models\Policias;
@@ -44,6 +46,11 @@ Route::put('Actualizar-Vehiculo/{id}', [VehiculosController::class,'update']);
 Route::get('EliminarVehiculo/{id}',[VehiculosController::class, 'destroy']);
 
 Route::get('PersonalSubcircuito', [PersonalSubcircuitoController::class, 'index']);
-
 Route::get('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'edit']);
 Route::put('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'update'])->name('PersonalSubcircuito.update');
+
+Route::get('VehiculoSubcircuito', [VehiculoSubcircuitoController::class, 'index']);
+Route::get('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'edit']);
+Route::put('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'update'])->name('VehiculoSubcircuito.update');
+
+Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);

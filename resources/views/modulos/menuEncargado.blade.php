@@ -27,8 +27,14 @@
             </li>
             <li>
                 <a href="{{ url('PersonalSubcircuito') }}">
-                    <i class="fa fa-list"></i>
-                    <span>Asignar personal a subcircuito</span>
+                    <i class="fa fa-link"></i>
+                    <span>Subcircuito - Personal policial</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('VehiculoSubcircuito') }}">
+                    <i class="fa fa-share"></i>
+                    <span>Subcircuito - Flota Vehícular</span>
                 </a>
             </li>
         </ul>

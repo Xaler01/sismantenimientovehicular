@@ -15,6 +15,7 @@
                 <form method="post" action="{{ url('Actualizar-Vehiculo/'.$vehiculo->id) }}">
                     @csrf
                     @method('put')
+                    @if(auth()->user()->rol == "Encargado")
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -63,9 +64,10 @@
                                 <label for="motor">Motor:</label>
                                 <input type="text" class="form-control" name="motor" id="motor" value="{{$vehiculo->motor}}" oninput="this.value = this.value.toUpperCase()">
                             </div>
+                            
                             <div class="form-group">
                                 <label for="kilometraje">Kilometraje:</label>
-                                <input type="number" class="form-control" name="kilometraje" id="kilometraje" value="{{$vehiculo->kilometraje}}">
+                                <input type="number" class="form-control" name="kilometraje" id="kilometraje" value="{{$vehiculo->kilometraje}}" min="{{ $vehiculo->kilometraje }}">
                             </div>
                             <div class="form-group">
                                 <label for="cilindraje">Cilindraje:</label>
@@ -88,6 +90,56 @@
                             </div>
                         </div>
                     </div>
+                    @elseif(auth()->user()->rol == "Policia")
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tipo_vehiculo">Tipo Vehiculo: </label>
+                                <input type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="placa">Placa:</label>
+                                <input type="text" class="form-control" name="placa" id="placa" value="{{$vehiculo->placa}}"readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="chasis">Chasis:</label>
+                                <input type="text" class="form-control" name="chasis" id="chasis" value="{{$vehiculo->chasis}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="marca">Marca:</label>
+                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modelo">Modelo:</label>
+                                <input class="form-control" name="modelo" id="modelo" value="{{$vehiculo->modelo}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="motor">Motor:</label>
+                                <input type="text" class="form-control" name="motor" id="motor" value="{{$vehiculo->motor}}" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="kilometraje">Kilometraje:</label>
+                                <input type="number" class="form-control" name="kilometraje" id="kilometraje" value="{{$vehiculo->kilometraje}}" min="{{ $vehiculo->kilometraje }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="cilindraje">Cilindraje:</label>
+                                <input type="number" class="form-control" name="cilindraje" id="cilindraje" value="{{$vehiculo->cilindraje}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="capacidad_carga">Capacidad de carga:</label>
+                                <input type="number" class="form-control" name="capacidad_carga" id="capacidad_carga" value="{{$vehiculo->capacidad_carga}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="capacidad_pasajeros">Capacidad de pasajeros:</label>
+                                <input type="number" class="form-control" name="capacidad_pasajeros" id="capacidad_pasajeros"value="{{$vehiculo->capacidad_pasajeros}}"readonly>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <br><br>
                     <button type="submit" class="btn btn-success btn-lg">Actualizar</button>
                     <a href="{{ url('Vehiculos') }}">

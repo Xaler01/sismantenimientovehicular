@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
   ciudad_nacimiento VARCHAR(255) NOT NULL,
   celular VARCHAR(255) NOT NULL,
   rango VARCHAR(255) NOT NULL,
-  id_dependencia INT NOT NULL,
+  dependencia_id INT NOT NULL,
   rol VARCHAR(255) NOT NULL,
   remember_token VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

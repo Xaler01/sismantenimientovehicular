@@ -46,8 +46,11 @@
 @if(Auth::user())
 
   @include('modulos.cabecera')
-  @if (auth()->user()->rol == "Encargado")
+  @if(auth()->user()->rol == "Encargado")
     @include('modulos.menuEncargado')
+
+  @elseif (auth()->user()->rol == "Policia")
+    @include('modulos.menuPolicia')
   @endif
 
   @yield('content')
@@ -149,7 +152,6 @@
       )
   </script>
 
-
     @elseif(session('asignadoDep'))
   <script>
     setTimeout(function() {
@@ -162,6 +164,17 @@
     }, 500);   
   </script>  
 
+@elseif(session('asignadoVeh'))
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Subcircuito asignado a vehiculo',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }, 500);   
+  </script>  
 
   @elseif(session('actualizado'))
   <script>

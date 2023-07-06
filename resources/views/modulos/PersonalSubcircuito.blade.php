@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Gestor de Personal Policial</h3>
+        <h3>Subcircuito - Personal policial</h3>
     </section>
     <section class="content">
         <div class="box">
@@ -28,11 +28,13 @@
                                     <td>{{ $policia->rango }}</td>
                                     <td>
                                         @if ($policia->dependencia_id)
-                                          
+                                            {{ $policia->dependencia->nombre_subcircuito }}
                                         @else
                                             No asignado
                                         @endif
                                     </td>
+                                    
+                                    
                                     <td>
                                         <button class="btn btn-success" data-toggle="modal" data-target="#EditarSubcircuito{{ $policia->id }}"><i class="fa fa-pencil"></i></button>
                                     </td>
@@ -47,12 +49,15 @@
 </div>
 @foreach($policias as $policia)
     @if ($policia->rol=="Policia" && $policia->estado=="Activo")
+    @php
+        $dependenciaNombre = $policia->personalSubcircuito ? $policia->personalSubcircuito->dependencia->nombre_subcircuito : null;
+    @endphp
     
     <div class="modal fade" id="EditarSubcircuito{{ $policia->id }}" tabindex="-1" role="dialog" aria-labelledby="EditarSubcircuito{{ $policia->id }}Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title" id="EditarSubcircuito{{ $policia->id }}Label">Asignar Subcircuito</h3>
+                    <h3 class="modal-title" id="EditarSubcircuito{{ $policia->id }}Label">Asignar subcircuito</h3>
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="{{ route('PersonalSubcircuito.update', $policia->id) }}">

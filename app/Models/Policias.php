@@ -32,7 +32,7 @@ class Policias extends Model
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencia::class, 'dependencia_id');
+        return $this->belongsTo(Dependencias::class, 'dependencia_id');
     }
     
 }
