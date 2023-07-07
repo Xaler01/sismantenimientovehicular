@@ -32,19 +32,23 @@
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/css/responsive.bootstrap.min.css">
 
- <!-- Google Font -->
+  <!--Full Calendar -->
+  <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+
+  <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini login-page">
-<div class="wrapper">
+
 
  
 
-</div>
+
 <!-- ./wrapper -->
 
 @if(Auth::user())
-
+<div class="wrapper">
   @include('modulos.cabecera')
   @if(auth()->user()->rol == "Encargado")
     @include('modulos.menuEncargado')
@@ -54,7 +58,7 @@
   @endif
 
   @yield('content')
-
+</div>
 @else
   @yield('contenido')
 @endif
@@ -98,6 +102,12 @@
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!-- FullCalendar -->
+
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/locale/es.js"></script>
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/moment/moment.js"></script>
 
 <script type="text/javascript">
 
@@ -319,6 +329,34 @@
   })
 
   </script>
+
+  <script type="text/javascript">
+    var date = new Date();
+    var d = date.getDate(),
+        m = date.getMonth(),
+        a = date.getFullYear()
+    
+    $('#calendario').fullCalendar({
+      defaultView: 'agendaWeek',
+      hiddenDays : [0,6],
+      scrollTime : "08:00:00",
+      minTime    : "08:00:00",
+      maxTime    : "18:00:00",
+
+      dayClick : function(date, jsEvent, view){
+        var fecha = date.format();
+        var hora = ("01:00:00").split(":");
+        Fechamantenimiento = fecha.split("T");
+        Horamantenimiento = fecha.split("T");
+        $('#MantenimientoModal').modal();
+        $("#fechamantenimiento").val(Fechamantenimiento[0]);
+        $("#horamantenimiento").val(Horamantenimiento[1]);
+      }
+    });
+
+    
+  
+   </script> 
 
 
 

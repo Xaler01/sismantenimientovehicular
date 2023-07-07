@@ -85,7 +85,7 @@
                         </div> 
                         <div class="form-group">
                             <h2>Contraseña: </h2>
-                            <input type= "text" class="form-control input-lg" name="password" required=¨¨>
+                            <input type= "password" class="form-control input-lg" name="password" required=¨¨>
                         </div> 
                         <div class="form-group">
                             <h2>Cedula: </h2>

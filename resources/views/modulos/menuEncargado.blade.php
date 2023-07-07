@@ -37,6 +37,12 @@
                     <span>Subcircuito - Flota Vehícular</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">
+                    <i class="fa fa-wrench"></i>
+                    <span>Solicitud de mantenimiento</span> 
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

@@ -29,12 +29,17 @@
                                     <td>{{ $vehiculo->modelo }}</td>
                                     <td>{{ $vehiculo->kilometraje }}</td>
                                     <td>
-                                        @if ($vehiculo->dependencia_id)
+                                    @if ($vehiculo->dependencia_id)
+                                        @if ($vehiculo->dependencia->estado == 'Activo')
                                             {{ $vehiculo->dependencia->nombre_subcircuito }}
                                         @else
                                             No asignado
                                         @endif
+                                    @else
+                                        No asignado
+                                    @endif
                                     </td>
+                                    
                                     <td>
                                         <button class="btn btn-success" data-toggle="modal" data-target="#AsignarVehiculo{{ $vehiculo->id }}"><i class="fa fa-pencil"></i></button>
                                     </td>
@@ -81,14 +86,17 @@
                                     <label for="kilometraje">Kilometraje:</label>
                                     <input type="text" class="form-control" id="kilometraje" name="kilometraje" value="{{ $vehiculo->kilometraje }}" disabled>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="dependencia">Dependencia:</label>
                                     <select class="form-control" id="dependencia" name="dependencia">
                                         <option value="">Seleccionar dependencia</option>
                                         @foreach($dependencias as $dependencia)
-                                            <option value="{{ $dependencia->id }}" {{ $vehiculo->dependencia_id == $dependencia->id ? 'selected' : '' }}>
-                                                {{ $dependencia->nombre_subcircuito }}
-                                            </option>
+                                            @if ($dependencia->estado == 'Activo')
+                                                <option value="{{ $dependencia->id }}" {{ $vehiculo->dependencia_id == $dependencia->id ? 'selected' : '' }}>
+                                                    {{ $dependencia->nombre_subcircuito }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

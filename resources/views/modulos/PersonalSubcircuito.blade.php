@@ -28,13 +28,15 @@
                                     <td>{{ $policia->rango }}</td>
                                     <td>
                                         @if ($policia->dependencia_id)
-                                            {{ $policia->dependencia->nombre_subcircuito }}
+                                            @if ($policia->dependencia->estado == 'Activo')
+                                                {{ $policia->dependencia->nombre_subcircuito }}
+                                            @else
+                                                No asignado
+                                            @endif
                                         @else
                                             No asignado
                                         @endif
                                     </td>
-                                    
-                                    
                                     <td>
                                         <button class="btn btn-success" data-toggle="modal" data-target="#EditarSubcircuito{{ $policia->id }}"><i class="fa fa-pencil"></i></button>
                                     </td>
@@ -87,11 +89,14 @@
                                     <select class="form-control" id="dependencia" name="dependencia">
                                         <option value="">Seleccionar dependencia</option>
                                         @foreach($dependencias as $dependencia)
-                                            <option value="{{ $dependencia->id }}" {{ $policia->personalSubcircuito && $policia->personalSubcircuito->dependencia_id == $dependencia->id ? 'selected' : '' }}>
-                                                {{ $dependencia->nombre_subcircuito }}
-                                            </option>
+                                            @if($dependencia->estado == 'Activo')
+                                                <option value="{{ $dependencia->id }}" {{ $policia->personalSubcircuito && $policia->personalSubcircuito->dependencia_id == $dependencia->id ? 'selected' : '' }}>
+                                                    {{ $dependencia->nombre_subcircuito }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
+                                    
                                 </div>
                                 
                             </div>

@@ -2,63 +2,61 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Solicitud de mantenimiento vehicular </h3>
-        
-        @if($solicitud == null)
-        <form method="post" action="">
-            @csrf
-            @method('put')
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="user">Policia:</label>
-                        <input type="text"  class="form-control hidden" name="user_id" id="user_id" value="{{$policia->id}}" oninput="this.value = this.value.toUpperCase()">
-                        <span>{{$policia->name}}</span>
-                        <span>{{$policia->id}}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="user">Vehiculo:</label>
-                        <input type="text"  class="form-control hidden" name="vehiculo_id" id="vehiculo_id" value="{{$vehiculo->id}}" oninput="this.value = this.value.toUpperCase()">
-                        <span>{{$vehiculo->placa}}</span>
-                        <span>{{$vehiculo->id}}</span>
-                    </div>
-                </div>
-            </div>
-
-                        
-         
-        @endif
-
+        <h3>Solicitud de mantenimiento vehicular</h3>
     </section>
     <section class="content">
         <div class="box">
-        @if($solicitud == null)
-        <form method="post" action="">
-            @csrf
-            @method('put')
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="user">Policia:</label>
-                        <input type="text"  class="form-control hidden" name="user_id" id="user_id" value="{{$policia->id}}" oninput="this.value = this.value.toUpperCase()">
-                        <span>{{$policia->name}}</span>
-                        <span>{{$policia->id}}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="user">Vehiculo:</label>
-                        <input type="text"  class="form-control hidden" name="vehiculo_id" id="vehiculo_id" value="{{$vehiculo->id}}" oninput="this.value = this.value.toUpperCase()">
-                        <span>{{$vehiculo->placa}}</span>
-                        <span>{{$vehiculo->id}}</span>
-                    </div>
-                </div>
-            </div>
-
-                        
-         
-        @endif
-
+            <div class="box-body">
+                <div id="calendario"></div>
+            </div>  
         </div>
     </section>
+</div>
 
+<div class="modal fade" id="MantenimientoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                @csrf
+                @method('put')
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="user">Usuario:</label>
+                            <input type="text" class="form-control" name="user_id" id="user_id" value="{{$policia->name}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="user">Placa {{$vehiculo->tipo_vehiculo}}:</label>
+                            <input type="text" class="form-control" name="vehiculo_id" id="vehiculo_id" value="{{$vehiculo->placa}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechamantenimiento">Fecha mantenimiento:</label>
+                            <input type="text" class="form-control" name="fechamantenimiento" id="fechamantenimiento" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="horamantenimiento">Hora solictud:</label>
+                            <input type="time" class="form-control" name="horamantenimiento" id="horamantenimiento" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="mantenimiento">Tipo de Mantenimiento:</label>
+                            <input type="text" class="form-control" name="mantenimiento" id="mantenimiento" placeholder="Ingrese el tipo de mantenimiento">
+                        </div>
+                        <div class="form-group">
+                            <label for="kilometraje">Kilometraje actual:</label>
+                            <input type="number" class="form-control" name="kilometraje" id="kilometraje" value="{{$vehiculo->kilometraje}}" min="{{ $vehiculo->kilometraje }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea class="form-control" name="observaciones" id="observaciones" placeholder="Mantenimiento 5000 kilómetros" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Solicitar Mantenimiento</button>
+                    <button type="button" class="btn btn-danger " data-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection

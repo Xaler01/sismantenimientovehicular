@@ -1,9 +1,3 @@
--- Crear la base de datos
-CREATE DATABASE sistemamantenimientovehicularpn;
-
--- Usar la base de datos
-USE sistemamantenimientovehicularpn;
-
 -- Crear la tabla "users" para gestionar el personal
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -17,8 +11,8 @@ CREATE TABLE users (
   ciudad_nacimiento VARCHAR(255),
   celular VARCHAR(255),
   rango VARCHAR(255),
-  dependencia_id INT NOT NULL,
   rol VARCHAR(255),
+  dependencia_id INT,
   estado VARCHAR(15),
   remember_token VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -38,7 +32,7 @@ CREATE TABLE vehiculos (
   cilindraje INT,
   capacidad_carga INT,
   capacidad_pasajeros INT,
-  dependencia_id INT NOT NULL,
+  dependencia_id INT,
   estado VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -75,16 +69,24 @@ CREATE TABLE personal_subcircuito (
   FOREIGN KEY (dependencia_id) REFERENCES dependencias(id)
 );
 
--- Crear la tabla "vehiculo_subcircuito" para vincular los vehículos a subcircuitos
+-- Crear la tabla "vehiculo_subcircuito" para vincular los vehículos a subcircuitos y usuarios
 CREATE TABLE vehiculo_subcircuito (
   id INT PRIMARY KEY AUTO_INCREMENT,
   vehiculo_id INT,
   dependencia_id INT,
+  user1_id INT,
+  user2_id INT,
+  user3_id INT,
+  user4_id INT,
   fecha_asignacion DATE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id),
-  FOREIGN KEY (dependencia_id) REFERENCES dependencias(id)
+  FOREIGN KEY (dependencia_id) REFERENCES dependencias(id),
+  FOREIGN KEY (user1_id) REFERENCES users(id),
+  FOREIGN KEY (user2_id) REFERENCES users(id),
+  FOREIGN KEY (user3_id) REFERENCES users(id),
+  FOREIGN KEY (user4_id) REFERENCES users(id)
 );
 
 -- Crear la tabla "solicitudes_mantenimiento" para gestionar las solicitudes de mantenimiento
@@ -92,6 +94,7 @@ CREATE TABLE solicitudes_mantenimiento (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT,
   vehiculo_id INT,
+  tipo_mantenimiento TEXT,
   fecha_solicitud DATE,
   hora_solicitud TIME,
   kilometraje_actual INT,
@@ -101,4 +104,3 @@ CREATE TABLE solicitudes_mantenimiento (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id)
 );
-
