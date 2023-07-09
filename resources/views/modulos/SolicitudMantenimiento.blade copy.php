@@ -20,18 +20,26 @@
                 @csrf
                 @method('put')
                 <div class="modal-body">
-                    <div class="box-body">                        
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="user">Usuario:</label>
+                            <input type="text" class="form-control" name="user_id" id="user_id" value="{{ $policia->name }}" readonly>
+                            
+                        </div>
                         <div class="form-group">
                             <label for="user">Usuario:</label>
                             <select class="form-control" name="user_id" id="user_id">
-                                <option value="">Seleccionar policia</option>
-                                @foreach($policia as $policiaE)
-                                    <option value="{{ $policiaE->id }}">{{ $policiaE->name }}</option>
+                                @foreach($Pol as $policiaX)
+                                    <option value="{{ $policiaX->id }}">{{ $policiaX->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        
+                        <div class="form-group">
+                            <label for="user">Placa {{$vehiculo->tipo_vehiculo}}:</label>
+                            <input type="text" class="form-control" name="vehiculo_id" id="vehiculo_id" value="{{$vehiculo->placa}}" readonly>
+                        </div>
                         <div class="form-group">
                             <label for="fechamantenimiento">Fecha mantenimiento:</label>
                             <input type="text" class="form-control" name="fechamantenimiento" id="fechamantenimiento" readonly>
@@ -50,7 +58,14 @@
                             </select>
                         </div>
                        
-                      
+                        <div class="form-group">
+                            <label for="kilometraje">Kilometraje actual:</label>
+                            <input type="number" class="form-control" name="kilometraje" id="kilometraje" value="{{$vehiculo->kilometraje}}" min="{{ $vehiculo->kilometraje }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea class="form-control" name="observaciones" id="observaciones" placeholder="Próximo mantenimiento a los {{$vehiculo->kilometraje+5000}} kilómetros" maxlength="500"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

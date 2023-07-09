@@ -28,7 +28,8 @@
                                     <td>{{ $policia->rango }}</td>
                                     <td>
                                         @if ($policia->dependencia_id)
-                                            @if ($policia->dependencia->estado == 'Activo')
+                                        @if ($policia && $policia->dependencia && $policia->dependencia->estado == 'Activo')
+                                            
                                                 {{ $policia->dependencia->nombre_subcircuito }}
                                             @else
                                                 No asignado

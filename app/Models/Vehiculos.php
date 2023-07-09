@@ -32,5 +32,8 @@ class Vehiculos extends Model
     {
         return $this->belongsTo(Dependencias::class, 'dependencia_id');
     }
-    
+    public function asignarVehiculo()
+    {
+        return $this->hasOne(AsignarVehiculo::class, 'vehiculo_id');
+    }
 }

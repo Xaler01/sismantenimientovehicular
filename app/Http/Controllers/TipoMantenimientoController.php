@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolicituMantenimiento;
+use App\Models\TipoMantenimiento;
 use Illuminate\Http\Request;
 
-class SolicituMantenimientoController extends Controller
+class TipoMantenimientoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   
 
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index()
     {
-        if(auth()->user()->rol == "Policia" && $id != auth() -> user()->id){
-            return redirect('Inicio');
-
-        }
+        //
     }
 
     /**
@@ -42,7 +36,7 @@ class SolicituMantenimientoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SolicituMantenimiento $solicituMantenimiento)
+    public function show(TipoMantenimiento $tipoMantenimiento)
     {
         //
     }
@@ -50,7 +44,7 @@ class SolicituMantenimientoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolicituMantenimiento $solicituMantenimiento)
+    public function edit(TipoMantenimiento $tipoMantenimiento)
     {
         //
     }
@@ -58,7 +52,7 @@ class SolicituMantenimientoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SolicituMantenimiento $solicituMantenimiento)
+    public function update(Request $request, TipoMantenimiento $tipoMantenimiento)
     {
         //
     }
@@ -66,7 +60,7 @@ class SolicituMantenimientoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SolicituMantenimiento $solicituMantenimiento)
+    public function destroy(TipoMantenimiento $tipoMantenimiento)
     {
         //
     }

@@ -109,6 +109,7 @@
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/locale/es.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/moment/moment.js"></script>
 
+
 <script type="text/javascript">
 
   $(".table").DataTable({
@@ -185,6 +186,8 @@
         });
     }, 500);   
   </script>  
+
+ 
 
   @elseif(session('actualizado'))
   <script>
@@ -338,7 +341,7 @@
     
     $('#calendario').fullCalendar({
       defaultView: 'agendaWeek',
-      hiddenDays : [0,6],
+      hiddenDays : [0],
       scrollTime : "08:00:00",
       minTime    : "08:00:00",
       maxTime    : "18:00:00",
@@ -347,16 +350,38 @@
         var fecha = date.format();
         var hora = ("01:00:00").split(":");
         Fechamantenimiento = fecha.split("T");
-        Horamantenimiento = fecha.split("T");
-        $('#MantenimientoModal').modal();
-        $("#fechamantenimiento").val(Fechamantenimiento[0]);
-        $("#horamantenimiento").val(Horamantenimiento[1]);
+        
+        
+        n = new Date();
+        y = n.getFullYear();
+        m = n.getMonth()+1;
+        d = n.getDate();
+
+        if (m < 10) {
+          M="0"+m;
+          if(d<10){
+            D = "0"+d;
+            diaActual = y + "-" + M + "-" + D;
+          }else{
+            diaActual = y + "-" +M+ "-"+ d;
+           }
+           }else{
+            diaActual= y+"-" +m+ "-" +d;
+            }
+
+        if(diaActual<=Fechamantenimiento){
+          $('#MantenimientoModal').modal();
+          $("#fechamantenimiento").val(Fechamantenimiento[0]);
+        }
+
+        
+        //$("#fechamantenimiento").val(Fechamantenimiento[0]);
+        //$("#fechamantenimiento").val(diaActual);
+        $("#horamantenimiento").val(Fechamantenimiento[1]);
       }
     });
-
-    
-  
    </script> 
+
 
 
 

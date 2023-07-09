@@ -38,6 +38,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('AsignarVehiculo') }}">
+                    <i class="fa fa-id-card"></i>
+                    <span>Asignar Vehiculo - Policia</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">
                     <i class="fa fa-wrench"></i>
                     <span>Solicitud de mantenimiento</span> 

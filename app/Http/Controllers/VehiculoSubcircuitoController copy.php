@@ -9,6 +9,7 @@ use App\Models\Dependencias;
 
 class VehiculoSubcircuitoController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -16,10 +17,11 @@ class VehiculoSubcircuitoController extends Controller
     
     public function index()
     {
-        if(auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
+        if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"){
+
             return redirect('Inicio');
+
         }
-        
         $vehiculos = Vehiculos::all();
         $dependencias = Dependencias::all();
 
@@ -29,10 +31,10 @@ class VehiculoSubcircuitoController extends Controller
     public function edit($id)
     {
         $vehiculo = Vehiculos::findOrFail($id);
-        $vehiculoSubcircuito = VehiculoSubcircuito::where('vehiculo_id', $vehiculo->id)->first();
+        $vehiculoSubcircuito = VehiculoSubcircuito::where('user_id', $vehiculo->id)->first();
         $dependencias = Dependencias::all();
 
-        return view('modulos.VehiculoSubcircuito', compact('vehiculo', 'vehiculoSubcircuito', 'dependencias'));
+        return view('modulos.VehiculoSubcircuito', compact('vehiculo','vehiculoSubcircuito' ,'dependencias'));
     }
 
     public function update(Request $request, $id)
@@ -57,10 +59,8 @@ class VehiculoSubcircuitoController extends Controller
             $vehiculoSubcircuito->vehiculo_id = $vehiculo->id;
             $vehiculoSubcircuito->dependencia_id = $dependencia_id;
             $vehiculoSubcircuito->save();
-        }
+        }   
 
         return redirect('VehiculoSubcircuito')->with('asignadoVeh', 'Si');
     }
-
-    
 }

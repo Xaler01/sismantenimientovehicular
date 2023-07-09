@@ -72,76 +72,78 @@
                 @csrf
                 <div class="modal-body">
                     <div class="box-body">
-                        <div class="form-group">
-                            <h2>Nombre y apellido: </h2>
-                            <input type="text" class="form-control input-lg" name="name" required="">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Nombre y apellido:</label>
+                                <input type="text" class="form-control" name="name" required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" name="email" value="{{(old ('email'))}}">
+                                @error('email')
+                                    <div class="alert alert-danger">El email ya existe.</div>
+                                @enderror
+                            </div> 
+                            <div class="form-group">
+                                <label for="password">Contraseña:</label>
+                                <input type= "password" class="form-control" name="password" required=¨¨>
+                            </div> 
+                            <div class="form-group">
+                                <label for="cedula">Cedula:</label>
+                                <input type= "text" class="form-control" name="cedula" required=¨¨>
+                            </div> 
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+                                <input type= "date" class="form-control" name="fecha_nacimiento" required=¨¨>
+                            </div> 
                         </div>
-                        <div class="form-group">
-                            <h2>Email: </h2>
-                            <input type="email" class="form-control input-lg" name="email" value="{{(old ('email'))}}">
-                            @error('email')
-                                <div class="alert alert-danger">El email ya existe.</div>
-                            @enderror
-                        </div> 
-                        <div class="form-group">
-                            <h2>Contraseña: </h2>
-                            <input type= "password" class="form-control input-lg" name="password" required=¨¨>
-                        </div> 
-                        <div class="form-group">
-                            <h2>Cedula: </h2>
-                            <input type= "text" class="form-control input-lg" name="cedula" required=¨¨>
-                        </div> 
-                        <div class="form-group">
-                            <h2>Fecha de nacimiento: </h2>
-                            <input type= "date" class="form-control input-lg" name="fecha_nacimiento" required=¨¨>
-                        </div> 
-                        <div class="form-group">
-                            <h2>Tipo de sangre: </h2>
-                            <select class="form-control input-lg" name="tipo_sangre" required=¨¨>
-                                <option value="">Seleccionar...</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                             </select>                                
-                        </div> 
-                        <div class="form-group">
-                            <h2>Ciudad de nacimiento: </h2>
-                            <input type= "text" class="form-control input-lg" name="ciudad_nacimiento" required=¨¨ oninput="this.value = this.value.toUpperCase()">
-                        </div> 
-                        <div class="form-group">
-                            <h2>Celular: </h2>
-                            <input type= "text" class="form-control input-lg" name="celular" required=¨¨>
-                        </div> 
-                        <div class="form-group">
-                            <h2>Rango: </h2>
-                            <select class="form-control input-lg" name="rango" required=¨¨>
-                                <option value="">Seleccionar...</option>
-                                <option value="Policia">Policía</option> 
-                                <option value="CaboSegundo">Cabo Segundo</option>
-                                <option value="CaboPrimero">Cabo Primero</option>
-                                <option value="SargentoSegundo">Sargento Segundo</option>
-                                <option value="SargentoPrimero">Sargento Primero</option>
-                                <option value="SuboficialSegundo">Suboficial Segundo</option>
-                                <option value="SuboficialPrimero">Suboficial Primero</option>
-                                <option value="SuboficialMayor">Suboficial Mayor</option>
-                                <option value="SubtenientedePolicía">Subteniente de Policía</option>
-                                <option value="TenientedePolicía">Teniente de Policía</option>
-                                <option value="CapitandePolicía">Capitán de Policía</option>
-                                <option value="MayordePolicía">Mayor de Policía</option>
-                                <option value="TenienteCoroneldePolicía">Teniente Coronel de Policía</option>
-                                <option value="CoroneldePolicía">Coronel de Policía</option>
-                                <option value="GeneraldeDistrito">General de Distrito</option>
-                                <option value="GeneralInspector">General Inspector</option>
-                                <option value="GeneralSuperior">General Superior</option>   
-                            </select>                                
-                        </div> 
-                        
-
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="tipo_sangre">Tipo de sangre:</label>
+                                <select class="form-control" name="tipo_sangre" required=¨¨>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>                                
+                            </div> 
+                            <div class="form-group">
+                                <label for="ciudad_nacimiento">Ciudad de nacimiento:</label>
+                                <input type= "text" class="form-control" name="ciudad_nacimiento" required=¨¨ oninput="this.value = this.value.toUpperCase()">
+                            </div> 
+                            <div class="form-group">
+                                <label for="celular">Celular:</label>
+                                <input type= "text" class="form-control" name="celular" required=¨¨>
+                            </div> 
+                            <div class="form-group">
+                                <label for="rango">Rango:</label>
+                                <select class="form-control" name="rango" required=¨¨>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="Policia">Policía</option> 
+                                    <option value="CaboSegundo">Cabo Segundo</option>
+                                    <option value="CaboPrimero">Cabo Primero</option>
+                                    <option value="SargentoSegundo">Sargento Segundo</option>
+                                    <option value="SargentoPrimero">Sargento Primero</option>
+                                    <option value="SuboficialSegundo">Suboficial Segundo</option>
+                                    <option value="SuboficialPrimero">Suboficial Primero</option>
+                                    <option value="SuboficialMayor">Suboficial Mayor</option>
+                                    <option value="SubtenientedePolicía">Subteniente de Policía</option>
+                                    <option value="TenientedePolicía">Teniente de Policía</option>
+                                    <option value="CapitandePolicía">Capitán de Policía</option>
+                                    <option value="MayordePolicía">Mayor de Policía</option>
+                                    <option value="TenienteCoroneldePolicía">Teniente Coronel de Policía</option>
+                                    <option value="CoroneldePolicía">Coronel de Policía</option>
+                                    <option value="GeneraldeDistrito">General de Distrito</option>
+                                    <option value="GeneralInspector">General Inspector</option>
+                                    <option value="GeneralSuperior">General Superior</option>   
+                                </select>                                
+                            </div> 
+                        </div>
                     </div>                    
                 </div>
                 <div class="modal-footer">

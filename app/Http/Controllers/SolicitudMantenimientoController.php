@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SolicitudMantenimiento;
 use App\Models\Policias;
 use App\Models\Vehiculos;
+use App\Models\TipoMantenimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,15 +19,17 @@ class SolicitudMantenimientoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index()
     {
-        if(auth()->user()->rol == "Policia" && $id != auth() -> user()->id){
+        if(auth()->user()->rol == "Policia" && auth()-> user()->rol !="Encargado"){
             return redirect('Inicio');
         }
-        $policia = Policias::findOrFail($id);
-        $vehiculo = Vehiculos::findOrFail($id);
-        $solicitud = DB::select('select * from solicitudes_mantenimiento where user_id = '.$id);
-        return view('modulos.SolicitudMantenimiento', compact('solicitud', 'policia', 'vehiculo'));
+        $policia = DB::select('select * from users where rol = "Policia" and estado ="Activo" ');
+        $vehiculo = Vehiculos::all();
+        /**$solicitud = DB::select('select * from solicitudes_mantenimiento where user_id = '.$id);*/
+        $tiposMantenimiento = TipoMantenimiento::all();
+        
+        return view('modulos.SolicitudMantenimiento', compact(/**'solicitud', */'policia', 'vehiculo', 'tiposMantenimiento'));
         
     }
 

@@ -104,3 +104,53 @@ CREATE TABLE solicitudes_mantenimiento (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id)
 );
+
+  -- Crear la tabla "tipo_mantenimiento"
+  CREATE TABLE tipo_mantenimiento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    detalle TEXT,
+    valor FLOAT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+-- Crear la tabla "ciudades"
+CREATE TABLE ciudades (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "tipo_sangre"
+CREATE TABLE tipo_sangre (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "rango"
+CREATE TABLE rango (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "marca"
+CREATE TABLE marca (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "tipo_vehiculo"
+CREATE TABLE tipo_vehiculo (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
