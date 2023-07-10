@@ -10,6 +10,7 @@ use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
 use Illuminate\Support\Facades\Auth;
+
 use App\Models\Dependencias;
 use App\Models\Policias;
 use Symfony\Component\ErrorHandler\Debug;
@@ -55,7 +56,8 @@ Route::get('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'e
 Route::put('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'update'])->name('VehiculoSubcircuito.update');
 
 Route::get('AsignarVehiculo', [AsignarVehiculoController::class, 'index'])->name('asignarvehiculo');
-Route::post('/vehiculo_subcircuito', [AsignarVehiculoController::class, 'store'])->name('vehiculo_subcircuito.store');
+Route::get('AsignarVehiculoPersonal/{id}', [AsignarVehiculoController::class, 'edit']);
+Route::post('PersonalVehiculo', [AsignarVehiculoController::class, 'update'])->name('PersonalVehiculo.update');
 
 
 Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);

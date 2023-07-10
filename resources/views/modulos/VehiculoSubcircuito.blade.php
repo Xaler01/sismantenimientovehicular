@@ -1,4 +1,4 @@
-@extends('plantilla')
+    @extends('plantilla')
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
@@ -10,6 +10,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>id</th>
                             <th>Tipo</th>
                             <th>Placa</th>
                             <th>Marca</th>
@@ -23,13 +24,14 @@
                         @foreach($vehiculos as $vehiculo)
                             @if ($vehiculo->estado=="Activo")
                                 <tr>
+                                    <td>{{ $vehiculo->id }}</td>
                                     <td>{{ $vehiculo->tipo_vehiculo }}</td>
                                     <td>{{ $vehiculo->placa }}</td>
                                     <td>{{ $vehiculo->marca }}</td>
                                     <td>{{ $vehiculo->modelo }}</td>
                                     <td>{{ $vehiculo->kilometraje }}</td>
                                     <td>
-                                    @if ($vehiculo->dependencia_id)
+                                    @if ($vehiculo->dependencia_id && $vehiculo->dependencia)
                                         @if ($vehiculo->dependencia->estado == 'Activo')
                                             {{ $vehiculo->dependencia->nombre_subcircuito }}
                                         @else

@@ -12,10 +12,10 @@ class Vehiculos extends Model
     protected $table = 'vehiculos';
 
     protected $fillable = [
-        'tipo_vehiculo',
+        'tipo_vehiculo_id',
         'placa',
         'chasis',
-        'marca',
+        'marca_id',
         'modelo',
         'motor',
         'kilometraje',
@@ -32,8 +32,20 @@ class Vehiculos extends Model
     {
         return $this->belongsTo(Dependencias::class, 'dependencia_id');
     }
+
+    public function tipoVehiculo()
+    {
+        return $this->belongsTo(TipoVehiculos::class, 'tipo_vehiculo_id');
+    }
+ 
+    public function marcas()
+    {
+        return $this->belongsTo(Marcas::class, 'marca_id');
+    }
+
+
     public function asignarVehiculo()
     {
-        return $this->hasOne(AsignarVehiculo::class, 'vehiculo_id');
+        return $this->hasOne(AsignarVehiculo::class, 'marca_id');
     }
 }

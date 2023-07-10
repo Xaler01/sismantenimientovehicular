@@ -37,10 +37,10 @@
                         @foreach($vehiculos as $vehiculo)
                         <tr>
                             <td>{{ $vehiculo->id }}</td>
-                            <td>{{ $vehiculo->tipo_vehiculo }}</td>
+                            <td>{{ $vehiculo->tipoVehiculo->nombre}}</td>
                             <td>{{ $vehiculo->placa }}</td>
                             <td>{{ $vehiculo->chasis }}</td>
-                            <td>{{ $vehiculo->marca }}</td>
+                            <td>{{ $vehiculo->marcas -> nombre }}</td>
                             <td>{{ $vehiculo->modelo }}</td>
                             <td>{{ $vehiculo->motor }}</td>
                             <td>{{ $vehiculo->kilometraje }}</td>

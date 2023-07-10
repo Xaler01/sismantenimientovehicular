@@ -381,7 +381,51 @@
       }
     });
    </script> 
+   <script>
+    // Escuchar los cambios en el campo de selección de tipo de vehículo
+    document.getElementById('tipo_vehiculo').addEventListener('change', function() {
+        // Obtener el valor seleccionado
+        var tipoVehiculo = this.value;
+        // Obtener el campo de capacidad de pasajeros
+        var capacidadPasajeros = document.getElementById('capacidad_pasajeros');
+        // Si el tipo de vehículo es "Moto", establecer la capacidad de pasajeros en 2
+        if (tipoVehiculo === "3") {
+            capacidadPasajeros.value = "2";
+        }
+        else{
+            capacidadPasajeros.value = "4";
+        }
+    });
+</script>
 
+<script>
+      document.getElementById('provincia').addEventListener('change', function() {
+          var numDistritosInput = document.getElementById('num_distritos');
+          var parroquiaGroup = document.getElementById('parroquia-group');
+          var parroquiaInput = document.querySelector('#parroquia-group input[name="parroquia"]');
+          var selectedProvincia = this.value;
+          if (selectedProvincia === '11') {
+              numDistritosInput.value = '{{ $numDistritos }}';
+              numDistritosInput.disabled = true;
+              parroquiaGroup.innerHTML = `
+                  <label for="parroquia">Parroquia:</label>
+                  <select class="form-control" name="parroquia" id="parroquia" required>
+                      <option value="">Seleccionar...</option>
+                      @foreach($parroquias as $parroquia)
+                          <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
+                      @endforeach
+                  </select>
+              `;
+          } else {
+              numDistritosInput.value = '';
+              numDistritosInput.disabled = false;
+              parroquiaGroup.innerHTML = `
+                  <label for="parroquia">Parroquia:</label>
+                  <input type="text" class="form-control" name="parroquia" required>
+              `;
+          }
+      });
+  </script>
 
 
 

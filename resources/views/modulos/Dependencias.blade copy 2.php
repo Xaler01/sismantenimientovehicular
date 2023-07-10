@@ -33,7 +33,7 @@
                         @foreach ($dependencias as $dependencia)
                         <tr>
                             <td>{{$dependencia->id}}</td>
-                            <td>{{$dependencia->provincia->nombre}}</td>
+                            <td>{{$dependencia->provincia}}</td>
                             <td>{{$dependencia->num_distritos}}</td>
                             <td>{{$dependencia->parroquia}}</td>
                             <td>{{$dependencia->cod_distrito}}</td>
@@ -71,67 +71,49 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="provincia">Provincia:</label>
-                                    <select class="form-control" name="provincia" id="provincia" required>
-                                        <option value="">Seleccionar...</option>
-                                        @foreach($provincias as $provincia)
-                                            <option value="{{ $provincia->id }}">{{ $provincia->nombre }}</option>
-                                        @endforeach
-                                    </select>  
+                                    <input type="text" class="form-control input-lg" name="provincia" required oninput="this.value = this.value.toUpperCase()">
                                 </div>
                                 <div class="form-group">
                                     <label for="num_distritos">No. Distritos:</label>
-                                    <input type="number" class="form-control" name="num_distritos" id="num_distritos">
+                                    <input type="number" class="form-control input-lg" name="num_distritos" required>
                                 </div>
-
-                                
-
-
-                                <div class="form-group" id="parroquia-group">
-                              
+                                <div class="form-group">
                                     <label for="parroquia">Parroquia:</label>
-                  <select class="form-control" name="parroquia" id="parroquia" required>
-                      <option value="">Seleccionar...</option>
-                      @foreach($parroquias as $parroquia)
-                          <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
-                      @endforeach
-                  </select>
+                                    <input type="text" class="form-control input-lg" name="parroquia" required oninput="this.value = this.value.toUpperCase()">
                                 </div>
                                 <div class="form-group">
                                     <label for="cod_distrito">Cod. Distrito:</label>
-                                    <input type="text" class="form-control" name="cod_distrito" id="cod_distrito" required>
+                                    <input type="text" class="form-control input-lg" name="cod_distrito" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre_distrito">Nombre Distrito:</label>
-                                    <input type="text" class="form-control " name="nombre_distrito" required oninput="this.value = this.value.toUpperCase()">
+                                    <input type="text" class="form-control input-lg" name="nombre_distrito" required oninput="this.value = this.value.toUpperCase()">
                                 </div>
                                 <div class="form-group">
                                     <label for="num_circuitos">No. Circuitos:</label>
-                                    <input type="number" class="form-control " name="num_circuitos" required>
+                                    <input type="number" class="form-control input-lg" name="num_circuitos" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cod_circuito">Cod. Circuito:</label>
-                                    <input type="text" class="form-control" name="cod_circuito" required>
+                                    <input type="text" class="form-control input-lg" name="cod_circuito" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre_circuito">Nombre Circuito:</label>
-                                    <input type="text" class="form-control" name="nombre_circuito" required oninput="this.value = this.value.toUpperCase()">
+                                    <input type="text" class="form-control input-lg" name="nombre_circuito" required oninput="this.value = this.value.toUpperCase()">
                                 </div>
                                 <div class="form-group">
                                     <label for="num_subcircuitos">No. Subcircuitos:</label>
-                                    <input type="number" class="form-control" name="num_subcircuitos" required>
+                                    <input type="number" class="form-control input-lg" name="num_subcircuitos" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="cod_subcircuito">Cod. Subcircuito:</label>
-                                    <input type="text" class="form-control" name="cod_subcircuito" required>
+                                    <input type="text" class="form-control input-lg" name="cod_subcircuito" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre_subcircuito">Nombre Subcircuito:</label>
-                                    <input type="text" class="form-control" name="nombre_subcircuito" required oninput="this.value = this.value.toUpperCase()" value="{{ old('nombre_subcircuito') }}">
-                                    @error('nombre_subcircuito')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                    <input type="text" class="form-control input-lg" name="nombre_subcircuito" required oninput="this.value = this.value.toUpperCase()">
                                 </div>
                             </div>
                         </div>

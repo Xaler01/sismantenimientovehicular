@@ -33,22 +33,11 @@
                                 <td>{{ $policia -> id }}</td>
                                 <td>{{ $policia -> name }}</td>
                                 <td>{{ $policia -> email }}</td>
-                                    @if ($policia-> cedula!= "")
-                                        <td>{{ $policia -> cedula }}</td>
-                                    @else
-                                        <td>No registrado</td>
-                                    @endif
-                                
+                                <td>{{ $policia -> cedula }}</td>
                                 <td>{{ $policia -> fecha_nacimiento }}</td>
-
-                                    @if ($policia-> fecha_nacimiento!= "")
-                                        <td>{{ $policia -> celular }}</td>
-                                    @else
-                                    <td>No registrado</td>
-                                    @endif
-                                
-                                <td>{{ $policia -> rango }}</td>
-                                <td>{{ $policia -> tipo_sangre }}</td>
+                                <td>{{ $policia -> celular }}</td>
+                                <td>{{ $policia -> rango -> nombre }}</td>
+                                <td>{{ $policia -> tipoSangre->nombre }}</td>
                                 <td>{{ $policia -> rol }}</td>                           
                                 <td>
                                 <a href="Editar-Policia/{{ $policia->id}}">
@@ -100,21 +89,21 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tipo_sangre">Tipo de sangre:</label>
-                                <select class="form-control" name="tipo_sangre" required=¨¨>
+                                <select class="form-control" name="tipo_sangre" id="tipo_sangre" required>
                                     <option value="">Seleccionar...</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                </select>                                
+                                    @foreach($tiposSangre as $tipoSangre)
+                                        <option value="{{ $tipoSangre->id }}">{{ $tipoSangre->nombre }}</option>
+                                    @endforeach
+                                </select>                            
                             </div> 
                             <div class="form-group">
                                 <label for="ciudad_nacimiento">Ciudad de nacimiento:</label>
-                                <input type= "text" class="form-control" name="ciudad_nacimiento" required=¨¨ oninput="this.value = this.value.toUpperCase()">
+                                <select class="form-control" name="ciudad_nacimiento" id="ciudad_nacimiento" required>
+                                    <option value="">Seleccionar...</option>
+                                    @foreach($ciudades as $ciudad)
+                                        <option value="{{ $ciudad->id }}">{{ $ciudad->nombre }}</option>
+                                    @endforeach
+                                </select>  
                             </div> 
                             <div class="form-group">
                                 <label for="celular">Celular:</label>
@@ -122,26 +111,12 @@
                             </div> 
                             <div class="form-group">
                                 <label for="rango">Rango:</label>
-                                <select class="form-control" name="rango" required=¨¨>
+                                <select class="form-control" name="rango" id="rango" required>
                                     <option value="">Seleccionar...</option>
-                                    <option value="Policia">Policía</option> 
-                                    <option value="CaboSegundo">Cabo Segundo</option>
-                                    <option value="CaboPrimero">Cabo Primero</option>
-                                    <option value="SargentoSegundo">Sargento Segundo</option>
-                                    <option value="SargentoPrimero">Sargento Primero</option>
-                                    <option value="SuboficialSegundo">Suboficial Segundo</option>
-                                    <option value="SuboficialPrimero">Suboficial Primero</option>
-                                    <option value="SuboficialMayor">Suboficial Mayor</option>
-                                    <option value="SubtenientedePolicía">Subteniente de Policía</option>
-                                    <option value="TenientedePolicía">Teniente de Policía</option>
-                                    <option value="CapitandePolicía">Capitán de Policía</option>
-                                    <option value="MayordePolicía">Mayor de Policía</option>
-                                    <option value="TenienteCoroneldePolicía">Teniente Coronel de Policía</option>
-                                    <option value="CoroneldePolicía">Coronel de Policía</option>
-                                    <option value="GeneraldeDistrito">General de Distrito</option>
-                                    <option value="GeneralInspector">General Inspector</option>
-                                    <option value="GeneralSuperior">General Superior</option>   
-                                </select>                                
+                                    @foreach($rangos as $rango)
+                                        <option value="{{ $rango->id }}">{{ $rango->nombre }}</option>
+                                    @endforeach
+                                </select>                                 
                             </div> 
                         </div>
                     </div>                    

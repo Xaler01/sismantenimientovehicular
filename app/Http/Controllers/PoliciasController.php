@@ -1,14 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Ciudades;
 use App\Models\Dependencias;
 use App\Models\Policias;
+use App\Models\TipoSangre;
+use App\Models\Rangos;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\PersonalSubcircuito; 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PoliciasController extends Controller
 {
@@ -16,25 +16,24 @@ class PoliciasController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"){
-
+        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
             return redirect('Inicio');
-
         }
 
         $dependencias = Dependencias::all();
+        $tiposSangre = TipoSangre::all();
+        $ciudades = Ciudades::all();
+        $rangos = Rangos::all();
 
-        $policias = Policias::where('estado', 'activo')->get();
+        $policias = Policias::where('estado_id', 1)->get();
 
-        return view('modulos.Policias', compact('dependencias','policias'));
-        /**
-        return view('modulos.Policias')-> with('dependencias', $dependencias);
-        */   
+        return view('modulos.Policias', compact('dependencias', 'policias', 'tiposSangre', 'ciudades', 'rangos'));
     }
 
     /**
@@ -42,42 +41,36 @@ class PoliciasController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = request()-> validate([
+        $datos = $request->validate([
             'name' => ['required'],
-            'email' => ['required','string','email','unique:users'],
-            'password' => ['required','string','min:3'],
+            'email' => ['required', 'string', 'email', 'unique:users'],
+            'password' => ['required', 'string', 'min:3'],
             'cedula' => ['required', 'min:10'],
             'fecha_nacimiento' => ['required', 'date'],
             'tipo_sangre' => ['required'],
             'ciudad_nacimiento' => ['required'],
             'celular' => ['required', 'min:10'],
             'rango' => ['required']
-            /**,
-            'id_dependencia' => ['required']    */
-
         ]);
-        
+
         Policias::create([
             'name' => $datos['name'],
             'email' => $datos['email'],
             'password' => Hash::make($datos['password']),
             'cedula' => $datos['cedula'],
             'fecha_nacimiento' => $datos['fecha_nacimiento'],
-            'tipo_sangre' => $datos['tipo_sangre'],
-            'ciudad_nacimiento' => $datos['ciudad_nacimiento'],
+            'tipo_sangre_id' => $datos['tipo_sangre'],
+            'ciudad_nacimiento_id' => $datos['ciudad_nacimiento'],
             'celular' => $datos['celular'],
-            'rango' => $datos['rango'],
-            /**'id_dependencia' => $datos['id_dependencia'],*/
-            'rol' => 'Policia'
+            'rango_id' => $datos['rango'],
+            'rol' => 'Policia',
+            'estado_id' => 1 // Establece el estado inicial del policía
         ]);
 
-          return redirect('Policias')->with('registrado', 'Si');
-          /**$policias = new Policias(); */
-        
+        return redirect('Policias')->with('registrado', 'Si');
     }
 
-    
-        /**
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
@@ -89,9 +82,14 @@ class PoliciasController extends Controller
 
         // Obtener el policía por ID
         $policia = Policias::find($id);
+        $tiposSangre = TipoSangre::all(); // Agrega esta línea para obtener los tipos de sangre
+        $ciudades = Ciudades::all();
+        $rangos = Rangos::all();
 
         // Pasar los datos a la vista
-        return view('modulos.Editar-Policia')->with('policia', $policia);
+        //return view('modulos.Editar-Policia')->with('policia', $policia);
+    //}
+        return view('modulos.Editar-Policia', compact('policia', 'tiposSangre','ciudades', 'rangos'));
     }
 
     /**
@@ -100,30 +98,29 @@ class PoliciasController extends Controller
     public function update(Request $request, $id)
     {
         // Validar los datos actualizados del formulario
-        //$datos = $request->validate([
-        $this->validate($request, [
+        $datos = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'cedula' => 'required|min:10',
+            'cedula' => 'required|max:10',
             'fecha_nacimiento' => 'required|date',
             'tipo_sangre' => 'required',
             'ciudad_nacimiento' => 'required',
-            'celular' => 'required|min:10',
+            'celular' => 'required|between:10,13',
             'rango' => 'required'
         ]);
 
         // Buscar el policía por ID
-        $policia = User::find($id);
+        $policia = Policias::find($id);
 
         // Actualizar los campos con los nuevos valores
-        $policia->name = $request['name'];
-        $policia->email = $request['email'];
-        $policia->cedula = $request['cedula'];
-        $policia->fecha_nacimiento = $request['fecha_nacimiento'];
-        $policia->tipo_sangre = $request['tipo_sangre'];
-        $policia->ciudad_nacimiento = $request['ciudad_nacimiento'];
-        $policia->celular = $request['celular'];
-        $policia->rango = $request['rango'];
+        $policia->name = $datos['name'];
+        $policia->email = $datos['email'];
+        $policia->cedula = $datos['cedula'];
+        $policia->fecha_nacimiento = $datos['fecha_nacimiento'];
+        $policia->tipo_sangre_id = $datos['tipo_sangre'];
+        $policia->ciudad_nacimiento_id = $datos['ciudad_nacimiento'];
+        $policia->celular = $datos['celular'];
+        $policia->rango_id = $datos['rango'];
         $policia->save();
 
         // Redirigir a la página de visualización de policías
@@ -133,14 +130,14 @@ class PoliciasController extends Controller
     public function destroy($id)
     {
         // Buscar el usuario por su ID
-        $policia = User::find($id);
+        $policia = Policias::find($id);
 
         if ($policia) {
             // Cambiar el estado del usuario a "Eliminado"
-            $policia->estado = 'Eliminado';
+            $policia->estado_id = 0; // ID del estado "Eliminado"
             $policia->save();
         }
+
         return redirect('Policias')->with('eliminadoP', true);
-      
     }
 }

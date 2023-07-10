@@ -13,7 +13,7 @@ class Dependencias extends Model
      
 
     protected $fillable = [ 
-        'provincia',
+        'provincia_id',
         'num_distritos',
         'parroquia',
         'cod_distrito',
@@ -24,9 +24,14 @@ class Dependencias extends Model
         'num_subcircuitos',
         'cod_subcircuito',
         'nombre_subcircuito',
-        'estado'     
+        'estado_id'     
     ];
 
     public $timestamp = false;
+
+    public function provincia()
+    {
+        return $this->belongsTo(Provincias::class, 'provincia_id');
+    }
     
 }

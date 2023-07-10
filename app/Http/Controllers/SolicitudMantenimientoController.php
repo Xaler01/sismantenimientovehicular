@@ -24,7 +24,8 @@ class SolicitudMantenimientoController extends Controller
         if(auth()->user()->rol == "Policia" && auth()-> user()->rol !="Encargado"){
             return redirect('Inicio');
         }
-        $policia = DB::select('select * from users where rol = "Policia" and estado ="Activo" ');
+        //$policia = DB::select('select * from users where rol = "Policia" and estado ="Activo" ');
+        $policia = Policias::where('estado_id')->get();
         $vehiculo = Vehiculos::all();
         /**$solicitud = DB::select('select * from solicitudes_mantenimiento where user_id = '.$id);*/
         $tiposMantenimiento = TipoMantenimiento::all();

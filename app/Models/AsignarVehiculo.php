@@ -25,7 +25,7 @@ class AsignarVehiculo extends Model
     }
     public function policia()
     {
-        return $this->belongsTo(Policias::class, 'user1_id');
+        return $this->belongsTo(Policias::class, 'user_id');
     }
     
 }
