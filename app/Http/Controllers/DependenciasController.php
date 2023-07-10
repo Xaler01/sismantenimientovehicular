@@ -105,15 +105,21 @@ class DependenciasController extends Controller
         if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"&& auth()-> user()->rol !="Policia") {
             return redirect('Inicio');
         }
-
+        $provincias = Provincias::all();
+        $ciudades = Ciudades::all();
+        $parroquias = Parroquias::all();
+        $numDistritos = Parroquias::count();
         $dependencia = Dependencias::find($id);
-        return view('modulos.Editar-Dependencia')->with('dependencia', $dependencia);
+        return view('modulos.Editar-Dependencia', compact('dependencias', 'provincias', 'parroquias', 'numDistritos','ciudades')) -> with('dependencias', $dependencias);
+        //return view('modulos.Editar-Dependencia')->with('dependencia', $dependencia);
+
     }
 
 
 
     public function update(Request $request, $id)
     {
+         /**
         $request->validate([
             'provincia' => 'required',
             'num_distritos' => 'required|integer',
@@ -128,6 +134,22 @@ class DependenciasController extends Controller
             'nombre_subcircuito' => 'required',
         ]);
 
+       **/
+          $datos = $request->validate([
+            'provincia' => 'required',
+            'num_distritos' => 'required',
+            'parroquia' => 'required',
+            'cod_distrito' => 'required',
+            'nombre_distrito' => 'required',
+            'num_circuitos' => 'required',
+            'cod_circuito' => 'required',
+            'nombre_circuito' => 'required',
+            'num_subcircuitos' => 'required',
+            'cod_subcircuito' => 'required',
+            'nombre_subcircuito' => 'required|unique:dependencias',
+        ]);
+        
+        /**
         $dependencia = Dependencias::find($id);
         $dependencia->provincia_id = $request->input('provincia');
         $dependencia->num_distritos = $request->input('num_distritos');
@@ -143,13 +165,28 @@ class DependenciasController extends Controller
         $dependencia->save();
 
         return redirect('Dependencias')->with('actualizadoDep', 'Si');
+
+         */
+
+        $dependencia = Dependencias::find($id);
+        $dependencia->provincia_id = $datos['provincia'];
+        $dependencia->num_distritos = $datos['num_distritos']; // Corregido
+        $dependencia->parroquia_id = $datos['parroquia'];
+        $dependencia->cod_distrito = $datos['cod_distrito'];
+        $dependencia->nombre_distrito = $datos['nombre_distrito'];
+        $dependencia->num_circuitos = $datos['num_circuitos']; // Corregido
+        $dependencia->cod_circuito = $datos['cod_circuito'];
+        $dependencia->nombre_circuito = $datos['nombre_circuito'];
+        $dependencia->num_subcircuitos = $datos['num_subcircuitos'];
+        $dependencia->cod_subcircuito = $datos['cod_subcircuito'];
+        $dependencia->nombre_subcircuito = $datos['nombre_subcircuito'];
+        $dependencia->estado_id = 1; 
+        $dependencia->save();
+
+        return redirect('Dependencias')->with('actualizadoDep', 'Si');
+
     }
-
-
-
-
-
-    
+ 
     /**
      * Remove the specified resource from storage.
      */

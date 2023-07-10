@@ -15,7 +15,7 @@ class Dependencias extends Model
     protected $fillable = [ 
         'provincia_id',
         'num_distritos',
-        'parroquia',
+        'parroquia_id',
         'cod_distrito',
         'nombre_distrito',
         'num_circuitos',
@@ -32,6 +32,11 @@ class Dependencias extends Model
     public function provincia()
     {
         return $this->belongsTo(Provincias::class, 'provincia_id');
+    }
+
+        public function parroquia()
+    {
+        return $this->belongsTo(Parroquia::class, 'parroquia_id');
     }
     
 }
