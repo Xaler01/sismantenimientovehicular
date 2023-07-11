@@ -41,9 +41,9 @@ CREATE TABLE vehiculos (
 -- Crear la tabla "dependencias" para gestionar las dependencias policiales
 CREATE TABLE dependencias (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  provincia VARCHAR(255),
+  provincia_id INT,
   num_distritos INT,
-  parroquia VARCHAR(255),
+  parroquia_id INT,
   cod_distrito VARCHAR(255),
   nombre_distrito VARCHAR(255),
   num_circuitos INT,
@@ -52,7 +52,34 @@ CREATE TABLE dependencias (
   num_subcircuitos INT,
   cod_subcircuito VARCHAR(255),
   nombre_subcircuito VARCHAR(255),
-  estado VARCHAR(15),
+  estado_ig VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (provincia_id) REFERENCES provincias(id),
+  FOREIGN KEY (parroquia_id) REFERENCES parroquias(id),
+  FOREIGN KEY (estado_id) REFERENCES estado(id)
+);
+
+-- Crear la tabla "provincias"
+CREATE TABLE provincias (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "parroquias"
+CREATE TABLE parroquias (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "estado"
+CREATE TABLE estado (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -36,7 +36,7 @@ class Dependencias extends Model
 
         public function parroquia()
     {
-        return $this->belongsTo(Parroquia::class, 'parroquia_id');
+        return $this->belongsTo(Parroquias::class, 'parroquia_id');
     }
     
 }

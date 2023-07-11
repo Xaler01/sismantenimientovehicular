@@ -35,7 +35,7 @@
                             <td>{{$dependencia->id}}</td>
                             <td>{{$dependencia->provincia->nombre}}</td>
                             <td>{{$dependencia->num_distritos}}</td>
-                            <td>{{$dependencia->parroquia}}</td>
+                            <td>{{$dependencia->parroquia->nombre}}</td>
                             <td>{{$dependencia->cod_distrito}}</td>
 
                             <td>{{$dependencia->nombre_distrito}}</td>
@@ -82,19 +82,14 @@
                                     <label for="num_distritos">No. Distritos:</label>
                                     <input type="number" class="form-control" name="num_distritos" id="num_distritos">
                                 </div>
-
-                                
-
-
                                 <div class="form-group" id="parroquia-group">
-                              
                                     <label for="parroquia">Parroquia:</label>
-                  <select class="form-control" name="parroquia" id="parroquia" required>
-                      <option value="">Seleccionar...</option>
-                      @foreach($parroquias as $parroquia)
-                          <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
-                      @endforeach
-                  </select>
+                                    <select class="form-control" name="parroquia" id="parroquia" required>
+                                        <option value="">Seleccionar...</option>
+                                        @foreach($parroquias as $parroquia)
+                                            <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="cod_distrito">Cod. Distrito:</label>
@@ -145,5 +140,7 @@
         </div>            
     </div>
 </div>
+
+
 
 @endsection

@@ -16,7 +16,7 @@
                             <th>ID</th> 
                             <th>Nombre y Apellido</th>
                             <th>Email</th> 
-                            <th>Cedula</th>
+                            <th>Cédula</th>
                             <th>Fecha de Nacimiento</th>
                             <th>Celular</th> 
                             <th>Rango</th>
@@ -79,7 +79,7 @@
                             </div> 
                             <div class="form-group">
                                 <label for="cedula">Cedula:</label>
-                                <input type= "text" class="form-control" name="cedula" required=¨¨>
+                                <input type= "text" class="form-control" name="cedula" required pattern="[0-9]{0,10}">
                             </div> 
                             <div class="form-group">
                                 <label for="fecha_nacimiento">Fecha de nacimiento:</label>

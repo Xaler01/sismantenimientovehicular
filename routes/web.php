@@ -40,16 +40,16 @@ Route::get('Editar-Policia/{id}', [PoliciasController::class,'edit']);
 Route::put('Actualizar-Policia/{id}', [PoliciasController::class,'update']);
 Route::get('Eliminar-Policia/{id}',[PoliciasController::class, 'destroy']);
 
-Route::get('PersonalSubcircuito', [PersonalSubcircuitoController::class, 'index']);
-Route::get('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'edit']);
-Route::put('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'update'])->name('PersonalSubcircuito.update');
-
 Route::get('Vehiculos', [VehiculosController::class, 'index']);
 Route::get('Crear-Vehiculo', [VehiculosController::class, 'create']);
 Route::post('Crear-Vehiculo', [VehiculosController::class, 'store']);
 Route::get('Editar-Vehiculo/{id}', [VehiculosController::class,'edit']);
 Route::put('Actualizar-Vehiculo/{id}', [VehiculosController::class,'update']);
 Route::get('EliminarVehiculo/{id}',[VehiculosController::class, 'destroy']); 
+
+Route::get('PersonalSubcircuito', [PersonalSubcircuitoController::class, 'index']);
+Route::get('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'edit']);
+Route::put('PersonalSubcircuito/{id}', [PersonalSubcircuitoController::class, 'update'])->name('PersonalSubcircuito.update');
 
 Route::get('VehiculoSubcircuito', [VehiculoSubcircuitoController::class, 'index']);
 Route::get('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'edit']);

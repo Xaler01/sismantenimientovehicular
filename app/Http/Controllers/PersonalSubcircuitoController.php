@@ -21,7 +21,8 @@ class PersonalSubcircuitoController extends Controller
             return redirect('Inicio');
 
         }
-        $policias = Policias::all();
+        $policias = Policias::where('estado_id', 1)
+                    ->where('rol', 'Policia')->get();
         $dependencias = Dependencias::all();
 
         return view('modulos.PersonalSubcircuito', compact('policias', 'dependencias'));
@@ -30,6 +31,7 @@ class PersonalSubcircuitoController extends Controller
     public function edit($id)
     {
         $policia = Policias::findOrFail($id);
+        $dependencias = Dependencias::where('estado',1);
         $personalSubcircuito = PersonalSubcircuito::where('user_id', $policia->id)->first();
         $dependencias = Dependencias::all();
 

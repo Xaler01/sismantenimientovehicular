@@ -10,24 +10,7 @@ class Policias extends Model
     use HasFactory;
 
     protected $table = 'users';
-    /**
-    protected $fillable = [
 
-        'name',
-        'email',
-        'password',
-        'cedula',
-        'fecha_nacimiento',
-        'tipo_sangre',
-        'ciudad_nacimiento',
-        'celular',
-        'rango',
-        'rol',
-        'dependencia_id',
-        'estado'
-
-    ];
-     */
     protected $fillable = [
 
         'name',

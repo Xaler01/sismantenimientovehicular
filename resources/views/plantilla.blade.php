@@ -398,34 +398,8 @@
     });
 </script>
 
-<script>
-      document.getElementById('provincia').addEventListener('change', function() {
-          var numDistritosInput = document.getElementById('num_distritos');
-          var parroquiaGroup = document.getElementById('parroquia-group');
-          var parroquiaInput = document.querySelector('#parroquia-group input[name="parroquia"]');
-          var selectedProvincia = this.value;
-          if (selectedProvincia === '11') {
-              numDistritosInput.value = '{{ $numDistritos }}';
-              numDistritosInput.disabled = true;
-              parroquiaGroup.innerHTML = `
-                  <label for="parroquia">Parroquia:</label>
-                  <select class="form-control" name="parroquia" id="parroquia" required>
-                      <option value="">Seleccionar...</option>
-                      @foreach($parroquias as $parroquia)
-                          <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
-                      @endforeach
-                  </select>
-              `;
-          } else {
-              numDistritosInput.value = '';
-              numDistritosInput.disabled = false;
-              parroquiaGroup.innerHTML = `
-                  <label for="parroquia">Parroquia:</label>
-                  <input type="text" class="form-control" name="parroquia" required>
-              `;
-          }
-      });
-  </script>
+
+
 
 
 
