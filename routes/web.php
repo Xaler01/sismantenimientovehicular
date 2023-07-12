@@ -9,6 +9,7 @@ use App\Http\Controllers\PersonalSubcircuitoController;
 use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
+use App\Http\Controllers\ReclamosController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Dependencias;
@@ -27,6 +28,10 @@ Route::get('/Ingresar', function () {
 Auth::routes();
 
 Route::get('Inicio', [InicioController::class, 'index']); 
+
+Route::get('Seleccionar', [ReclamosController::class, 'index']);
+Route::get('Crear-Reclamo', [ReclamosController::class, 'create']);
+Route::post('Crear-Reclamo', [ReclamosController::class, 'store']);
 
 Route::get('Dependencias', [DependenciasController::class, 'index']);
 Route::post('Dependencias', [DependenciasController::class, 'store']);
@@ -58,7 +63,6 @@ Route::put('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'u
 Route::get('AsignarVehiculo', [AsignarVehiculoController::class, 'index'])->name('asignarvehiculo');
 Route::get('AsignarVehiculoPersonal/{id}', [AsignarVehiculoController::class, 'edit']);
 Route::post('PersonalVehiculo', [AsignarVehiculoController::class, 'update'])->name('PersonalVehiculo.update');
-
 
 Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
