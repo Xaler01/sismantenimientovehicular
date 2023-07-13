@@ -57,6 +57,9 @@
 <div id="CrearPolicia" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header text-center">
+                <h3 class="modal-title">Nuevo personal</h3>
+            </div>
             <form method="post">
                 @csrf
                 <div class="modal-body">
@@ -87,6 +90,7 @@
                             </div> 
                         </div>
                         <div class="col-md-6">
+                            
                             <div class="form-group">
                                 <label for="tipo_sangre">Tipo de sangre:</label>
                                 <select class="form-control" name="tipo_sangre" id="tipo_sangre" required>

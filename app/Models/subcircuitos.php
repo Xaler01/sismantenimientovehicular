@@ -13,10 +13,13 @@ class subcircuitos extends Model
     protected $fillable = [
         'circuito_id',
         'nombre',
+        'estado',
     ];
 
     public function circuito()
     {
         return $this->belongsTo(circuitos::class, 'circuito_id');
     }
+
+    
 }

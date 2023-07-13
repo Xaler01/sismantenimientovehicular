@@ -9,7 +9,9 @@ use App\Http\Controllers\PersonalSubcircuitoController;
 use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
+use App\Http\Controllers\ComentariosSugerenciasController;
 use App\Http\Controllers\ReclamosController;
+use App\Http\Controllers\SubcircuitosController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Dependencias;
@@ -25,11 +27,16 @@ Route::get('/Ingresar', function () {
 });
 
 
+
+
 Auth::routes();
 
 Route::get('Inicio', [InicioController::class, 'index']); 
 
-Route::get('Seleccionar', [ReclamosController::class, 'index']);
+
+Route::get('Reclamos', [ReclamosController::class, 'index']);
+Route::get('/get-circuito/{subcircuitoId}', [ReclamosController::class, 'getCircuito']);
+
 Route::get('Crear-Reclamo', [ReclamosController::class, 'create']);
 Route::post('Crear-Reclamo', [ReclamosController::class, 'store']);
 
@@ -66,3 +73,5 @@ Route::post('PersonalVehiculo', [AsignarVehiculoController::class, 'update'])->n
 
 Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
+
+Route::get('ComentariosSugerencias', [ComentariosSugerenciasController::class, 'index']);

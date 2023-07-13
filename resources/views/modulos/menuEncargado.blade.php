@@ -49,6 +49,12 @@
                     <span>Solicitud de mantenimiento</span> 
                 </a>
             </li>
+            <li>
+                <a href="{{ url('ComentariosSugerencias/') }}">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <span>Comentarios y Sugerencias</span> 
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

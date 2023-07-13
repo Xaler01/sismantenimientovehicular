@@ -19,6 +19,8 @@ class reclamos extends Model
         'nombres'
     ];
 
+    
+
     public function circuito()
     {
         return $this->belongsTo(circuitos::class, 'circuito_id');
@@ -32,5 +34,9 @@ class reclamos extends Model
     public function tiporeclamo()
     {
         return $this->belongsTo(Tiporeclamo::class, 'tiporeclamo_id');
+    }
+    public function dependencia()
+    {
+        return $this->belongsTo(Dependencias::class, 'subcircuito_id');
     }
 }

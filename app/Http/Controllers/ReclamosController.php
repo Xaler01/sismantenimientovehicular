@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\circuitos;
+use App\Models\Dependencias;
 use App\Models\reclamos;
 use App\Models\subcircuitos;
 use App\Models\Tiporeclamo;
@@ -10,61 +11,102 @@ use Illuminate\Http\Request;
 
 class ReclamosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $circuito= circuitos::where('estado', 'activo');
-        $subcircuito = subcircuitos::where('estado', 'activo');
+        $circuito = circuitos::where('estado', 'Activo')->get();
+        $SubcircuitosDisp = subcircuitos::where('estado', 'Activo')->get();
+        $dependenciaReclamo = Dependencias::where('estado_id','1')->get();
+        // Verificar si se ha seleccionado un subcircuito
+        if (request()->has('subcircuito')) {
+            $subcircuitoId = request()->input('subcircuito');
+            $subcircuito = subcircuitos::find($subcircuitoId);
+            
+        }
+
         $tiporeclamo = Tiporeclamo::all();
-
         $reclamo = reclamos::all();
-        return view ('modulos.Seleccionar', compact('circuito','subcircuito','tiporeclamo','reclamo'));
 
+        return view('modulos.Reclamos', compact('circuito', 'SubcircuitosDisp', 'dependenciaReclamo','tiporeclamo', 'reclamo'));
     }
+ 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        $circuito= circuitos::where('estado', 'activo');
-        $subcircuito = subcircuitos::where('estado', 'activo');
+        $circuito = circuitos::where('estado', 'Activo')->get(); // Obtener los circuitos activos
+        $subcircuito = subcircuitos::where('estado', 'Activo')->get(); // Obtener los subcircuitos activos
         $tiporeclamo = Tiporeclamo::all();
 
-        $reclamo = reclamos::all();
-        return view ('Crear-Reclamo', compact('circuito','subcircuito','tiporeclamo','reclamo'));
-
+        return view('Crear-Reclamo', compact('circuito', 'subcircuito', 'tiporeclamo'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function store(Request $request)
+{
+    $datos = $request->validate([
+        'subcircuito' => ['required'],
+        'tiporeclamo' => ['required'],
+        'detalle' => ['required'],
+        'apellidos' => ['required'],
+        'nombres' => ['required']
+    ]);
+
+    $subcircuitoId = $datos['subcircuito'];
+    $subcircuito = Dependencias::find($subcircuitoId);
+
+    if ($subcircuito) {
+        $circuitoId = $subcircuito->circuito_id;
+    } else {
+        $circuitoId = null;
+    }
+
+    Reclamos::create([
+        'circuito_id' => $subcircuitoId,
+        'subcircuito_id' => $subcircuitoId,
+        'tipo_reclamo_id' => $datos['tiporeclamo'],
+        'detalle' => $datos['detalle'],
+        'contacto' => $request->input('contacto'),
+        'apellidos' => $request->input('apellidos'),
+        'nombres' => $request->input('nombres')
+    ]);
+
+    return redirect('/')->with('reclamo', 'Si');
+    
+}
+
+
+    /** 
     public function store(Request $request)
     {
-        $datos = request()-> validate([
-            'circuito'=> ['required'],
+        $datos = $request->validate([
             'subcircuito' => ['required'],
             'tiporeclamo' => ['required'],
-            'detalle'=> ['required'],
-            'apellidos'=> ['required'],
-            'nombres'=> ['required']
+            'detalle' => ['required'],
+            'apellidos' => ['required'],
+            'nombres' => ['required']
         ]);
 
+        $subcircuitoId = $datos['subcircuito'];
+        $subcircuito = subcircuitos::find($subcircuitoId);
+
+        if ($subcircuito) {
+            $circuitoId = $subcircuito->circuito_id;
+        } else {
+            $circuitoId = null;
+        }
+
         reclamos::create([
-            'circuito_id' => $datos['circuito'],
-            'subcircuito_id' => $datos['subcircuito'],
+            'circuito_id' => $circuitoId,
+            'subcircuito_id' => $subcircuitoId,
             'tipo_reclamo_id' => $datos['tiporeclamo'],
             'detalle' => $datos['detalle'],
             'contacto' => $request->input('contacto'),
             'apellidos' => $request->input('apellidos'),
             'nombres' => $request->input('nombres')
-            
         ]);
 
-        return redirect('modulos.Seleccionar')->with('agregado', 'Si');
+        return redirect('Seleccionar')->with('agregado', 'Si');
     }
+    */
 
     /**
      * Display the specified resource.

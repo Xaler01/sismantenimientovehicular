@@ -48,18 +48,19 @@
 <!-- ./wrapper -->
 
 @if(Auth::user())
-<div class="wrapper">
-  @include('modulos.cabecera')
-  @if(auth()->user()->rol == "Encargado")
-    @include('modulos.menuEncargado')
+  <div class="wrapper">
+    @include('modulos.cabecera')
+    @if(auth()->user()->rol == "Encargado")
+      @include('modulos.menuEncargado')
 
-  @elseif (auth()->user()->rol == "Policia")
-    @include('modulos.menuPolicia')
-  @endif
+    @elseif (auth()->user()->rol == "Policia")
+      @include('modulos.menuPolicia')
+    @endif
 
-  @yield('content')
-</div>
+    @yield('content')
+  </div>
 @else
+  
   @yield('contenido')
 @endif
 <!-- jQuery 3 -->
@@ -187,6 +188,19 @@
     }, 500);   
   </script>  
 
+@elseif(session('reclamo') == 'Si')
+  <script>
+    setTimeout(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Su mensaje ha sido enviado correctamente. Gracias...',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }, 500);   
+  </script>  
+  
+
  
 
   @elseif(session('actualizado'))
@@ -238,7 +252,9 @@
             timer: 2000
         });
     }, 500);   
-  </script>     
+  </script>  
+    
+   
 
   @elseif(session('eliminadoDep'))   
   <script>
