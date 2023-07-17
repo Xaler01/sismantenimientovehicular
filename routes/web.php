@@ -9,6 +9,8 @@ use App\Http\Controllers\PersonalSubcircuitoController;
 use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
+use App\Http\Controllers\CircuitosController;
+use App\Http\Controllers\SubcircuitosController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Dependencias;
@@ -33,6 +35,9 @@ Route::post('Dependencias', [DependenciasController::class, 'store']);
 Route::get('Editar-Dependencia/{id}', [DependenciasController::class,'edit']);
 Route::put('Actualizar-Dependencia/{id}', [DependenciasController::class, 'update']);
 Route::get('Eliminar-Dependencia/{id}', [DependenciasController::class,'destroy']);
+
+Route::get('Circuitos', [CircuitosController::class, 'index']);
+Route::get('Subcircuitos', [SubcircuitosController::class, 'index']);
 
 Route::get('Policias', [PoliciasController::class, 'index']); 
 Route::post('Policias', [PoliciasController::class,'store']);

@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Parroquias extends Model
 {
     use HasFactory;
-    protected $table = 'parroquias';
+    protected $table = 'parroquia';
 
     protected $fillable = [
-        'nombre'
+        'nombre',
+        'provincia_id'
     ];
+
+    public function provincias()
+    {
+        return $this->belongsTo(Provincias::class, 'provincia_id');
+    }
 }
 

@@ -19,10 +19,18 @@
                     <span>Vehiculos</span> 
                 </a>
             </li>
+    
             <li>
                 <a href="{{ url('Dependencias') }}">
                     <i class="fa fa-list"></i>
                     <span>Dependencias</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('Subcircuitos') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Subcircuitos</span>
                 </a>
             </li>
             <li>

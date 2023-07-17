@@ -5,7 +5,7 @@
         <h>Mantenimiento Vehicular</h>
     </div>
     <div class="login-box-body">
-        <p class="login-box-msg">Ingresar al sistema</p>
+        <a href="{{ url('/') }}"><p class="login-box-msg">Ingresar al sistema</p></a>
         <form method="post" action="{{ route('login') }}">
         @csrf
             <div class="form-group has-feedback">

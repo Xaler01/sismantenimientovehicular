@@ -18,7 +18,7 @@ class DependenciasController extends Controller
     }
     /**
      * Display a listing of the resource.
-     */
+     
     public function index()
     {
         if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"){
@@ -29,13 +29,58 @@ class DependenciasController extends Controller
         $provincias = Provincias::where('estado','Activo')->get();
         $ciudades = Ciudades::all();
         $parroquias = Parroquias::all();
-       
-        /**$dependencias = Dependencias::all();*/
         $dependencias = Dependencias::where('estado_id',1)->get();
-        //$dependencias = DB::select('select * from dependencias where estado = "Activo"');
         return view('modulos.Dependencias', compact('dependencias', 'provincias', 'parroquias','ciudades')) -> with('dependencias', $dependencias);
     }
+    */
+    
+    public function getParroquiasByProvincia($provinciaId)
+    {
+        return Parroquias::where('provincia_id', $provinciaId)->get();
+    }
 
+    public function index()
+    {
+        if(auth()-> user()->rol !="Administrador" && auth()-> user()->rol !="Encargado"){
+                
+            return redirect('Inicio');
+        }
+        /*
+        $provincias = Provincias::where('estado', 'Activo')->get();
+        $ciudades = Ciudades::all();
+        $parroquias = Parroquias::all();
+
+        $dependencias = Dependencias::where('estado_id', 1)->get();
+
+        $provinciaIdSeleccionada = request('provincia_id', null);
+        $parroquiasSeleccionadas = null;
+
+        if ($provinciaIdSeleccionada) {
+            $parroquiasSeleccionadas = $this->getParroquiasByProvincia($provinciaIdSeleccionada);
+        }
+   
+        foreach ($Dependencia as $provincia) {
+            $provincia->num_parroquias = $provincia->parroquias->count();
+        }
+        $dependencia = Dependencias::all();
+        $provincias = Provincias::where('estado', 'Activo')->get();
+        $parroquias = Parroquias::where('provincia_id', $provincias->id)->get();
+        return view('modulos.Dependencias', compact('dependencia','provincias', 'parroquias'));
+*/
+
+        $dependencia = Dependencias::all();
+        $provincias = Provincias::where('estado', 'Activo')->get();
+        
+
+        // Obtener los IDs de las provincias en estado activo
+        $provinciasIds = $provincias->pluck('id')->toArray();
+
+        // Obtener las parroquias que pertenecen a las provincias activas
+        $parroquias = Parroquias::whereIn('provincia_id', $provinciasIds)->get();
+
+        return view('modulos.Dependencias', compact('dependencia', 'provincias', 'parroquias'));
+
+    }
     public function store(Request $request)
     {
         $datos = $request->validate([

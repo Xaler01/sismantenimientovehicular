@@ -90,7 +90,7 @@
                                     <select class="form-control" name="parroquia" id="parroquia" required>
                                         <option value="">Seleccionar...</option>
                                         @foreach($parroquias as $parroquia)
-                                            <option value="{{ $parroquia->id }}" class="parroquia-{{ $parroquia->provincia_id }}">{{ $parroquia->nombre }}</option>
+                                            <option value="{{ $parroquia->id }}">{{ $parroquia->nombre }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -143,29 +143,5 @@
         </div>            
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Obtener elementos del DOM
-        var $provinciaSelect = $('#provincia');
-        var $parroquiaSelect = $('#parroquia');
-
-        // Manejar evento de cambio en la selección de la provincia
-        $provinciaSelect.on('change', function() {
-            // Obtener el ID de la provincia seleccionada
-            var provinciaId = $(this).val();
-
-            // Ocultar todas las opciones de parroquia
-            $parroquiaSelect.find('option').hide();
-
-            // Mostrar solo las parroquias correspondientes a la provincia seleccionada
-            $('.parroquia-' + provinciaId).show();
-
-            // Restablecer selección de parroquia
-            $parroquiaSelect.val('').trigger('change');
-        });
-    });
-</script>
 
 @endsection

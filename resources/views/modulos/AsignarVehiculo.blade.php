@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>Asignar Vehículo</h1>
+        <h3>Asignar Vehículo</h3>
     </section>
     <section class="content">
         <div class="box">

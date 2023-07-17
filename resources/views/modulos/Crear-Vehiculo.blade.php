@@ -69,7 +69,7 @@
                                 <input type="number" class="form-control" name="kilometraje" required>
                             </div>
                             <div class="form-group">
-                                <label for="cilindraje">Cilindraje:</label>
+                                <label for="cilindraje">Cilindraje (cc):</label>
                                 <input type="number" class="form-control" name="cilindraje" step="any" required>
                             </div>
                             <div class="form-group">
