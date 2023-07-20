@@ -19,6 +19,12 @@
                     <span>Vehiculos</span> 
                 </a>
             </li>
+            <li>
+                <a href="{{ url('Parroquias') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Parroquias</span>
+                </a>
+            </li>
     
             <li>
                 <a href="{{ url('Dependencias') }}">

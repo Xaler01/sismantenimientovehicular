@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Circuitos;
+use App\Models\Distritos;
+use App\Models\Parroquias;
 use App\Models\Provincias;
+use App\Models\Subcircuitos;
 use Illuminate\Http\Request;
 
 class SubcircuitosController extends Controller
@@ -13,21 +17,20 @@ class SubcircuitosController extends Controller
     }
 
     public function index()
-{
-    if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
-        return redirect('Inicio');
+    {
+        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
+            return redirect('Inicio');
+        }
+
+        $circuitos = Circuitos::where('estado', 'Activo')->get();
+        $parroquias = Parroquias::where('estado', 'Activo')->get();
+        $distritos = Distritos::where('estado', 'Activo')->get();
+        //$numcircuitos = Distritos::where('estado', 'Activo')->withCount('circuitos')->get();
+        $subcircuitos = Subcircuitos::where('estado', 'Activo')->get();
+
+
+        return view('modulos.Subcircuitos', compact('circuitos','parroquias','distritos','subcircuitos'));
     }
-
-    $provincias = Provincias::where('estado', 'Activo')->with(['parroquias' => function ($query) {
-        $query->where('estado', 'Activo');
-    }])->get();
-
-    foreach ($provincias as $provincia) {
-        $provincia->num_parroquias = $provincia->parroquias->count();
-    }
-
-    return view('modulos.Subcircuitos', compact('provincias'));
-}
 
     /**
      * Display a listing of the resource.

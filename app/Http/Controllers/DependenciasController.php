@@ -45,32 +45,11 @@ class DependenciasController extends Controller
                 
             return redirect('Inicio');
         }
-        /*
-        $provincias = Provincias::where('estado', 'Activo')->get();
-        $ciudades = Ciudades::all();
-        $parroquias = Parroquias::all();
 
-        $dependencias = Dependencias::where('estado_id', 1)->get();
-
-        $provinciaIdSeleccionada = request('provincia_id', null);
-        $parroquiasSeleccionadas = null;
-
-        if ($provinciaIdSeleccionada) {
-            $parroquiasSeleccionadas = $this->getParroquiasByProvincia($provinciaIdSeleccionada);
-        }
-   
-        foreach ($Dependencia as $provincia) {
-            $provincia->num_parroquias = $provincia->parroquias->count();
-        }
-        $dependencia = Dependencias::all();
-        $provincias = Provincias::where('estado', 'Activo')->get();
-        $parroquias = Parroquias::where('provincia_id', $provincias->id)->get();
-        return view('modulos.Dependencias', compact('dependencia','provincias', 'parroquias'));
-*/
 
         $dependencia = Dependencias::all();
         $provincias = Provincias::where('estado', 'Activo')->get();
-        
+
 
         // Obtener los IDs de las provincias en estado activo
         $provinciasIds = $provincias->pluck('id')->toArray();
@@ -128,6 +107,8 @@ class DependenciasController extends Controller
         //return view('modulos.Editar-Dependencia')->with('dependencia', $dependencia);
 
     }
+
+    
 
     public function update(Request $request, $id)
     {

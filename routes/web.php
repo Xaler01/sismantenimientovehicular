@@ -10,6 +10,7 @@ use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
 use App\Http\Controllers\CircuitosController;
+use App\Http\Controllers\ParroquiasController;
 use App\Http\Controllers\SubcircuitosController;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,12 @@ Route::get('/Ingresar', function () {
 Auth::routes();
 
 Route::get('Inicio', [InicioController::class, 'index']); 
+
+Route::get('Parroquias', [ParroquiasController::class, 'index'])->name('parroquias.index');
+Route::post('Parroquias', [ParroquiasController::class, 'store'])->name('parroquias.store');
+Route::get('Editar-Parroquias/{id}', [ParroquiasController::class, 'edit'])->name('parroquias.edit');
+Route::put('Actualizar-Parroquia/{id}', [ParroquiasController::class, 'update'])->name('parroquias.update');
+Route::get('Eliminar-Parroquia/{id}', [ParroquiasController::class,'destroy']);
 
 Route::get('Dependencias', [DependenciasController::class, 'index']);
 Route::post('Dependencias', [DependenciasController::class, 'store']);

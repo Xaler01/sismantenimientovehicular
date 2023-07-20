@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Parroquias extends Model
+class Distritos extends Model
 {
     use HasFactory;
-    protected $table = 'parroquia';
+    protected $table = 'distrito';
 
     protected $fillable = [
-        'provincia_id',
+        'codigo',
         'nombre',
         'estado'
     ];
 
-    public function provincias()
-    {
-        return $this->belongsTo(Provincias::class, 'provincia_id');
-    }
 }
-

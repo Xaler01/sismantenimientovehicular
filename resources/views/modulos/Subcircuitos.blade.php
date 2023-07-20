@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Gestor de Dependencias</h3>
+        <h3>Gestor de Subcircuitos</h3>
     </section>
     <section class="content">
         <div class="box">
@@ -14,23 +14,25 @@
                     <thead>
                         <tr>                        
                             <th>ID</th> 
-                            <th>Provincia</th>
-                            <!--<th>Num.Parroquias</th>  -->
-                            <th>Distrito</th> 
-                            <th>Parroquias</th> 
+                            <th>Nombre Subcircuito: </th>
+                            <th>Codigo Subcircuito: </th> 
+                            <th>Nombre Circuito: </th> 
+                            <th>Nombre Distrito: </th> 
                             
                             <th>Botones</th>  
                         </tr>
                     </thead>
                     
                     <tbody>
-                    @foreach ($provincias as $provincia)
-                            @foreach ($provincia->parroquias as $parroquia)
+                    @foreach ($subcircuitos as $subcircuito)
+                            
                                 <tr>
-                                    <td>{{ $provincia->id }}</td>
-                                    <td>{{ $provincia->nombre }}</td>
-                                    <!--<td>{{ $provincia->num_parroquias }}</td>-->
-                                    <td>{{ $parroquia->nombre }}</td>
+                                    <td>{{ $subcircuito->id }}</td>
+                                    <td>{{ $subcircuito->nombre }}</td>
+                                    <td>{{ $subcircuito->codigo }}</td>
+                                    <td>{{ $subcircuito->circuitos->nombre }}</td>
+                                    <td>{{ $subcircuito->distritos->nombre }}</td>
+                                    
                                     <td>
                                         <a href="">
                                             <button class="btn btn-success" nombre="{{ $provincia->nombre }}"><i class="fa fa-pencil"></i></button>
@@ -38,7 +40,7 @@
                                         <button class="btn btn-danger EliminarDependencia" Did="{{ $provincia->id }}" nombre="{{ $provincia->nombre }}"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
-                            @endforeach
+                           
                         @endforeach
                     </tbody>
                 </table>
