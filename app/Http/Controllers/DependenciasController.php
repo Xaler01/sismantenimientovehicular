@@ -48,16 +48,7 @@ class DependenciasController extends Controller
 
 
         $dependencia = Dependencias::all();
-        $provincias = Provincias::where('estado', 'Activo')->get();
-
-
-        // Obtener los IDs de las provincias en estado activo
-        $provinciasIds = $provincias->pluck('id')->toArray();
-
-        // Obtener las parroquias que pertenecen a las provincias activas
-        $parroquias = Parroquias::whereIn('provincia_id', $provinciasIds)->get();
-
-        return view('modulos.Dependencias', compact('dependencia', 'provincias', 'parroquias'));
+        return view('modulos.Dependencias', compact('dependencia'));
 
     }
     public function store(Request $request)

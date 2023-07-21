@@ -6,9 +6,6 @@
     </section>
     <section class="content">
         <div class="box">
-            <div class="box-header">
-                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearDependencia">Nuevo Subcircuito</button>
-            </div>
             <div class="box-body">
                 <table class="table table-bordered table-hover table-striped dt-responsive">
                     <thead>
@@ -26,7 +23,7 @@
                             <th>No. Subcircuitos</th>
                             <th>Cod. Subcircuito</th>
                             <th>Nombre Subircuito</th> 
-                            <th>Editar/Eliminar</th>
+                            <!--<th>Editar/Eliminar</th>-->
                         </tr>
                     </thead>
                     
@@ -41,19 +38,20 @@
                             <td>{{$dependencia->distrito_codigo}}</td>
 
                             <td>{{$dependencia->distrito_nombre}}</td>
-                            <td>9</td>
+                            <td>{{$dependencia->circuito_id}}</td>
                             <td>{{$dependencia->circuito_codigo}}</td>
-                            <td>{{$dependencia->nombre_circuito}}</td>
-                            <td>2</td>
+                            <td>{{$dependencia->circuito_nombre}}</td>
+                            <td>{{$dependencia->subcircuito_id}}</td>
+                            
 
                             <td>{{$dependencia->subcircuito_codigo}}</td>
                             <td>{{$dependencia->subcircuito_nombre}}</td>        
-                            <td>
+                           <!-- <td>
                                 <a href="Editar-Dependencia/{{ $dependencia->id}}">
                                     <button class="btn btn-success" nombre = "{{ $dependencia -> nombre_subcircuito }}"><i class="fa fa-pencil"></i></button>
                                 </a>
                                 <button class="btn btn-danger EliminarDependencia" Did="{{ $dependencia->id}}" nombre="{{ $dependencia->nombre_subcircuito}}"><i class="fa fa-trash"></i></button>
-                            </td>
+                            </td>-->
                         </tr>
                         @endforeach
                     </tbody>
@@ -62,110 +60,5 @@
         </div>
     </section>
 </div>
-
-<div id="CrearDependencia" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="GET" action="{{ url('Dependencias') }}">
-                @csrf
-                <div class="modal-body">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="provincia">Provincia:</label>
-                                    <select class="form-control" name="provincia" id="provincia" required>
-                                        <option value="">Seleccionar...</option>
-                                        @foreach($provincias as $provincia)
-                                            <option value="{{ $provincia->id }}">{{ $provincia->nombre }}</option>
-                                        @endforeach
-                                    </select>  
-                                </div>
-                                <div class="form-group">
-                                    <label for="num_distritos">No. Distritos:</label>
-                                    <input type="number" class="form-control" name="num_distritos" id="num_distritos">
-                                </div>
-                                <div class="form-group" id="parroquia-group">
-                                    <label for="parroquia">Parroquia:</label>
-                                    <select class="form-control" name="parroquia" id="parroquia" required>
-                                        <option value="">Seleccionar...</option>
-                                        @foreach($parroquias as $parroquia)
-                                            <option value="{{ $parroquia->id }}" class="parroquia-{{ $parroquia->provincia_id }}">{{ $parroquia->nombre }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cod_distrito">Cod. Distrito:</label>
-                                    <input type="text" class="form-control" name="cod_distrito" id="cod_distrito" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nombre_distrito">Nombre Distrito:</label>
-                                    <input type="text" class="form-control " name="nombre_distrito" required oninput="this.value = this.value.toUpperCase()">
-                                </div>
-                                <div class="form-group">
-                                    <label for="num_circuitos">No. Circuitos:</label>
-                                    <input type="number" class="form-control " name="num_circuitos" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cod_circuito">Cod. Circuito:</label>
-                                    <input type="text" class="form-control" name="cod_circuito" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nombre_circuito">Nombre Circuito:</label>
-                                    <input type="text" class="form-control" name="nombre_circuito" required oninput="this.value = this.value.toUpperCase()">
-                                </div>
-                                <div class="form-group">
-                                    <label for="num_subcircuitos">No. Subcircuitos:</label>
-                                    <input type="number" class="form-control" name="num_subcircuitos" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cod_subcircuito">Cod. Subcircuito:</label>
-                                    <input type="text" class="form-control" name="cod_subcircuito" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nombre_subcircuito">Nombre Subcircuito:</label>
-                                    <input type="text" class="form-control" name="nombre_subcircuito" required oninput="this.value = this.value.toUpperCase()" value="{{ old('nombre_subcircuito') }}">
-                                    @error('nombre_subcircuito')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Crear</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
-        </div>            
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Obtener elementos del DOM
-        var $provinciaSelect = $('#provincia');
-        var $parroquiaSelect = $('#parroquia');
-
-        // Manejar evento de cambio en la selección de la provincia
-        $provinciaSelect.on('change', function() {
-            // Obtener el ID de la provincia seleccionada
-            var provinciaId = $(this).val();
-
-            // Ocultar todas las opciones de parroquia
-            $parroquiaSelect.find('option').hide();
-
-            // Mostrar solo las parroquias correspondientes a la provincia seleccionada
-            $('.parroquia-' + provinciaId).show();
-
-            // Restablecer selección de parroquia
-            $parroquiaSelect.val('').trigger('change');
-        });
-    });
-</script>
 
 @endsection

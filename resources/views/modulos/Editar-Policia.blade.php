@@ -6,12 +6,18 @@
     </section>
     <section class="content">
         <div class="box">
-            <!-- Formulario de edición -->
-            <div class="row">
-                <div class="col-md-6">
-                    <form method="post" action="{{ url('Actualizar-Policia/'.$policia['id']) }}">
-                        @csrf
-                        @method('PUT')
+            <div class="box-header">
+                <a href="{{ url('Policias') }}">
+                    <button class="btn btn-primary btn-lg">Volver a Policias</button>
+                </a>
+            </div>
+        
+
+            <div class="box-body">
+                <form method="post" action="{{ url('Actualizar-Policia/'.$policia['id']) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="col-md-6">
                         <div class="box-body">
                             <!-- Campos del formulario -->
                             <div class="form-group">
@@ -30,7 +36,6 @@
                                 <label for="fecha_nacimiento">Fecha de Nacimiento</label>
                                 <input type="date" name="fecha_nacimiento" class="form-control" value="{{ $policia->fecha_nacimiento }}" required>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -72,8 +77,8 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        <a href="{{ url('Policias') }}" class="btn btn-default">Cancelar</a>
+                        <button type="submit" class="btn btn-success btn-lg">Actualizar</button>
+                        <a href="{{ url('Policias') }}" class="btn btn-danger btn-lg">Cancelar</a>
                     </div>
                 </form>
             </div>

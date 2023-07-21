@@ -3,11 +3,11 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h4>Crear Vehiculo</h4> 
+        <h3>Crear Vehiculo</h3> 
     </section>
     <section class="content">
         <div class="box">
-            <div class="row">
+            <div class="box-body">
                 <div class="col-md-6">
                     <form method="post">
                         @csrf
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-lg">Crear</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
                         <a href="{{ url('Vehiculos') }}" class="btn btn-danger btn-lg" data-dismiss="modal">Cancelar</a>
                     </div>
                 </form>

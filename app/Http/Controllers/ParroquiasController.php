@@ -17,16 +17,28 @@ class ParroquiasController extends Controller
 
     public function index()
     {
-        /*
+        
         if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
             return redirect('Inicio');
-        }*/
-        $parroquias = Parroquias::where('estado', 'Activo')->GET();
+        }
+
+        
+
+
+        
         $provincias = Provincias::where('estado', 'Activo')->get();
         $numparroquias = Provincias::where('estado', 'Activo')->withCount('parroquias')->get();
 
         return view('modulos.Parroquias', compact('provincias', 'parroquias','numparroquias'));
     }
+
+    public function obtenerParroquias($provincia)
+    {
+        dd($provincia); 
+        $parroquias = Parroquias::where('provincia_id', $provincia)->get();
+        return response()->json($parroquias);
+    }
+        
 
 
     /**
@@ -74,7 +86,7 @@ class ParroquiasController extends Controller
         $parroquia = Parroquias::find($id);
         $provincias = Provincias::where('estado', 'Activo')->get();
 
-        return view('modulos.Parroquias', compact('parroquia', 'provincias'));
+        return view('modulos.Editar-Parroquias', compact('parroquia', 'provincias'));
     }
 
 
@@ -85,12 +97,14 @@ class ParroquiasController extends Controller
     {
         $datos = $request->validate([
             'provincia' => 'required',
-            'parroquia' => 'required'
+            'parroquia' => 'required',
+            'estado' => 'required'
         ]);
 
         $parroquia = Parroquias::find($id);
         $parroquia->provincia_id = $datos['provincia'];
         $parroquia->nombre = $datos['parroquia'];
+        $parroquia->estado = $datos['estado'];
         
         $parroquia->save();
 

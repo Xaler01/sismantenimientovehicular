@@ -7,7 +7,7 @@
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearPolicia">Crear Policia</button>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearPolicia">Nuevo Policia</button>
             </div>
             <div class="box-body">
                 <table class="table table-bordered table-hover table-striped dt-responsive">
@@ -22,7 +22,7 @@
                             <th>Rango</th>
                             <th>Tipo de sangre</th>
                             <th>Rol</th>
-                            <th>Eliminar</th>
+                            <th>Editar/Eliminar</th>
                         </tr>
                     </thead>
                     

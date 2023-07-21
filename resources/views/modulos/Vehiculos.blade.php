@@ -9,7 +9,7 @@
             <div class="box-header">
             @if(auth()->user()->rol != "Policia")
                 <a href="Crear-Vehiculo">
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearVehiculo">Agregar Vehiculo</button>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#CrearVehiculo">Nuevo Vehiculo</button>
                 </a>
                 @endif
                 
@@ -29,7 +29,7 @@
                             <th>Cilindraje</th>
                             <th>Capacidad de carga</th>
                             <th>Capacidad de pasajeros</th>
-                            <th>Edital / Borrar</th>
+                            <th>Editar/Eliminar</th>
                         </tr>
                     </thead>
 

@@ -44,7 +44,15 @@ Route::put('Actualizar-Dependencia/{id}', [DependenciasController::class, 'updat
 Route::get('Eliminar-Dependencia/{id}', [DependenciasController::class,'destroy']);
 
 Route::get('Circuitos', [CircuitosController::class, 'index']);
+
+Route::get('/obtener-parroquias/{provincia}', 'SubcircuitosController@obtenerParroquias');
+
+
 Route::get('Subcircuitos', [SubcircuitosController::class, 'index']);
+Route::get('Editar-Subcircuitos/{id}', [SubcircuitosController::class, 'edit']);
+Route::put('Actualizar-Subcircuito/{id}', [SubcircuitosController::class, 'update']);
+Route::get('Eliminar-Subcircuito/{id}', [SubcircuitosController::class,'destroy']);
+
 
 Route::get('Policias', [PoliciasController::class, 'index']); 
 Route::post('Policias', [PoliciasController::class,'store']);

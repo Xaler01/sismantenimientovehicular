@@ -26,33 +26,22 @@ class SubcircuitosController extends Controller
         $parroquias = Parroquias::where('estado', 'Activo')->get();
         $distritos = Distritos::where('estado', 'Activo')->get();
         //$numcircuitos = Distritos::where('estado', 'Activo')->withCount('circuitos')->get();
-        $subcircuitos = Subcircuitos::where('estado', 'Activo')->get();
+        $provincias= Provincias::where('estado', 'Activo')->get();
+        $subcircuitos = Subcircuitos::all();
 
 
-        return view('modulos.Subcircuitos', compact('circuitos','parroquias','distritos','subcircuitos'));
+        return view('modulos.Subcircuitos', compact('circuitos','parroquias','distritos','subcircuitos','provincias'));
     }
 
-    /**
-     * Display a listing of the resource.
-     
-    public function index()
+    public function obtenerParroquias($provincia)
     {
-        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
-            return redirect('Inicio');
-        }
+        dd($provincia); 
+        $parroquias = Parroquias::where('provincia_id', $provincia)->get();
+        return response()->json($parroquias);
+    }
+       
 
-        $provincias = Provincias::where('estado', 'Activo')->get();
 
-        foreach ($provincias as $provincia) {
-            $provincia->num_parroquias = $provincia->parroquias()->count();
-        }
-
-        return view('modulos.Subcircuitos', compact('provincias'));
-    }*/
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -71,11 +60,12 @@ class SubcircuitosController extends Controller
      */
     public function show($id)
     {
-        $provincia = Provincias::findOrFail($id);
+        /**$provincia = Provincias::findOrFail($id);
         $parroquias = $provincia->parroquias;
         $circuitos = $provincia->circuitos;
 
         return view('modulos.Subcircuitos', compact('provincia', 'parroquias', 'circuitos'));
+        */
     }
 
     /**
@@ -83,7 +73,18 @@ class SubcircuitosController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado") {
+            return redirect('Inicio');
+        }
+
+        $subcircuito = Subcircuitos::find($id);
+        $circuitos = Circuitos::where('estado', 'Activo')->get();
+        $parroquia = Parroquias::where('estado', 'Activo')->get();
+        $distritos = Distritos::where('estado', 'Activo')->get();
+        //$numcircuitos = Distritos::where('estado', 'Activo')->withCount('circuitos')->get();
+
+        return view('modulos.Editar-Subcircuitos', compact('circuitos','parroquia','distritos','subcircuito'));
+
     }
 
     /**
@@ -91,14 +92,36 @@ class SubcircuitosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $datos = $request->validate([
+            'circuito' => 'required',
+            'parroquia_id' =>'required',
+            'codigo_subcircuito' => 'required',
+            'subcircuito' =>'required',
+            'estado' =>'required'
+        ]);
+        
+        $subcircuito = Subcircuitos::find($id);
+        $subcircuito->circuito_id = $datos['circuito'];
+        $subcircuito->parroquia_id = $datos['parroquia_id'];
+        $subcircuito->codigo = $datos['codigo_subcircuito'];
+        $subcircuito->nombre = $datos['subcircuito'];
+        $subcircuito->estado = $datos['estado'];
+        $subcircuito->save();
+
+        return redirect('Subcircuitos')->with('actualizadoGen', 'Si');  
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+
     public function destroy($id)
     {
-        //
+        $subcircuito = Subcircuitos::findOrfail($id);
+        $subcircuito->estado= 'Eliminado';
+        $subcircuito->save();
+        return redirect('Subcircuitos')->with('eliminadoGen', 'Si');
+
     }
 }

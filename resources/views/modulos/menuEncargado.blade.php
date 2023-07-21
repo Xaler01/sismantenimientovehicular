@@ -25,7 +25,12 @@
                     <span>Parroquias</span>
                 </a>
             </li>
-    
+            <li>
+                <a href="{{ url('Subcircuitos') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Subcircuitos</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ url('Dependencias') }}">
                     <i class="fa fa-list"></i>
@@ -33,12 +38,7 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{ url('Subcircuitos') }}">
-                    <i class="fa fa-list"></i>
-                    <span>Subcircuitos</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{ url('PersonalSubcircuito') }}">
                     <i class="fa fa-link"></i>

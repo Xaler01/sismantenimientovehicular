@@ -14,12 +14,11 @@
                     <thead>
                         <tr>                        
                             <th>ID</th> 
-                            <th>Provincias</th>
-                            <th>No. Distritos</th>  
-                            <th>Parroquias</th>  
+                            <th>Provincia</th>
+                            <!--<th>No. Parroquias</th>  -->
+                            <th>Parroquia</th>  
                             <th>Estado</th>
- 
-                            <th>Eliminar</th>
+                            <th>Editar/Eliminar</th>
                         </tr>
                     </thead>
                     
@@ -28,26 +27,33 @@
                         <tr>
                             <td>{{ $parroquia->id }}</td>
                             <td>{{ $parroquia->provincias->nombre }}</td>
-                            <td>{{ $parroquia->provincias->parroquias_count }}</td>
+                           <!-- <td>{{ $parroquia->provincias->numparroquias }}</td>-->
                             <td>{{ $parroquia->nombre }}</td>
                             <td>{{ $parroquia->estado }}</td>
 
+                            
+
                             <td>
-                                <!--
+                                
 
                                 <a href="Editar-Parroquias/{{ $parroquia->id}}">
                                     <button class="btn btn-success" nombre="{{ $parroquia->nombre }}"><i class="fa fa-pencil"></i></button>
-                                </a>-->
+                                </a>
                                 <button class="btn btn-danger EliminarParroquia" Prrid="{{ $parroquia->id}}" nombre="{{ $parroquia->nombre}}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         @endforeach
+
+
+                        
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 </div>
+
+
 
 <div id="CrearParroquia" class="modal fade">
     <div class="modal-dialog">
