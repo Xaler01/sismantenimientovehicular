@@ -40,6 +40,7 @@ class User extends Authenticatable
         'ciudad_nacimiento_id',
         'celular',
         'rango_id',
+        'dependenci_id',
         'rol',
         'estado_id'
     ];
@@ -72,6 +73,6 @@ class User extends Authenticatable
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencias::class, 'dependencia_id');
+        return $this->belongsTo(Subcircuitos::class, 'dependencia_id');
     }
 }

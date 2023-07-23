@@ -31,7 +31,7 @@ class Policias extends Model
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencias::class, 'dependencia_id');
+        return $this->belongsTo(Subcircuitos::class, 'dependencia_id');
     }
 
     public function tipoSangre()

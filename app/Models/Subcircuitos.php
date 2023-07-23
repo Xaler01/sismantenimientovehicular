@@ -14,7 +14,7 @@ class Subcircuitos extends Model
     protected $fillable = [
         'circuito_id',
         'parroquia_id',
-        'codigo'.
+        'codigo',
         'nombre',
         'estado'
     ];

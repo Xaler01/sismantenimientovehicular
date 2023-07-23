@@ -30,7 +30,10 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="vehiculomantenimiento">Vehiculo:</label>
+                            <input type="text" class="form-control" name="vehiculomantenimiento" id="vehiculomantenimiento" readonly>
+                        </div>
                         
                         <div class="form-group">
                             <label for="fechamantenimiento">Fecha mantenimiento:</label>

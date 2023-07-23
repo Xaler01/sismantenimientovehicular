@@ -25,20 +25,15 @@ class ParroquiasController extends Controller
         
 
 
-        
+        $parroquias = Parroquias::all();
         $provincias = Provincias::where('estado', 'Activo')->get();
         $numparroquias = Provincias::where('estado', 'Activo')->withCount('parroquias')->get();
 
         return view('modulos.Parroquias', compact('provincias', 'parroquias','numparroquias'));
     }
 
-    public function obtenerParroquias($provincia)
-    {
-        dd($provincia); 
-        $parroquias = Parroquias::where('provincia_id', $provincia)->get();
-        return response()->json($parroquias);
-    }
-        
+    
+    
 
 
     /**

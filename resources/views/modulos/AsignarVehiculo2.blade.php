@@ -44,9 +44,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @foreach ($vehiculo_usuario as $asignacion)
-                                            @if ($asignacion->vehiculo_id == $vehiculo->id)
-                                                {{ $asignacion->user1_id ? $asignacion->policia->name : '' }}
+                                        @foreach ($vehiculo_usuario as $asignacion1)
+                                            @if ($asignacion1->vehiculo_id == $vehiculo->id)
+                                                {{ $asignacion1->user1_id ? $asignacion1->policia->name : '' }}
                                                 
                                             @endif
                                         @endforeach
@@ -54,21 +54,21 @@
                                     <td>
                                         @foreach ($vehiculo_usuario as $asignacion)
                                             @if ($asignacion->vehiculo_id == $vehiculo->id)
-                                                {{ $asignacion->user1_id ? $asignacion->policia->name : '' }}
+                                                {{ $asignacion->user2_id ? $asignacion->policia->name : '' }}
                                             @endif
                                         @endforeach
                                     </td>
                                     <td>
                                         @foreach ($vehiculo_usuario as $asignacion)
                                             @if ($asignacion->vehiculo_id == $vehiculo->id)
-                                                {{ $asignacion->user1_id ? $asignacion->policia->name : '' }}
+                                                {{ $asignacion->user3_id ? $asignacion->policia->name : '' }}
                                             @endif
                                         @endforeach
                                     </td>
                                     <td>
                                         @foreach ($vehiculo_usuario as $asignacion)
                                             @if ($asignacion->vehiculo_id == $vehiculo->id)
-                                                {{ $asignacion->user1_id ? $asignacion->policia->name : '' }}
+                                                {{ $asignacion->user4_id ? $asignacion->policia->name : '' }}
                                             @endif
                                         @endforeach
                                     </td>

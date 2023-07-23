@@ -8,7 +8,7 @@
         <div class="box">
             <div class="box-header">
                 <a href="{{ url('Subcircuitos') }}">
-                    <button class="btn btn-primary btn-lg">Volver a parroquias</button>
+                    <button class="btn btn-primary btn-lg">Volver a subcircuitos</button>
                 </a>
             </div>
             <div class="box-body">
@@ -29,6 +29,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="circuito">Circuito:</label>
+                                <input type="text" class="form-control " name="circuito-nombre" id="circuito-nombre" value="{{ $subcircuito->Circuito->nombre }}" readonly>
+                                <input type="hidden" class="form-control " name="circuito" id="circuito" value="{{ $subcircuito->Circuito->id }}" readonly>
+                               
+                                <!--
                                 <select class="form-control" name="circuito" id="circuito" required>
                                     @foreach($circuitos as $circuito)
                                         <option value="{{ $circuito->id }}" {{ $subcircuito->circuito_id == $circuito->id ? 'selected' : '' }}>
@@ -36,6 +40,7 @@
                                         </option>
                                     @endforeach
                                 </select> 
+-->
                             </div>
                             <div class="form-group">
                                 <label for="codigo_subcircuito">Código Subcircuito:</label>

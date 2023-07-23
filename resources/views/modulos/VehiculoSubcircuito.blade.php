@@ -16,37 +16,35 @@
                             <th>Marca</th>
                             <th>Modelo</th>
                             <th>Kilometraje</th>
-                            <th>Asignado a</th>
+                            <th>Subcircuito asignado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($vehiculos as $vehiculo)
-                            @if ($vehiculo->estado=="Activo")
-                                <tr>
-                                    <td>{{ $vehiculo->id }}</td>
-                                    <td>{{ $vehiculo->tipo_vehiculo }}</td>
-                                    <td>{{ $vehiculo->placa }}</td>
-                                    <td>{{ $vehiculo->marca }}</td>
-                                    <td>{{ $vehiculo->modelo }}</td>
-                                    <td>{{ $vehiculo->kilometraje }}</td>
-                                    <td>
-                                    @if ($vehiculo->dependencia_id && $vehiculo->dependencia)
-                                        @if ($vehiculo->dependencia->estado == 'Activo')
-                                            {{ $vehiculo->dependencia->nombre_subcircuito }}
-                                        @else
-                                            No asignado
-                                        @endif
+                            <tr>
+                                <td>{{ $vehiculo->id }}</td>
+                                <td>{{ $vehiculo->tipoVehiculo->nombre}}</td>
+                                <td>{{ $vehiculo->placa }}</td> 
+                                <td>{{ $vehiculo->marcas->nombre }}</td>
+                                <td>{{ $vehiculo->modelo }}</td>
+                                <td>{{ $vehiculo->kilometraje }}</td>
+                                <td>
+                                @if ($vehiculo->dependencia_id && $vehiculo->dependencia)
+                                    @if ($vehiculo->dependencia->estado == 'Activo')
+                                        {{ $vehiculo->dependencia->nombre}}
                                     @else
                                         No asignado
                                     @endif
-                                    </td>
-                                    
-                                    <td>
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#AsignarVehiculo{{ $vehiculo->id }}"><i class="fa fa-pencil"></i></button>
-                                    </td>
-                                </tr>
-                            @endif
+                                @else
+                                    No asignado
+                                @endif
+                                </td>
+                                
+                                <td>
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#AsignarVehiculo{{ $vehiculo->id }}"><i class="fa fa-pencil"></i></button>
+                                </td>
+                            </tr>   
                         @endforeach
                     </tbody>
                 </table>
@@ -70,7 +68,7 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="tipo_vehiculo">Tipo de Vehículo:</label>
-                                    <input type="text" class="form-control" id="tipo_vehiculo" name="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo }}" disabled>
+                                    <input type="text" class="form-control" id="tipo_vehiculo" name="tipo_vehiculo" value="{{ $vehiculo->tipoVehiculo->nombre }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="placa">Placa:</label>
@@ -78,7 +76,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="marca">Marca:</label>
-                                    <input type="text" class="form-control" id="marca" name="marca" value="{{ $vehiculo->marca }}" disabled>
+                                    <input type="text" class="form-control" id="marca" name="marca" value="{{ $vehiculo->marcas->nombre }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="modelo">Modelo:</label>
@@ -94,11 +92,9 @@
                                     <select class="form-control" id="dependencia" name="dependencia">
                                         <option value="">Seleccionar dependencia</option>
                                         @foreach($dependencias as $dependencia)
-                                            @if ($dependencia->estado == 'Activo')
-                                                <option value="{{ $dependencia->id }}" {{ $vehiculo->dependencia_id == $dependencia->id ? 'selected' : '' }}>
-                                                    {{ $dependencia->nombre_subcircuito }}
-                                                </option>
-                                            @endif
+                                            <option value="{{ $dependencia->id }}" {{ $vehiculo->dependencia_id == $dependencia->id ? 'selected' : '' }}>
+                                                {{ $dependencia->nombre }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

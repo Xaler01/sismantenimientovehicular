@@ -251,6 +251,18 @@
         });
     }, 500);   
   </script>
+  @elseif(session('erroruser'))   
+  <script>
+    setTimeout(function() {
+        var mensaje = '{{ session("erroruser") }}';
+        Swal.fire({
+            icon: 'warning',
+            title: mensaje,
+            showConfirmButton: true,
+            
+        });
+    }, 500);   
+  </script>
 @endif
 
   <script type="text/javascript">
@@ -423,7 +435,40 @@
     });
 </script>
 
+<script>
+$(document).ready(function() {
+  // Cuando se cambia la selección del usuario
+  $("#user_id").on("change", function() {
+    // Obtener el valor seleccionado del usuario
+    var userId = $(this).val();
 
+    // Si no se ha seleccionado ningún usuario, limpiar el campo "vehiculomantenimiento"
+    if (userId === "") {
+      $("#vehiculomantenimiento").val("");
+      return;
+    }
+
+    // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
+    $.ajax({
+      url: "{{ url('obtenerVehiculoUsuario') }}/" + userId, // Reemplaza "obtenerVehiculoUsuario" con la ruta a tu controlador para obtener la información del vehículo asignado al usuario
+      type: "GET",
+      dataType: "json",
+      success: function(response) {
+        // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+        if (response.vehiculo) {
+          $("#vehiculomantenimiento").val(response.vehiculo.placa);
+        } else {
+          $("#vehiculomantenimiento").val("No asignado");
+        }
+      },
+      error: function() {
+        // En caso de error, mostrar un mensaje o realizar alguna acción
+        $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+      }
+    });
+  });
+});
+</script>
 
 
 

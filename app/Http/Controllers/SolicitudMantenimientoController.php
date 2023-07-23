@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsignarVehiculo;
 use App\Models\SolicitudMantenimiento;
 use App\Models\Policias;
 use App\Models\Vehiculos;
@@ -25,12 +26,14 @@ class SolicitudMantenimientoController extends Controller
             return redirect('Inicio');
         }
         //$policia = DB::select('select * from users where rol = "Policia" and estado ="Activo" ');
-        $policia = Policias::where('estado_id')->get();
+        $policia = Policias::where('estado_id',1)
+                            ->where('rol', 'Policia') ->get();
         $vehiculo = Vehiculos::all();
+        $vehiculomantenimiento =AsignarVehiculo::all();
         /**$solicitud = DB::select('select * from solicitudes_mantenimiento where user_id = '.$id);*/
         $tiposMantenimiento = TipoMantenimiento::all();
         
-        return view('modulos.SolicitudMantenimiento', compact(/**'solicitud', */'policia', 'vehiculo', 'tiposMantenimiento'));
+        return view('modulos.SolicitudMantenimiento', compact(/**'solicitud', */'policia', 'vehiculo', 'vehiculomantenimiento','tiposMantenimiento'));
         
     }
 

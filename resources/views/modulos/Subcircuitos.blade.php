@@ -74,31 +74,30 @@
                                             @endforeach
                                         </select>  
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="distrito">Nombre Distrito:</label>
-                                        <select class="form-control" name="distrito" id="distrito" required>
-                                            <option value="">Seleccionar...</option>
-                                            @foreach($distritos as $distrito)
-                                                <option value="{{ $distrito->id }}">{{ $distrito->nombre }}</option>
-                                            @endforeach
-                                        </select>  
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="circuito">Nombre Distrito:</label>
+                                        <label for="circuito">Nombre Cicuito:</label>
                                         <select class="form-control" name="circuito" id="circuito" required>
                                             <option value="">Seleccionar...</option>
                                             @foreach($circuitos as $circuito)
-                                                <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+                                                <option value="{{ $circuito->id }}">{{ $circuito->nombre .' '. $circuito->codigo}}</option>
                                             @endforeach
                                         </select>  
                                     </div>
                                     <div class="form-group">
-                                        <label for="circuito">Codigo Subcircuito:</label>
-                                        <input type="text" class="form-control" name="circuito"  required>
+                                        <label for="codigo_subcircuito">Codigo Subcircuito:</label>
+                                        <input type="text" class="form-control" name="codigo_subcircuito" id="codigo_subcircuito" value="{{(old ('codigo_subcircuito'))}}" required oninput="this.value = this.value.toUpperCase()">
+                                        @error('codigo_subcircuito')
+                                            <div class="alert alert-danger">El codigo ya existe.</div>
+                                        @enderror
+
                                     </div>
                                     <div class="form-group">
                                         <label for="subcircuito">Nombre Subcircuito:</label>
-                                        <input type="text" class="form-control" name="subcircuito"  required>
+                                        <input type="text" class="form-control" name="subcircuito"  value="{{(old ('subcircuito'))}}" required oninput="this.value = this.value.toUpperCase()">
+                                        @error('subcircuito')
+                                            <div class="alert alert-danger">El nombre del subcirctuito ya existe.</div>
+                                        @enderror
                                     </div>
                                     
                                 </div>
@@ -114,36 +113,5 @@
         </div>
     </section>
 </div>
-
-
-
-<!-- Agregar el siguiente script al final de la vista -->
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            // Cuando el valor del select de provincias cambie
-            $('#provincia').on('change', function () {
-                var provinciaId = $(this).val();
-
-                // Realizar una petición AJAX para obtener las parroquias de la provincia seleccionada
-                $.ajax({
-                    
-                    url: '/obtener-parroquias/' + provinciaId,
-                    type: 'GET',
-                    success: function (data) {
-                        // Limpiar el select de parroquias y agregar las nuevas opciones
-                        $('#parroquia').empty().append('<option value="">Seleccionar...</option>');
-                        $.each(data, function (index, parroquia) {
-                            $('#parroquia').append('<option value="' + parroquia.id + '">' + parroquia.nombre + '</option>');
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
 
 @endsection

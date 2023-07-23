@@ -39,7 +39,15 @@ class SubcircuitosController extends Controller
         $parroquias = Parroquias::where('provincia_id', $provincia)->get();
         return response()->json($parroquias);
     }
-       
+    public function obtenerNumeroSubcircuitos($circuitoId)
+    {
+        $circuito = Circuitos::find($circuitoId);
+        // Verificar si el circuito existe y obtener la cantidad de subcircuitos
+        $numeroSubcircuitos = $circuito ? $circuito->subcircuitos()->count() : 0;
+
+        // Devolver la respuesta como JSON
+        return response()->json($numeroSubcircuitos);
+    }
 
 
     public function create()
@@ -50,9 +58,26 @@ class SubcircuitosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
+
     public function store(Request $request)
     {
-        //
+        
+        $datos = $request->validate([
+            'circuito' => 'required|exists:circuito,id',
+            'parroquia' => 'required|exists:parroquia,id',
+            'codigo_subcircuito' => 'required|unique:subcircuito,codigo', // Verificará que el código no esté duplicado en la tabla "subcircuito"
+            'subcircuito' => 'required|unique:subcircuito,nombre', // Verificará que el nombre del subcircuito no esté duplicado en la tabla "subcircuito"
+        ]);
+
+        Subcircuitos::create([
+            'circuito_id' => $datos['circuito'],
+            'parroquia_id' => $datos['parroquia'],
+            'codigo' => $datos['codigo_subcircuito'],
+            'nombre' => $datos['subcircuito']
+        ]);
+
+        return redirect('Subcircuitos')->with('registradoG', 'Si');
     }
 
     /**

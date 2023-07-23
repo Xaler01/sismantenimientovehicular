@@ -21,11 +21,26 @@ class AsignarVehiculo extends Model
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencia::class, 'dependencia_id');
+        return $this->belongsTo(Subcircuitos    ::class, 'dependencia_id');
     }
-    public function policia()
+    public function policia1()
     {
-        return $this->belongsTo(Policias::class, 'user_id');
+        return $this->belongsTo(Policias::class, 'user1_id');
+    }
+
+    public function policia2()
+    {
+        return $this->belongsTo(Policias::class, 'user2_id');
+    }
+
+    public function policia3()
+    {
+        return $this->belongsTo(Policias::class, 'user3_id');
+    }
+
+    public function policia4()
+    {
+        return $this->belongsTo(Policias::class, 'user4_id');
     }
     
 }

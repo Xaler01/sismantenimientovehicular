@@ -46,9 +46,11 @@ Route::get('Eliminar-Dependencia/{id}', [DependenciasController::class,'destroy'
 Route::get('Circuitos', [CircuitosController::class, 'index']);
 
 Route::get('/obtener-parroquias/{provincia}', 'SubcircuitosController@obtenerParroquias');
+Route::get('/obtener-numero-subcircuitos/{circuitoId}', 'SubcircuitoController@obtenerNumeroSubcircuitos');
 
 
 Route::get('Subcircuitos', [SubcircuitosController::class, 'index']);
+Route::post('Subcircuitos', [SubcircuitosController::class, 'store']);
 Route::get('Editar-Subcircuitos/{id}', [SubcircuitosController::class, 'edit']);
 Route::put('Actualizar-Subcircuito/{id}', [SubcircuitosController::class, 'update']);
 Route::get('Eliminar-Subcircuito/{id}', [SubcircuitosController::class,'destroy']);
@@ -75,10 +77,11 @@ Route::get('VehiculoSubcircuito', [VehiculoSubcircuitoController::class, 'index'
 Route::get('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'edit']);
 Route::put('VehiculoSubcircuito/{id}', [VehiculoSubcircuitoController::class, 'update'])->name('VehiculoSubcircuito.update');
 
-Route::get('AsignarVehiculo', [AsignarVehiculoController::class, 'index'])->name('asignarvehiculo');
+Route::get('AsignarVehiculo', [AsignarVehiculoController::class, 'index'])->name('AsignarVehiculo');
 Route::get('AsignarVehiculoPersonal/{id}', [AsignarVehiculoController::class, 'edit']);
-Route::post('PersonalVehiculo', [AsignarVehiculoController::class, 'update'])->name('PersonalVehiculo.update');
+Route::put('PersonalVehiculo/{id}', [AsignarVehiculoController::class, 'update'])->name('PersonalVehiculo.update');
 
 
-Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
+//Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
+Route::get('SolicitudMantenimiento  ', [SolicitudMantenimientoController::class, 'index']);
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);

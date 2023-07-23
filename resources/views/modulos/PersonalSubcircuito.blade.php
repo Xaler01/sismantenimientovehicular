@@ -27,9 +27,9 @@
                                     <td>{{ $policia->rango -> nombre }}</td>
                                     <td>
                                         @if ($policia->dependencia_id)
-                                        @if ($policia && $policia->dependencia && $policia->dependencia->estado == 'Activo')
+                                            @if ($policia && $policia->dependencia && $policia->dependencia->estado == 'Activo')
                                             
-                                                {{ $policia->dependencia->nombre_subcircuito }}
+                                                {{ $policia->dependencia->nombre }}
                                             @else
                                                 No asignado
                                             @endif
@@ -52,7 +52,7 @@
 @foreach($policias as $policia)
     
     @php
-        $dependenciaNombre = $policia->personalSubcircuito ? $policia->personalSubcircuito->dependencia->nombre_subcircuito : null;
+        $dependenciaNombre = $policia->personalSubcircuito ? $policia->personalSubcircuito->dependencia->nombre : null;
     @endphp
     
     <div class="modal fade" id="EditarSubcircuito{{ $policia->id }}" tabindex="-1" role="dialog" aria-labelledby="EditarSubcircuito{{ $policia->id }}Label" aria-hidden="true">
@@ -89,9 +89,9 @@
                                     <select class="form-control" id="dependencia" name="dependencia">
                                         <option value="">Seleccionar dependencia</option>
                                         @foreach($dependencias as $dependencia)
-                                        <option value="{{ $dependencia->id }}" {{ $dependencia->nombre_circuito}}>
-                                                    {{ $dependencia->nombre_subcircuito }}
-                                                </option>
+                                            <option value="{{ $dependencia->id }}" {{ $dependencia->nombre}}>
+                                                {{ $dependencia->nombre }}
+                                            </option>
                                             
                                                 
                                         @endforeach

@@ -49,7 +49,8 @@
                                 <select class="form-control" name="modelo">
                                     @php
                                         $modeloActual = date('Y');
-                                        for ($modelo = 2010; $modelo <= $modeloActual + 1; $modelo++) {
+                                        //for ($modelo = 2010; $modelo <= $modeloActual + 1; $modelo++) {
+                                        for ($modelo = $modeloActual + 1; $modelo >= 2010; $modelo--) {
                                             echo '<option value="' . $modelo . '">' . $modelo . '</option>';
                                         }
                                     @endphp
