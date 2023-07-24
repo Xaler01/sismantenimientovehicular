@@ -36,6 +36,9 @@
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.min.css">
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
+  <!-- Select 2-->
+  <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/select2/dist/css/select2.min.css">
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -109,6 +112,8 @@
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/locale/es.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/moment/moment.js"></script>
 
+<!-- Select2  -->
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/select2/dist/js/select2.js"></script>
 
 <script type="text/javascript">
 
@@ -134,6 +139,8 @@
 
    }
   });
+
+  $('#select2').select2();
 </script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!--Invoca de sweet alert para notificaciones "suaves"-->
@@ -378,10 +385,13 @@
     
     $('#calendario').fullCalendar({
       defaultView: 'agendaWeek',
-      hiddenDays : [0],
+      hiddenDays : [0,6],
       scrollTime : "08:00:00",
       minTime    : "08:00:00",
       maxTime    : "18:00:00",
+      events: {!! $solicitudmantenimiento->toJson() !!},
+      
+    
 
       dayClick : function(date, jsEvent, view){
         var fecha = date.format();
@@ -415,6 +425,16 @@
         //$("#fechamantenimiento").val(Fechamantenimiento[0]);
         //$("#fechamantenimiento").val(diaActual);
         $("#horamantenimiento").val(Fechamantenimiento[1]);
+
+       
+      },
+      eventClick:function(calEvent,jsEvent, view){
+        if ("{{ auth()->user()->rol }}" == 'Policia' && "{{ auth()->user()->id }}"==userId){
+          $('#EventoModal').modal();
+        } 
+        
+        $('#usuario').html(calEvent.title);
+        $('#solicitudMantenimiento_id').val(calEvent.id);
       }
     });
    </script> 
@@ -436,40 +456,52 @@
 </script>
 
 <script>
-$(document).ready(function() {
-  // Cuando se cambia la selección del usuario
-  $("#user_id").on("change", function() {
-    // Obtener el valor seleccionado del usuario
-    var userId = $(this).val();
+  $(document).ready(function() {
+    // Cuando se cambia la selección del usuario
+    $("#user_id").on("change", function() {
+      // Obtener el valor seleccionado del usuario
+      var userId = $(this).val();
 
-    // Si no se ha seleccionado ningún usuario, limpiar el campo "vehiculomantenimiento"
-    if (userId === "") {
-      $("#vehiculomantenimiento").val("");
-      return;
-    }
-
-    // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
-    $.ajax({
-      url: "{{ url('obtenerVehiculoUsuario') }}/" + userId, // Reemplaza "obtenerVehiculoUsuario" con la ruta a tu controlador para obtener la información del vehículo asignado al usuario
-      type: "GET",
-      dataType: "json",
-      success: function(response) {
-        // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
-        if (response.vehiculo) {
-          $("#vehiculomantenimiento").val(response.vehiculo.placa);
-        } else {
-          $("#vehiculomantenimiento").val("No asignado");
-        }
-      },
-      error: function() {
-        // En caso de error, mostrar un mensaje o realizar alguna acción
-        $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+      // Si no se ha seleccionado ningún usuario, limpiar los campos "vehiculomantenimiento" y "kilometrajeactual"
+      if (userId === "") {
+        $("#vehiculomantenimiento").val("");
+        $("#kilometrajeactual").val("");
+        return;
       }
+
+      // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
+      $.ajax({
+        url: "{{ route('obtenerVehiculoUsuario', '') }}/" + userId, // Utiliza la ruta con el nombre definido en web.php
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+          // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+          console.log(response.vehiculo.placa)
+          // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+          if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.placa) {
+              $("#vehiculomantenimiento").val(response.vehiculo.vehiculo.placa);
+              $("#vehiculo_id").val(response.vehiculo.vehiculo.id);
+          } else {
+              $("#vehiculomantenimiento").val("No asignado");
+          }
+
+          // Actualizar el campo "kilometrajeactual" con el valor del kilometraje recibido
+          if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.kilometraje) {
+              $("#kilometrajeactual").val(response.vehiculo.vehiculo.kilometraje);
+              // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+              $("#kilometrajeactual").attr("min", response.vehiculo.vehiculo.kilometraje);
+          } else {
+              $("#kilometrajeactual").val("No disponible");
+          }
+        },
+        error: function() {
+          // En caso de error, mostrar un mensaje o realizar alguna acción
+          $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+        }
+      });
     });
   });
-});
 </script>
-
 
 
 

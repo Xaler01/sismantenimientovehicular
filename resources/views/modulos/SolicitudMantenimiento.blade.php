@@ -16,23 +16,30 @@
 <div class="modal fade" id="MantenimientoModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post">
+            <form method="post" action="{{ route('guardar-solicitud') }}">
                 @csrf
-                @method('put')
+                @method('post')
                 <div class="modal-body">
                     <div class="box-body">                        
                         <div class="form-group">
-                            <label for="user">Usuario:</label>
-                            <select class="form-control" name="user_id" id="user_id">
+                            <label for="user_id">Usuario:</label>
+                            <select class="form-control " name="user_id"  id="user_id" style="width:100%">
                                 <option value="">Seleccionar policia</option>
-                                @foreach($policia as $policiaE)
-                                    <option value="{{ $policiaE->id }}">{{ $policiaE->name }}</option>
+                                
+                                @foreach($policias as $usuario)
+                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"><span>A</span>
                             <label for="vehiculomantenimiento">Vehiculo:</label>
                             <input type="text" class="form-control" name="vehiculomantenimiento" id="vehiculomantenimiento" readonly>
+                            <input type="hidden" class="form-control" name="vehiculo_id" id="vehiculo_id" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kilometrajeactual">Kilometraje actual:</label>
+                            <input type="number" class="form-control" name="kilometrajeactual" id="kilometrajeactual" min="kilometrajeactual" required>
                         </div>
                         
                         <div class="form-group">
@@ -52,6 +59,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea  class="form-control" name="observaciones" id="observaciones" rows="4" ></textarea>
+                            
+                        </div> 
                        
                       
                     </div>
@@ -63,5 +75,34 @@
             </form>
         </div>
     </div>
+</div>
+
+<div class='modal fade' id='EventoModal'>
+    <div clas= "modal-dialog">
+        <div class="modal-content">
+            <form method="Post" action="{{ url('borrar-solicitud') }}">
+                @csrf
+                @method('delete')
+                <div class= "modal-body">
+                    <div class="form-group">
+                        <label for="usuario">Usuario:</label>
+                        <input type="text" class="form-control" name="usuario" id="usuario" readonly>
+                        <input type="text" class="form-control" name="vehiculo" id="vehiculo" readonly>
+                        <?php
+
+                        ?>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type= "submit" class= "btn btn-warning">Cancelar Mantenimiento</button>
+                    <button type= "button" data-dismiss="modal" class= "btn btn-danger">Cerrar</button>
+
+                </div>
+            </form>    
+        </div>
+    </div>
+
+
 </div>
 @endsection

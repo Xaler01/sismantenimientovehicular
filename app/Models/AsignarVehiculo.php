@@ -19,6 +19,10 @@ class AsignarVehiculo extends Model
         'user4_id'
     ];
 
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculos::class, 'vehiculo_id');
+    }
     public function dependencia()
     {
         return $this->belongsTo(Subcircuitos    ::class, 'dependencia_id');
