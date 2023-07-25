@@ -32,7 +32,6 @@ class SolicitudMantenimientoController extends Controller
                             ->where('estado_id',1)->get();
       
         $solicitudmantenimiento = SolicitudMantenimiento::all();
-
         $tiposMantenimiento = TipoMantenimiento::all();
 
         $solicitudmantenimiento->transform(function ($solicitud) {
@@ -54,6 +53,105 @@ class SolicitudMantenimientoController extends Controller
         return view('modulos.SolicitudMantenimiento', compact('vehiculomantenimiento','tiposMantenimiento','policias','solicitudmantenimiento'));
         
     }
+
+    public function index2()
+    {
+        $solicitud = SolicitudMantenimiento::all();
+        // Resto del código necesario para preparar los datos para la vista
+
+        return view('modulos.Solicitudes', compact('solicitud'));
+    }
+
+  
+
+
+    
+    public function getCitasCalendario()
+    {
+        $solicitudes = SolicitudMantenimiento::select(['user_id', 'vehiculo_id', 'fecha_solicitud', 'hora_solicitud'])
+            ->where('estado_solicitud', 'Activo')
+            ->where('fecha_solicitud', '>=', Carbon::now()) // Solo citas futuras
+            ->get();
+
+        $citas = [];
+
+        foreach ($solicitudes as $solicitud) {
+            $tipoVehiculo = $solicitud->vehiculo->tipo_vehiculo;
+
+
+            // Formatear la fecha y hora como cadenas ISO 8601
+            $fechaInicio = Carbon::parse($solicitud->fecha_solicitud)->format('Y-m-d');
+            $horaInicio = Carbon::parse($solicitud->hora_solicitud)->format('H:i:s');
+        
+            // Calcular la fecha y hora de finalización (1 hora después de la fecha y hora de inicio)
+            $fechaFin = Carbon::parse($solicitud->fecha_solicitud)->addHour()->format('Y-m-d');
+            $horaFin = Carbon::parse($solicitud->hora_solicitud)->addHour(1)->format('H:i:s');
+        
+            // Agregar la cita al array en el formato esperado por el calendario
+            $citas[] = [
+                'title' => 'Solicitud de Mantenimiento', // Título del evento
+                'start' => $fechaInicio . 'T' . $horaInicio, // Fecha y hora de inicio del evento
+                'end' => $fechaFin . 'T' . $horaFin, // Fecha y hora de finalización del evento
+                'user' => $solicitud->user_id, // ID del usuario asociado a la solicitud
+                
+                'tipoVehiculo' => $tipoVehiculo,
+                'vehiculo' => $solicitud->vehiculo_id, // ID del vehículo asociado a la solicitud
+            ];
+        }
+
+        // Devolver las citas en formato JSON
+        return response()->json($citas);
+    }
+    
+
+    public function actualizarSolicitud(Request $request)
+    {
+        // Validar los datos del formulario
+        $request->validate([
+            'solicitud_id' => 'required|exists:solicitud_mantenimiento,id',
+            'estado' => 'required|in:Activo,Aprobada,Rechazada,Recalendarizar',
+        ]);
+
+        // Obtener la solicitud por su ID
+        $solicitud = SolicitudMantenimiento::findOrFail($request->input('solicitud_id'));
+
+        // Actualizar el estado de la solicitud
+        $solicitud->estado_solicitud = $request->input('estado');
+        $solicitud->save();
+
+        return redirect()->route('Solicitudes')->with('success', 'Estado de la solicitud actualizado correctamente.');
+    }
+
+
+
+/*
+
+    
+    public function getCitasCalendario()
+    {
+        $solicitudes = SolicitudMantenimiento::select(['user_id', 'vehiculo_id', 'fecha_solicitud', 'hora_solicitud'])
+            ->where('estado_solicitud', 'Activo')
+            ->get();
+
+        $citas = [];
+
+        foreach ($solicitudes as $solicitud) {
+            // Formatear la fecha y hora como cadenas ISO 8601
+            $fecha = Carbon::parse($solicitud->fecha_solicitud)->format('Y-m-d');
+            $hora = Carbon::parse($solicitud->hora_solicitud)->format('H:i:s');
+
+            // Agregar la cita al array en el formato esperado por el calendario
+            $citas[] = [
+                'title' => 'Solicitud de Mantenimiento', // Título del evento
+                'start' => $fecha . 'T' . $hora, // Fecha y hora de inicio del evento
+                'user' => $solicitud->user_id, // ID del usuario asociado a la solicitud
+                'vehiculo' => $solicitud->vehiculo_id, // ID del vehículo asociado a la solicitud
+            ];
+        }
+
+        // Devolver las citas en formato JSON
+        return response()->json($citas);
+    }*/
 
 
 
@@ -115,6 +213,14 @@ class SolicitudMantenimientoController extends Controller
         // Guarda la solicitud en la base de datos
         $solicitud->save();
 
+        // Actualizar el kilometraje en la tabla "vehiculos"
+        $vehiculoId = $request->input('vehiculo_id');
+        $kilometrajeActual = $request->input('kilometrajeactual');
+
+        $vehiculo = Vehiculos::find($vehiculoId);
+        $vehiculo->kilometraje = $kilometrajeActual;
+        $vehiculo->save();
+
         // Redirige a una página de éxito o muestra un mensaje de éxito
         return redirect()->route('modulos.SolicitudMantenimiento')->with('success', 'Solicitud de mantenimiento enviada con éxito.');
 
@@ -150,7 +256,15 @@ class SolicitudMantenimientoController extends Controller
      */
     public function destroy(SolicitudMantenimiento $solicitudMantenimiento)
     {   
+        /**
+            $subcircuito = Subcircuitos::findOrfail($id);
+            $subcircuito->estado= 'Eliminado';
+            $subcircuito->save();
+            return redirect('Subcircuitos')->with('eliminadoGen', 'Si');*/
+    
         
-        DB::table('solicitud_mantenimiento')-> whereId(request('id'))->delete();
+        DB::table('solicitud_mantenimiento')-> whereId(request('id'))->get();
+
+        return redirect('SolicitudMantenimiento');
     }
 }

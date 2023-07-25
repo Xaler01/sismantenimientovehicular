@@ -64,6 +64,13 @@
                     <span>Solicitud de mantenimiento</span> 
                 </a>
             </li>
+            <li>
+                <!--<a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">-->
+                <a href="{{ url('Solicitudes') }}">
+                    <i class="fa fa-wrench"></i>
+                    <span>Gestion de Solicitudes</span> 
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

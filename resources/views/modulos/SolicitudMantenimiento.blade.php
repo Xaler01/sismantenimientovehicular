@@ -7,7 +7,9 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <div id="calendario"></div>
+                <!--<div id="calendario"></div>-->
+                <div id="calendario" data-events="{{ json_encode($solicitudmantenimiento) }}"></div>
+           
             </div>  
         </div>
     </section>
@@ -62,10 +64,7 @@
                         <div class="form-group">
                             <label for="observaciones">Observaciones:</label>
                             <textarea  class="form-control" name="observaciones" id="observaciones" rows="4" ></textarea>
-                            
                         </div> 
-                       
-                      
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -82,16 +81,21 @@
         <div class="modal-content">
             <form method="Post" action="{{ url('borrar-solicitud') }}">
                 @csrf
-                @method('delete')
+                @method('post')
                 <div class= "modal-body">
-                    <div class="form-group">
-                        <label for="usuario">Usuario:</label>
-                        <input type="text" class="form-control" name="usuario" id="usuario" readonly>
-                        <input type="text" class="form-control" name="vehiculo" id="vehiculo" readonly>
-                        <?php
-
-                        ?>
-
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="usuario">Usuario:</label>
+                            <input type="text" class="form-control" name="usuario" id="usuario" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="usuario">Vehiculo:</label>
+                            <input type="text" class="form-control" name="vehiculo" id="vehiculo" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoVehiculo">Tipo de Vehiculo:</label>
+                            <input type="text" class="form-control" name="tipoVehiculo" id="tipoVehiculo" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

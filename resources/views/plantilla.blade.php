@@ -377,68 +377,75 @@
 
   </script>
 
-  <script type="text/javascript">
-    var date = new Date();
-    var d = date.getDate(),
-        m = date.getMonth(),
-        a = date.getFullYear()
-    
-    $('#calendario').fullCalendar({
-      defaultView: 'agendaWeek',
-      hiddenDays : [0,6],
-      scrollTime : "08:00:00",
-      minTime    : "08:00:00",
-      maxTime    : "18:00:00",
-      events: {!! $solicitudmantenimiento->toJson() !!},
-      
-    
 
-      dayClick : function(date, jsEvent, view){
-        var fecha = date.format();
-        var hora = ("01:00:00").split(":");
-        Fechamantenimiento = fecha.split("T");
-        
-        
-        n = new Date();
-        y = n.getFullYear();
-        m = n.getMonth()+1;
-        d = n.getDate();
 
-        if (m < 10) {
-          M="0"+m;
-          if(d<10){
-            D = "0"+d;
-            diaActual = y + "-" + M + "-" + D;
-          }else{
-            diaActual = y + "-" +M+ "-"+ d;
-           }
-           }else{
-            diaActual= y+"-" +m+ "-" +d;
-            }
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#calendario').fullCalendar({
+            defaultView: 'agendaWeek',
+            hiddenDays: [0, 6],
+            scrollTime: "08:00:00",
+            minTime: "08:00:00",
+            maxTime: "18:00:00",
+            events: function(start, end, timezone, callback) {
+                // Obtener las citas desde el servidor usando la ruta getCitasCalendario
+                $.ajax({
+                    url: "{{ route('getCitasCalendario') }}",
+                    dataType: "json",
+                    success: function(response) {
+                        // Devolver las citas al calendario
+                        callback(response);
+                    }
+                });
+            },
 
-        if(diaActual<=Fechamantenimiento){
-          $('#MantenimientoModal').modal();
-          $("#fechamantenimiento").val(Fechamantenimiento[0]);
-        }
 
-        
-        //$("#fechamantenimiento").val(Fechamantenimiento[0]);
-        //$("#fechamantenimiento").val(diaActual);
-        $("#horamantenimiento").val(Fechamantenimiento[1]);
+            eventClick: function(calEvent, jsEvent, view) {
+                $('#EventoModal').modal();
+                // Llenar los campos del modal con los datos del evento
+                $("#usuario").val(calEvent.user);
+                $("#vehiculo").val(calEvent.vehiculo);
+                $("#tipoVehiculo").val(calEvent.tipoVehiculo);
+                $("#placaVehiculo").val(calEvent.placaVehiculo);
+                $("#kilometrajeVehiculo").val(calEvent.kilometrajeVehiculo);
+                $("#subcircuito").val(calEvent.subcircuito);
+            },
+            
+            dayClick: function(date, jsEvent, view) {
+              var fecha = date.format();
+              var hora = ("01:00:00").split(":");
+              Fechamantenimiento = fecha.split("T");
+              
+              n = new Date();
+              y = n.getFullYear();
+              m = n.getMonth()+1;
+              d = n.getDate();
 
-       
-      },
-      eventClick:function(calEvent,jsEvent, view){
-        if ("{{ auth()->user()->rol }}" == 'Policia' && "{{ auth()->user()->id }}"==userId){
-          $('#EventoModal').modal();
-        } 
-        
-        $('#usuario').html(calEvent.title);
-        $('#solicitudMantenimiento_id').val(calEvent.id);
-      }
+              if (m < 10) {
+                M="0"+m;
+                if(d<10){
+                  D = "0"+d;
+                  diaActual = y + "-" + M + "-" + D;
+                }else{
+                  diaActual = y + "-" +M+ "-"+ d;
+                }
+                }else{
+                  diaActual= y+"-" +m+ "-" +d;
+                  }
+              if(diaActual<=Fechamantenimiento){
+                $('#MantenimientoModal').modal();
+                $("#fechamantenimiento").val(Fechamantenimiento[0]);
+              }
+              $("#horamantenimiento").val(Fechamantenimiento[1]);
+            },
+        });
     });
-   </script> 
-   <script>
+</script>
+
+
+  
+
+  <script>
     // Escuchar los cambios en el campo de selección de tipo de vehículo
     document.getElementById('tipo_vehiculo').addEventListener('change', function() {
         // Obtener el valor seleccionado
@@ -453,55 +460,55 @@
             capacidadPasajeros.value = "4";
         }
     });
-</script>
+  </script>
 
-<script>
-  $(document).ready(function() {
-    // Cuando se cambia la selección del usuario
-    $("#user_id").on("change", function() {
-      // Obtener el valor seleccionado del usuario
-      var userId = $(this).val();
+  <script>
+    $(document).ready(function() {
+      // Cuando se cambia la selección del usuario
+      $("#user_id").on("change", function() {
+        // Obtener el valor seleccionado del usuario
+        var userId = $(this).val();
 
-      // Si no se ha seleccionado ningún usuario, limpiar los campos "vehiculomantenimiento" y "kilometrajeactual"
-      if (userId === "") {
-        $("#vehiculomantenimiento").val("");
-        $("#kilometrajeactual").val("");
-        return;
-      }
-
-      // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
-      $.ajax({
-        url: "{{ route('obtenerVehiculoUsuario', '') }}/" + userId, // Utiliza la ruta con el nombre definido en web.php
-        type: "GET",
-        dataType: "json",
-        success: function(response) {
-          // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
-          console.log(response.vehiculo.placa)
-          // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
-          if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.placa) {
-              $("#vehiculomantenimiento").val(response.vehiculo.vehiculo.placa);
-              $("#vehiculo_id").val(response.vehiculo.vehiculo.id);
-          } else {
-              $("#vehiculomantenimiento").val("No asignado");
-          }
-
-          // Actualizar el campo "kilometrajeactual" con el valor del kilometraje recibido
-          if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.kilometraje) {
-              $("#kilometrajeactual").val(response.vehiculo.vehiculo.kilometraje);
-              // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
-              $("#kilometrajeactual").attr("min", response.vehiculo.vehiculo.kilometraje);
-          } else {
-              $("#kilometrajeactual").val("No disponible");
-          }
-        },
-        error: function() {
-          // En caso de error, mostrar un mensaje o realizar alguna acción
-          $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+        // Si no se ha seleccionado ningún usuario, limpiar los campos "vehiculomantenimiento" y "kilometrajeactual"
+        if (userId === "") {
+          $("#vehiculomantenimiento").val("");
+          $("#kilometrajeactual").val("");
+          return;
         }
+
+        // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
+        $.ajax({
+          url: "{{ route('obtenerVehiculoUsuario', '') }}/" + userId, // Utiliza la ruta con el nombre definido en web.php
+          type: "GET",
+          dataType: "json",
+          success: function(response) {
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            console.log(response.vehiculo.placa)
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.placa) {
+                $("#vehiculomantenimiento").val(response.vehiculo.vehiculo.placa);
+                $("#vehiculo_id").val(response.vehiculo.vehiculo.id);
+            } else {
+                $("#vehiculomantenimiento").val("No asignado");
+            }
+
+            // Actualizar el campo "kilometrajeactual" con el valor del kilometraje recibido
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.kilometraje) {
+                $("#kilometrajeactual").val(response.vehiculo.vehiculo.kilometraje);
+                // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+                $("#kilometrajeactual").attr("min", response.vehiculo.vehiculo.kilometraje);
+            } else {
+                $("#kilometrajeactual").val("No disponible");
+            }
+          },
+          error: function() {
+            // En caso de error, mostrar un mensaje o realizar alguna acción
+            $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+          }
+        });
       });
     });
-  });
-</script>
+  </script>
 
 
 

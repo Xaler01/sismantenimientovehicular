@@ -84,7 +84,10 @@ Route::put('PersonalVehiculo/{id}', [AsignarVehiculoController::class, 'update']
 
 //Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
 Route::get('SolicitudMantenimiento', [SolicitudMantenimientoController::class, 'index'])->name('modulos.SolicitudMantenimiento');
+Route::get('Solicitudes', [SolicitudMantenimientoController::class, 'index2'])->name('Solicitudes');
+Route::post('actualizar-solicitud', [SolicitudMantenimientoController::class, 'actualizarSolicitud'])->name('actualizar-solicitud');
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
 Route::get('obtenerVehiculoUsuario/{userId}', [SolicitudMantenimientoController::class, 'obtenerVehiculoUsuario'])->name('obtenerVehiculoUsuario');
 Route::post('guardar-solicitud', [SolicitudMantenimientoController::class, 'store'])->name('guardar-solicitud');
-Route::delete('borrar-solicitud', [SolicitudMantenimientoController::class, 'destroy'])->name('borrar-solicitud');
+Route::get('getCitasCalendario', [SolicitudMantenimientoController::class, 'getCitasCalendario'])->name('getCitasCalendario');
+
