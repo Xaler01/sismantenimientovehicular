@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label for="tipo_vehiculo">Tipo Vehiculo: </label>
                                 <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" required>
-                                    @foreach($tipoVehiculo as $tipo_vehiculo)
+                                    @foreach($tipo_vehiculo as $tipo_vehiculo)
                                         <option value="{{ $tipo_vehiculo->id }}"{{ $vehiculo->tipo_vehiculo_id == $tipo_vehiculo->id ? 'selected' : '' }}>
                                         {{ $tipo_vehiculo->nombre }}
                                     @endforeach
@@ -99,8 +99,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="tipo_vehiculo">Tipo Vehiculo: </label>
-                                <input type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo }}" readonly>
+                                <label for="tipo_vehiculo">Tipo Vehicular: </label>
+                                <input type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo_id }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="placa">Placa:</label>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="marca">Marca:</label>
-                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca}}" readonly>
+                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca_id}}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="modelo">Modelo:</label>

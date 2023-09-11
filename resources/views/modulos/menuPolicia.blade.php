@@ -14,9 +14,16 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">
+                <!--<a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">-->
+                <a href="{{ url('SolicitudMantenimiento') }}">
                     <i class="fa fa-wrench"></i>
                     <span>Solicitud de mantenimiento</span> 
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('Parroquias') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Parroquias</span>
                 </a>
             </li>
      

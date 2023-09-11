@@ -16,6 +16,7 @@ class SolicitudMantenimiento extends Model
         'fecha_solicitud',
         'hora_solicitud',
         'kilometraje_actual',
+        'tipo_vehiculo_id',
         'observaciones',
         'estado_solicitud'        
     ];
@@ -27,6 +28,11 @@ class SolicitudMantenimiento extends Model
     public function vehiculo()
     {
         return $this->belongsTo(Vehiculos::class, 'vehiculo_id');
+    }
+
+    public function tipoVehiculo()
+    {
+        return $this->belongsTo(TipoVehiculos::class, 'tipo_vehiculo_id');
     }
     
     public function usuarios()

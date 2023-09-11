@@ -90,4 +90,5 @@ Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class,
 Route::get('obtenerVehiculoUsuario/{userId}', [SolicitudMantenimientoController::class, 'obtenerVehiculoUsuario'])->name('obtenerVehiculoUsuario');
 Route::post('guardar-solicitud', [SolicitudMantenimientoController::class, 'store'])->name('guardar-solicitud');
 Route::get('getCitasCalendario', [SolicitudMantenimientoController::class, 'getCitasCalendario'])->name('getCitasCalendario');
+Route::post('cancelar-solicitud', [SolicitudMantenimientoController::class, 'cancelarsolicitud'])->name('cancelar-solicitud');
 

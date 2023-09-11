@@ -15,6 +15,8 @@
     </section>
 </div>
 
+
+
 <div class="modal fade" id="MantenimientoModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -33,10 +35,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group"><span>A</span>
-                            <label for="vehiculomantenimiento">Vehiculo:</label>
+                        <div class="form-group">
+                            <label for="vehiculomantenimiento">Placa vehiculo:</label>
                             <input type="text" class="form-control" name="vehiculomantenimiento" id="vehiculomantenimiento" readonly>
                             <input type="hidden" class="form-control" name="vehiculo_id" id="vehiculo_id" >
+                            <input type="hidden" class="form-control" name="tipoVehiculo" id="tipoVehiculo" readonly>
                         </div>
 
                         <div class="form-group">
@@ -76,25 +79,41 @@
     </div>
 </div>
 
-<div class='modal fade' id='EventoModal'>
-    <div clas= "modal-dialog">
+<div class="modal fade" id="EventoModal">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <form method="Post" action="{{ url('borrar-solicitud') }}">
+            <form method="post" action="{{ route('cancelar-solicitud') }}">
                 @csrf
                 @method('post')
-                <div class= "modal-body">
+                <div class="modal-body">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="usuario">Usuario:</label>
-                            <input type="text" class="form-control" name="usuario" id="usuario" readonly>
+                            <input type="text" class="form-control" name="usuario" id="polinombre" readonly>                            
                         </div>
                         <div class="form-group">
-                            <label for="usuario">Vehiculo:</label>
-                            <input type="text" class="form-control" name="vehiculo" id="vehiculo" readonly>
+                            <label for="vehiculo">Vehiculo:</label>
+                            <input type="text" class="form-control" name="vehiculo" id="placa" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="tipoVehiculo">Tipo de Vehiculo:</label>
-                            <input type="text" class="form-control" name="tipoVehiculo" id="tipoVehiculo" readonly>
+                            <label for="tipodeVehiculo">Tipo de Vehiculo:</label>
+                            <input type="text" class="form-control" name="tipodeVehiculo" id="tipodeVehiculo" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipomantenimiento">Tipo de mantenimiento:</label>
+                            <input type="text" class="form-control" name="tipomantenimiento" id="tipomantenimiento" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcircuito">Subcircuito:</label>
+                            <input type="text" class="form-control" name="subcircuito" id="subcircuito" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="turno">Turno Num:</label>
+                            <input type="text" class="form-control" name="turno" id="turno" readonly>                       </div>
+                        <div class="form-group">
+                            <label for="estado">Estado de la solicitud:</label>
+                            <input type="text" class="form-control" name="estado" id="estado" readonly>
+                            
                         </div>
                     </div>
                 </div>
@@ -106,7 +125,7 @@
             </form>    
         </div>
     </div>
-
-
 </div>
+
+
 @endsection

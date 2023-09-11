@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\AsignarVehiculo;
 use App\Models\SolicitudMantenimiento;
 use App\Models\Policias;
+use App\Models\Subcircuitos;
 use App\Models\Vehiculos;
 use App\Models\TipoMantenimiento;
+use App\Models\TipoVehiculos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,22 +36,22 @@ class SolicitudMantenimientoController extends Controller
         $solicitudmantenimiento = SolicitudMantenimiento::all();
         $tiposMantenimiento = TipoMantenimiento::all();
 
+        //FUNCIONA      
+         
         $solicitudmantenimiento->transform(function ($solicitud) {
             return [
-                'user' => $solicitud->user_id,
-                'vehiculo' => $solicitud->vehiculo_id,
-                'mantenimiento' => $solicitud->tipo_mantenimiento_id,
+                'usuariosolicitud' => $solicitud->usuarios->name,
+                'vehiculo' => $solicitud->vehiculo->placa,
+                'tipodeVehiculo' => $solicitud->tipo_mantenimiento_id,
                 // Formatear la fecha y hora como cadenas ISO 8601
                 'fecha' => Carbon::parse($solicitud->fecha_solicitud)->toIso8601String(),
                 'hora' => Carbon::parse($solicitud->hora_solicitud)->toIso8601String(),
-                'kilometraje' => $solicitud->kilometraje_actual,    
+                'kilometraje' => $solicitud->kilometraje_actual, 
                 'observacion' => $solicitud->observaciones,
-                'estado' => $solicitud->estado_solicitud,
+                'tipoMantenimiento' => $solicitud->tipoMantenimiento,
             ];
         });
-
-
-        
+    
         return view('modulos.SolicitudMantenimiento', compact('vehiculomantenimiento','tiposMantenimiento','policias','solicitudmantenimiento'));
         
     }
@@ -68,15 +70,15 @@ class SolicitudMantenimientoController extends Controller
     
     public function getCitasCalendario()
     {
-        $solicitudes = SolicitudMantenimiento::select(['user_id', 'vehiculo_id', 'fecha_solicitud', 'hora_solicitud'])
-            ->where('estado_solicitud', 'Activo')
-            ->where('fecha_solicitud', '>=', Carbon::now()) // Solo citas futuras
-            ->get();
+        $solicitudes = SolicitudMantenimiento::whereIn('estado_solicitud',['Activo', 'Aprobada'])
+                                              ->where('fecha_solicitud', '>=', Carbon::now()) // Solo citas futuras
+                                              ->get();
 
-        $citas = [];
+                                            
+
 
         foreach ($solicitudes as $solicitud) {
-            $tipoVehiculo = $solicitud->vehiculo->tipo_vehiculo;
+            $tipoVehiculo = $solicitud->tipo_vehiculo_id;
 
 
             // Formatear la fecha y hora como cadenas ISO 8601
@@ -86,17 +88,31 @@ class SolicitudMantenimientoController extends Controller
             // Calcular la fecha y hora de finalización (1 hora después de la fecha y hora de inicio)
             $fechaFin = Carbon::parse($solicitud->fecha_solicitud)->addHour()->format('Y-m-d');
             $horaFin = Carbon::parse($solicitud->hora_solicitud)->addHour(1)->format('H:i:s');
-        
+            
+            $usuariosolicitud = Policias::where('id',$solicitud->user_id )->first();
+            $vehiculoSolicitud = Vehiculos::where('id',$solicitud->vehiculo_id)->first();
+            $mantenimiento = TipoMantenimiento::where('id',$solicitud->tipo_mantenimiento_id)->first();
+            $tipodevehiculo = TipoVehiculos::where('id',$solicitud->tipo_vehiculo_id)->first();
+            $subcircuto = Subcircuitos::where('id',$usuariosolicitud -> dependencia_id)->first();
             // Agregar la cita al array en el formato esperado por el calendario
             $citas[] = [
                 'title' => 'Solicitud de Mantenimiento', // Título del evento
+                'id' =>$solicitud->id,
+                'user' => $solicitud->user_id, // ID del usuario asociado a la solicitud
+                //'usernombre' => $solicitud->user_id,
+                'polinombre' => $usuariosolicitud-> name,
+                'vehiculo' => $solicitud->vehiculo_id, // ID del vehículo asociado a la solicitud
+                'placa' => $vehiculoSolicitud -> placa,  
+                'tipomantenimiento' => $mantenimiento->nombre,
                 'start' => $fechaInicio . 'T' . $horaInicio, // Fecha y hora de inicio del evento
                 'end' => $fechaFin . 'T' . $horaFin, // Fecha y hora de finalización del evento
-                'user' => $solicitud->user_id, // ID del usuario asociado a la solicitud
+                'kilometraje' => $solicitud->kilometraje_actual,
+                'tipodeVehiculo' => $tipodevehiculo->nombre,
+                'estado_solicitud' => $solicitud -> estado_solicitud,
+                'subcircuito' => $subcircuto -> nombre,
                 
-                'tipoVehiculo' => $tipoVehiculo,
-                'vehiculo' => $solicitud->vehiculo_id, // ID del vehículo asociado a la solicitud
             ];
+            
         }
 
         // Devolver las citas en formato JSON
@@ -165,13 +181,23 @@ class SolicitudMantenimientoController extends Controller
                                     ->orWhere('user4_id', $userId)
                                     ->with('vehiculo')
                                     ->first();
-        
+       
 
         // Devuelve la información del vehículo en formato JSON
-        return response()->json(['vehiculo' => $vehiculo]);
+        return response()->json([
+            'vehiculo' => $vehiculo
+   
+        ]);
         //return response()->json(['vehiculo' => ['placa' => $vehiculo->vehiculo->placa,'kilometrajeactual' => $vehiculo->vehiculo->kilometraje]]);
     }
  
+    /**
+         $usuariosolicitud = Policias::find($userId);
+        $vehiculosolicitud = $usuariosolicitud->vehiculoAsignado();
+        'usuariosolicitud' => $usuario->name,
+        'vehiculosolicitud' => $vehiculo->placa, 
+    
+     */
 
     /**
      * Show the form for creating a new resource.
@@ -190,6 +216,7 @@ class SolicitudMantenimientoController extends Controller
         $request->validate([
             'user_id' => 'required',
             'vehiculo_id' => 'required',
+            'tipoVehiculo' => 'required',
             'kilometrajeactual' => 'required|numeric',
             'fechamantenimiento' => 'required',
             'horamantenimiento' => 'required',
@@ -202,6 +229,7 @@ class SolicitudMantenimientoController extends Controller
            
             'user_id' => $request->input('user_id'),
             'vehiculo_id' => $request->input('vehiculo_id'),
+            'tipo_vehiculo_id' => $request->input('tipoVehiculo'),
             'tipo_mantenimiento_id' => $request->input('mantenimiento'),
             'fecha_solicitud' => $request->input('fechamantenimiento'),
             'hora_solicitud' => $request->input('horamantenimiento'),
@@ -254,17 +282,19 @@ class SolicitudMantenimientoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SolicitudMantenimiento $solicitudMantenimiento)
-    {   
-        /**
-            $subcircuito = Subcircuitos::findOrfail($id);
-            $subcircuito->estado= 'Eliminado';
-            $subcircuito->save();
-            return redirect('Subcircuitos')->with('eliminadoGen', 'Si');*/
-    
-        
-        DB::table('solicitud_mantenimiento')-> whereId(request('id'))->get();
 
-        return redirect('SolicitudMantenimiento');
+   
+    public function cancelarsolicitud(Request $request)
+    {   
+        $request->validate([
+            'turno' => 'required|exists:solicitud_mantenimiento,id',
+            
+        ]);
+        
+        $idSolicitud = $request->input('turno');
+        $solicitudacancelar = SolicitudMantenimiento::findOrfail($idSolicitud);
+        $solicitudacancelar -> estado_solicitud= 'Cancelada';
+        $solicitudacancelar -> save();
+        return redirect()->route('modulos.SolicitudMantenimiento')->with('success', 'Solicitud de mantenimiento cancelada');
     }
 }
