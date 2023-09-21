@@ -58,28 +58,21 @@
                 </a>
             </li>
             <li>
-                <!--<a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">-->
                 <a href="{{ url('SolicitudMantenimiento') }}">
-                    <i class="fa fa-calendar-check-o"></i>
+                    <i class="fa fa-wrench"></i>
                     <span>Solicitud de mantenimiento</span> 
                 </a>
             </li>
             <li>
                 <a href="{{ url('Solicitudes') }}">
-                    <i class="fa fa-tasks"></i>
+                    <i class="fa fa-list"></i>
                     <span>Gestion de Solicitudes</span> 
                 </a>
             </li>
             <li>
-                <a href="{{ url('Ordenes') }}">                    
-                    <i class="fa fa-cogs"></i>
-                    <span>Ordenes de trabajo</span> 
-                </a>
-            </li>
-            <li>
-                <a href="{{ url('Informes') }}">                    
-                    <i class="fa fa-bar-chart"></i>
-                    <span>Informes</span> 
+                <a href="{{ url('Encargados') }}">
+                    <i class="fa fa-users"></i>
+                    <span>Encargados</span> 
                 </a>
             </li>
         </ul>

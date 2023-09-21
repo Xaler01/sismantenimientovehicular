@@ -21,9 +21,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('Parroquias') }}">
+                <a href="{{ url('Historial') }}">
                     <i class="fa fa-list"></i>
-                    <span>Parroquias</span>
+                    <span>Historial</span>
                 </a>
             </li>
      

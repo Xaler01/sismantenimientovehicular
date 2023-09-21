@@ -10,7 +10,9 @@ use App\Http\Controllers\VehiculoSubcircuitoController;
 use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
 use App\Http\Controllers\CircuitosController;
+use App\Http\Controllers\EncargadosController;
 use App\Http\Controllers\ParroquiasController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubcircuitosController;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +31,13 @@ Route::get('/Ingresar', function () {
 
 Auth::routes();
 
+Route::get('/generar-pdf/{id}', [PdfController::class, 'generarPdf']);
 Route::get('Inicio', [InicioController::class, 'index']); 
+//Route::get('Perfil', [InicioController::class, 'DatosCreate']); 
+Route::get('Editar-Perfil/{id}', [InicioController::class,'edit']);
+Route::put('Actualizar-Perfil/{id}', [InicioController::class,'update']);
+Route::get('Editar-Inicio', [InicioController::class, 'editar']); 
+Route::put('Editar-Inicio', [InicioController::class, 'actualizar']); 
 
 Route::get('Parroquias', [ParroquiasController::class, 'index'])->name('parroquias.index');
 Route::post('Parroquias', [ParroquiasController::class, 'store'])->name('parroquias.store');
@@ -62,6 +70,13 @@ Route::get('Editar-Policia/{id}', [PoliciasController::class,'edit']);
 Route::put('Actualizar-Policia/{id}', [PoliciasController::class,'update']);
 Route::get('Eliminar-Policia/{id}',[PoliciasController::class, 'destroy']);
 
+Route::get('Encargados', [EncargadosController::class, 'index']); 
+Route::post('Encargados', [EncargadosController::class,'store']);
+Route::get('Editar-Encargado/{id}', [EncargadosController::class,'edit']);
+Route::put('Actualizar-Encargado/{id}', [EncargadosController::class,'update']);
+Route::get('Eliminar-Policia/{id}',[EncargadosController::class, 'destroy']);
+
+
 Route::get('Vehiculos', [VehiculosController::class, 'index']);
 Route::get('Crear-Vehiculo', [VehiculosController::class, 'create']);
 Route::post('Crear-Vehiculo', [VehiculosController::class, 'store']);
@@ -84,11 +99,19 @@ Route::put('PersonalVehiculo/{id}', [AsignarVehiculoController::class, 'update']
 
 //Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
 Route::get('SolicitudMantenimiento', [SolicitudMantenimientoController::class, 'index'])->name('modulos.SolicitudMantenimiento');
-Route::get('Solicitudes', [SolicitudMantenimientoController::class, 'index2'])->name('Solicitudes');
+Route::get('Solicitudes', [SolicitudMantenimientoController::class, 'solicitudes'])->name('Solicitudes');
 Route::post('actualizar-solicitud', [SolicitudMantenimientoController::class, 'actualizarSolicitud'])->name('actualizar-solicitud');
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
 Route::get('obtenerVehiculoUsuario/{userId}', [SolicitudMantenimientoController::class, 'obtenerVehiculoUsuario'])->name('obtenerVehiculoUsuario');
 Route::post('guardar-solicitud', [SolicitudMantenimientoController::class, 'store'])->name('guardar-solicitud');
+Route::post('guardar-solicitudP', [SolicitudMantenimientoController::class, 'storeP'])->name('guardar-solicitudP');
 Route::get('getCitasCalendario', [SolicitudMantenimientoController::class, 'getCitasCalendario'])->name('getCitasCalendario');
 Route::post('cancelar-solicitud', [SolicitudMantenimientoController::class, 'cancelarsolicitud'])->name('cancelar-solicitud');
 
+//Historial de mantenimiento vehicular
+Route::get('Historial',[SolicitudMantenimientoController::class,'historial']);
+
+//Ordenes de trabajo
+Route::get('Ordenes', [SolicitudMantenimientoController::class, 'ordenes'])->name('Ordenes');
+Route::get('Editar-Orden/{id}', [SolicitudMantenimientoController::class,'edit']);
+Route::put('Actualizar-Orden/{id}', [SolicitudMantenimientoController::class,'update']);

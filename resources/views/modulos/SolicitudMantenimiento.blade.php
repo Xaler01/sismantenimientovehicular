@@ -127,5 +127,61 @@
     </div>
 </div>
 
+<div class="modal fade" id="MantenimientoPModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method = "post" action="{{ route('guardar-solicitudP') }}">
+                @csrf
+                @method('post')
+                <div class="modal-body">
+                    <div class="box-body"> 
+                        <div class="form-group">
+                            <label for="user_idP">Usuario:</label>
+                            <input type="text" class="form-control" value = "{{ auth() -> user()-> name  }}" readonly>  
+                            <input type="hidden" class="form-control" name="user_idP"  id="user_idP" value = "{{ auth() -> user()-> id  }}" readonly>  
+                        </div>
+                        <div class="form-group">
+                            <label for="vehiculomantenimientop">Placa vehiculo:</label>
+                            <input type="text" class="form-control" name="vehiculomantenimientoP" id="vehiculomantenimientoP" readonly>
+                            <input type="hidden" class="form-control" name="vehiculo_idP" id="vehiculo_idP" >
+                            <input type="hidden" class="form-control" name="tipoVehiculoP" id="tipoVehiculoP" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kilometrajeactualP">Kilometraje actual:</label>
+                            <input type="number" class="form-control" name="kilometrajeactualP" id="kilometrajeactualP" min="kilometrajeactualP" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fechamantenimientoP">Fecha mantenimiento:</label>
+                            <input type="text" class="form-control" name="fechamantenimientoP" id="fechamantenimientoP" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="horamantenimientoP">Hora solictud:</label>
+                            <input type="time" class="form-control" name="horamantenimientoP" id="horamantenimientoP" readonly>
+                        </div>                
+                        <div class="form-group">
+                            <label for="mantenimientoP">Tipo de Mantenimiento:</label>
+                            <select class="form-control" name="mantenimientoP" id="mantenimientoP">
+                                <option value="">Seleccionar tipo de mantenimiento</option>
+                                @foreach($tiposMantenimiento as $tipoMantenimiento)
+                                    <option value="{{ $tipoMantenimiento->id }}">{{ $tipoMantenimiento->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="observacionesP">Observaciones:</label>
+                            <textarea  class="form-control" name="observacionesP" id="observacionesP" rows="4" ></textarea>
+                        </div> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Pedir Mantenimiento</button>
+                    <button type="button" class="btn btn-danger " data-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection

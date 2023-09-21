@@ -18,6 +18,7 @@ class SolicitudMantenimiento extends Model
         'kilometraje_actual',
         'tipo_vehiculo_id',
         'observaciones',
+        'observacionesTaller',
         'estado_solicitud'        
     ];
 

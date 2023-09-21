@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\AsignarVehiculo;
+use App\Models\Marcas;
 use App\Models\SolicitudMantenimiento;
 use App\Models\Policias;
+use App\Models\Rangos;
 use App\Models\Subcircuitos;
 use App\Models\Vehiculos;
 use App\Models\TipoMantenimiento;
 use App\Models\TipoVehiculos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudMantenimientoController extends Controller
 {
@@ -25,7 +27,7 @@ class SolicitudMantenimientoController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->rol == "Policia" && auth()-> user()->rol !="Encargado"){
+        if(auth()->user()->rol != "Policia" && auth()-> user()->rol !="Encargado"&& auth()-> user()->rol !="Administrador"){
             return redirect('Inicio');
         }
         
@@ -56,13 +58,22 @@ class SolicitudMantenimientoController extends Controller
         
     }
 
-    public function index2()
+    public function solicitudes()
     {
         $solicitud = SolicitudMantenimiento::all();
         // Resto del código necesario para preparar los datos para la vista
 
         return view('modulos.Solicitudes', compact('solicitud'));
     }
+
+    public function ordenes()
+    {
+        $orden = SolicitudMantenimiento::where('estado_solicitud','Aprobada')->get();
+        // Resto del código necesario para preparar los datos para la vista
+        $usuario = Policias::where('id','{{ $orden -> user_id }}')->get();
+        return view('modulos.Ordenes', compact('orden','usuario'));
+    }
+
 
   
 
@@ -109,6 +120,7 @@ class SolicitudMantenimientoController extends Controller
                 'kilometraje' => $solicitud->kilometraje_actual,
                 'tipodeVehiculo' => $tipodevehiculo->nombre,
                 'estado_solicitud' => $solicitud -> estado_solicitud,
+                'rol' => $usuariosolicitud-> rol,
                 'subcircuito' => $subcircuto -> nombre,
                 
             ];
@@ -126,6 +138,7 @@ class SolicitudMantenimientoController extends Controller
         $request->validate([
             'solicitud_id' => 'required|exists:solicitud_mantenimiento,id',
             'estado' => 'required|in:Activo,Aprobada,Rechazada,Recalendarizar',
+            
         ]);
 
         // Obtener la solicitud por su ID
@@ -254,29 +267,127 @@ class SolicitudMantenimientoController extends Controller
 
     }
 
+    public function storeP(Request $request)
+    {
+        // Valida los datos del formulario antes de guardarlos
+        $request->validate([
+            'user_idP' => 'required',
+            'vehiculo_idP' => 'required',
+            'tipoVehiculoP' => 'required',
+            'kilometrajeactualP' => 'required|numeric',
+            'fechamantenimientoP' => 'required',
+            'horamantenimientoP' => 'required',
+            'mantenimientoP' => 'required',
+            'observacionesP' => 'nullable|string',
+        ]);
+
+        // Crea una nueva instancia del modelo SolicitudMantenimiento con los datos del formulario
+        $solicitudP = new SolicitudMantenimiento([
+           
+            'user_id' => $request->input('user_idP'),
+            'vehiculo_id' => $request->input('vehiculo_idP'),
+            'tipo_vehiculo_id' => $request->input('tipoVehiculoP'),
+            'tipo_mantenimiento_id' => $request->input('mantenimientoP'),
+            'fecha_solicitud' => $request->input('fechamantenimientoP'),
+            'hora_solicitud' => $request->input('horamantenimientoP'),
+            'kilometraje_actual' => $request->input('kilometrajeactualP'),
+            'observaciones' => $request->input('observacionesP')
+            
+        ]);
+
+        // Guarda la solicitud en la base de datos
+        $solicitudP->save();
+
+        // Actualizar el kilometraje en la tabla "vehiculos"
+        $vehiculoId = $request->input('vehiculo_idP');
+        $kilometrajeActual = $request->input('kilometrajeactualP');
+
+        $vehiculo = Vehiculos::find($vehiculoId);
+        $vehiculo->kilometraje = $kilometrajeActual;
+        $vehiculo->save();
+
+        // Redirige a una página de éxito o muestra un mensaje de éxito
+        return redirect()->route('modulos.SolicitudMantenimiento')->with('success', 'Solicitud de mantenimiento enviada con éxito.');
+
+    }
+
+
+   
+
 
     /**
      * Display the specified resource.
      */
-    public function show(SolicitudMantenimiento $solicitudMantenimiento)
+    public function historial ()
     {
-        //
+        $user = Auth::user();
+        // Verifica si el usuario está autenticado
+        
+        $solicitud = SolicitudMantenimiento::where('user_id', $user->id)->get();
+        
+        //$solicitud = SolicitudMantenimiento::all();
+        // Resto del código necesario para preparar los datos para la vista
+
+        return view('modulos.Historial', compact('solicitud')); 
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SolicitudMantenimiento $solicitudMantenimiento)
+    public function edit($id)
     {
-        //
+       
+        if (auth()->user()->rol != "Administrador" && auth()->user()->rol != "Encargado" && auth()->user()->rol != "Auxiliar") {
+            return redirect('Inicio');
+        }
+        
+        $orden = SolicitudMantenimiento::find($id);
+        
+        $usuario = Policias::where('id', $orden -> user_id )->first();
+        $rango = Rangos::where('id', $usuario->rango_id)->first();
+        $subcircuito = Subcircuitos::where('id', $usuario -> dependencia_id )->first();
+        $vehiculo = Vehiculos::where('id', $orden->vehiculo_id)->first();
+        $tipodevehiculo = TipoVehiculos::where('id',$orden->tipo_vehiculo_id)->first();
+        $marca = Marcas::where('id',$vehiculo->marca_id)->first();
+        $mantenimiento   = TipoMantenimiento::where('id',$orden->tipo_mantenimiento_id)->first();
+        //getCitasCalendario()
+        return view('modulos.Editar-Orden', compact('orden','usuario','rango','subcircuito','vehiculo','tipodevehiculo','marca','mantenimiento'));
+
+        
+    
+       
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SolicitudMantenimiento $solicitudMantenimiento)
+    public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            
+            'observacionesTaller' => 'required|string|max:600',
+            'estado' => 'required|in:Atendida,Rechazada,Revisando',
+        ]);
+        
+
+        // Obtener la solicitud por su ID
+        $orden = SolicitudMantenimiento::find($id);
+
+        if (!$orden) {
+            return redirect()->back()->with('error', 'No se encontró la solicitud de mantenimiento.');
+        }
+
+       
+        // Actualizar el estado de la solicitud
+        $orden->observacionesTaller = $request->input('observacionesTaller');
+        $orden->estado_solicitud = $request->input('estado');
+        
+        $orden->save();
+   
+
+        return redirect('Editar-Orden/'.$orden->id)->with('orden', $orden);
+        //return redirect('Ordenes')->with('orden', $orden);
     }
 
     /**
@@ -295,6 +406,6 @@ class SolicitudMantenimientoController extends Controller
         $solicitudacancelar = SolicitudMantenimiento::findOrfail($idSolicitud);
         $solicitudacancelar -> estado_solicitud= 'Cancelada';
         $solicitudacancelar -> save();
-        return redirect()->route('modulos.SolicitudMantenimiento')->with('success', 'Solicitud de mantenimiento cancelada');
+        return redirect()->route('modulos.Editar-Orden')->with('success', 'Solicitud de mantenimiento cancelada');
     }
 }
