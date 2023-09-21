@@ -20,20 +20,26 @@ class EncargadosController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index()
-    {
-        if (auth()->user()->rol != "Administrador" ) {
-            return redirect('Inicio');
-        }
-        $dependencias = Dependencias::all();
-        $tiposSangre = TipoSangre::all();
-        $ciudades = Ciudades::all();
-        $rangos = Rangos::all();
-
-        $encargados = Encargados::all()->where('rol', 'Encargado');
-
-        return view('modulos.Encargados',compact('dependencias',  'tiposSangre', 'ciudades', 'rangos'))->with('encargados', $encargados);
+{
+    if (auth()->user()->rol !== "Administrador") {
+        return redirect('Inicio');
     }
+    
+    $dependencias = Dependencias::all();
+    $tiposSangre = TipoSangre::all();
+    $ciudades = Ciudades::all();
+    $rangos = Rangos::all();
+
+    $encargados = Encargados::where('rol', 'Encargado')
+                             ->where('estado_id', 1)
+                             ->get();
+
+    return view('modulos.Encargados', compact('dependencias', 'tiposSangre', 'ciudades', 'rangos', 'encargados'));
+}
+
 
     
     /**

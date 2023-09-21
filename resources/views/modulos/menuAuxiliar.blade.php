@@ -64,12 +64,6 @@
                     <span>Solicitud de mantenimiento</span> 
                 </a>
             </li>
-            <li >
-                <a href="{{ url('Ordenes') }}">                    
-                    <i class="fa fa-cogs"></i>
-                    <span>Ordenes de trabajo</span> 
-                </a>
-            </li>
            
         
         </ul>

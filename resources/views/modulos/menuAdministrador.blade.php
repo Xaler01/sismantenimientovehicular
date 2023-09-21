@@ -14,6 +14,12 @@
                 </a>
             </li>   
             <li>
+                <a href="{{ url('Encargados') }}">
+                    <i class="fa fa-users"></i>
+                    <span>Encargados</span> 
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('Vehiculos') }}">
                     <i class="fa fa-car"></i>
                     <span>Vehiculos</span> 
@@ -69,12 +75,20 @@
                     <span>Gestion de Solicitudes</span> 
                 </a>
             </li>
+            
             <li>
-                <a href="{{ url('Encargados') }}">
-                    <i class="fa fa-users"></i>
-                    <span>Encargados</span> 
+                <a href="{{ url('Informe1') }}">                    
+                    <i class="fa fa-bar-chart"></i>
+                    <span>Informes</span> 
                 </a>
             </li>
+            <li>
+                <a href="{{ url('Informe2') }}">                    
+                    <i class="fa fa-bar-chart"></i>
+                    <span>Informe 2</span> 
+                </a>
+            </li>
+            
         </ul>
     </section>
 </aside>

@@ -80,7 +80,7 @@
                                         <select class="form-control" name="circuito" id="circuito" required>
                                             <option value="">Seleccionar...</option>
                                             @foreach($circuitos as $circuito)
-                                                <option value="{{ $circuito->id }}">{{ $circuito->nombre .' '. $circuito->codigo}}</option>
+                                                <option value="{{ $circuito->id }}">{{ $circuito->codigo .' - '. $circuito->nombre}}</option>
                                             @endforeach
                                         </select>  
                                     </div>

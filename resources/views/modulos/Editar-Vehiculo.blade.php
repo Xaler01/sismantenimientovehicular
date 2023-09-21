@@ -15,13 +15,13 @@
                 <form method="post" action="{{ url('Actualizar-Vehiculo/'.$vehiculo->id) }}">
                     @csrf
                     @method('put')
-                    @if(auth()->user()->rol == "Encargado")
+                    @if(auth()->user()->rol !== "Policia")
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tipo_vehiculo">Tipo Vehiculo: </label>
                                 <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" required>
-                                    @foreach($tipo_vehiculo as $tipo_vehiculo)
+                                    @foreach($tipoVehiculo as $tipo_vehiculo)
                                         <option value="{{ $tipo_vehiculo->id }}"{{ $vehiculo->tipo_vehiculo_id == $tipo_vehiculo->id ? 'selected' : '' }}>
                                         {{ $tipo_vehiculo->nombre }}
                                     @endforeach
