@@ -70,18 +70,25 @@
                     <span>Gestion de Solicitudes</span> 
                 </a>
             </li>
-            <li>
+            <li >
                 <a href="{{ url('Ordenes') }}">                    
                     <i class="fa fa-cogs"></i>
                     <span>Ordenes de trabajo</span> 
                 </a>
             </li>
             <li>
-                <a href="{{ url('Informes') }}">                    
+                <a href="{{ url('Informe1') }}">                    
                     <i class="fa fa-bar-chart"></i>
                     <span>Informes</span> 
                 </a>
             </li>
+            <li>
+                <a href="{{ url('Informe2') }}">                    
+                    <i class="fa fa-bar-chart"></i>
+                    <span>Informe 2</span> 
+                </a>
+            </li>
+        
         </ul>
     </section>
 </aside>

@@ -11,6 +11,7 @@ use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\AsignarVehiculoController;
 use App\Http\Controllers\CircuitosController;
 use App\Http\Controllers\EncargadosController;
+use App\Http\Controllers\InformesController;
 use App\Http\Controllers\ParroquiasController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SubcircuitosController;
@@ -115,3 +116,6 @@ Route::get('Historial',[SolicitudMantenimientoController::class,'historial']);
 Route::get('Ordenes', [SolicitudMantenimientoController::class, 'ordenes'])->name('Ordenes');
 Route::get('Editar-Orden/{id}', [SolicitudMantenimientoController::class,'edit']);
 Route::put('Actualizar-Orden/{id}', [SolicitudMantenimientoController::class,'update']);
+
+Route::get('Informe1', [InformesController::class, 'indexinf1']);
+Route::get('Informe2', [InformesController::class, 'indexinf2']);
