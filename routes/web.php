@@ -106,7 +106,7 @@ Route::post('actualizar-solicitud', [SolicitudMantenimientoController::class, 'a
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
 Route::get('obtenerVehiculoUsuario/{userId}', [SolicitudMantenimientoController::class, 'obtenerVehiculoUsuario'])->name('obtenerVehiculoUsuario');
 Route::post('guardar-solicitud', [SolicitudMantenimientoController::class, 'store'])->name('guardar-solicitud');
-Route::post('guardar-solicitudM', [SolicitudMantenimientoController::class, 'storeM'])->name('guardar-solicitudP');
+Route::post('guardar-solicitudM', [SolicitudMantenimientoController::class, 'storeM'])->name('guardar-solicitudM');
 Route::post('guardar-solicitudP', [SolicitudMantenimientoController::class, 'storeP'])->name('guardar-solicitudP');
 Route::get('getCitasCalendario', [SolicitudMantenimientoController::class, 'getCitasCalendario'])->name('getCitasCalendario');
 Route::post('cancelar-solicitud', [SolicitudMantenimientoController::class, 'cancelarsolicitud'])->name('cancelar-solicitud');

@@ -80,13 +80,13 @@
             <li >
                 <a href="{{ url('Ordenes') }}">                    
                     <i class="fa fa-cogs"></i>
-                    <span>Ordenes de trabajo</span> 
+                    <span>Aut. Ordes y Solicitudes</span> 
                 </a>
             </li>
             <li >
                 <a href="{{ url('Autorizaciones') }}">                    
                     <i class="fa fa-cogs"></i>
-                    <span>Autorizaciones</span> 
+                    <span>Autorizaciones de movilización</span> 
                 </a>
             </li>
            

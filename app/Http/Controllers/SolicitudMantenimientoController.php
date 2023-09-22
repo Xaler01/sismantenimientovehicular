@@ -111,7 +111,7 @@ class SolicitudMantenimientoController extends Controller
         $orden = SolicitudMantenimiento::where('estado_solicitud','Autorizada')->get();
         // Resto del código necesario para preparar los datos para la vista
         $usuario = Policias::where('id','{{ $orden -> user_id }}')->get();
-        return view('modulos.Ordenes', compact('orden','usuario'));
+        return view('modulos.Autorizaciones', compact('orden','usuario'));
     }
 
 
@@ -321,6 +321,7 @@ class SolicitudMantenimientoController extends Controller
             'mantenimientoP' => 'required',
             'observacionesP' => 'nullable|string',
         ]);
+       
 
         // Crea una nueva instancia del modelo SolicitudMantenimiento con los datos del formulario
         $solicitudP = new SolicitudMantenimiento([
@@ -335,6 +336,7 @@ class SolicitudMantenimientoController extends Controller
             'observaciones' => $request->input('observacionesP')
             
         ]);
+      
 
         // Guarda la solicitud en la base de datos
         $solicitudP->save();
@@ -369,7 +371,7 @@ class SolicitudMantenimientoController extends Controller
         ]);
 
         // Crea una nueva instancia del modelo SolicitudMantenimiento con los datos del formulario
-        $solicitudP = new SolicitudMantenimiento([
+        $solicitudM = new SolicitudMantenimiento([
            
             'user_id' => $request->input('user_idP'),
             'vehiculo_id' => $request->input('vehiculo_idP'),
@@ -383,7 +385,7 @@ class SolicitudMantenimientoController extends Controller
         ]);
 
         // Guarda la solicitud en la base de datos
-        $solicitudP->save();
+        $solicitudM->save();
 
         // Actualizar el kilometraje en la tabla "vehiculos"
         $vehiculoId = $request->input('vehiculo_idP');
@@ -497,6 +499,7 @@ class SolicitudMantenimientoController extends Controller
         $solicitudacancelar = SolicitudMantenimiento::findOrfail($idSolicitud);
         $solicitudacancelar -> estado_solicitud= 'Cancelada';
         $solicitudacancelar -> save();
-        return redirect()->route('modulos.Editar-Orden')->with('success', 'Solicitud de mantenimiento cancelada');
+        //return redirect()->route('modulos.Editar-Orden')->with('success', 'Solicitud de mantenimiento cancelada');
+        return redirect()->route('modulos.SolicitudMantenimiento')->with('success', 'Solicitud de mantenimiento cancelada');
     }
 }

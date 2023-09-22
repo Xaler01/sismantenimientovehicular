@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Solicitud de mantenimiento vehicular</h3>
+        <h3>Solicitud de Movilización</h3>
     </section>
     <section class="content">
         <div class="box">
@@ -63,7 +63,7 @@
                           
                         </div>
                         <div class="form-group">
-                            <label for="observacionesP">Motivo:</label>
+                            <label for="observacionesP">Motivo1:</label>
                             <textarea  class="form-control" name="observaciones" id="observaciones" rows="4" ></textarea>
                         </div> 
                     </div>
@@ -126,9 +126,9 @@
 </div>
 
 <div class="modal fade" id="MantenimientoPModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog">vehiculo_idP
         <div class="modal-content">
-            <form method = "post" action="{{ route('guardar-solicitudP') }}">
+            <form method = "post" action="{{ route('guardar-solicitudM') }}">
                 @csrf
                 @method('post')
                 <div class="modal-body">
@@ -161,7 +161,7 @@
                         <div class="form-group">
                             
                             
-                            <input type="hidden" class="form-control" name="mantenimiento" id="mantenimiento" value="1"readonly>
+                            <input type="hidden" class="form-control" name="mantenimientoP" id="mantenimientoP" value="1"readonly>
 
                           
                         </div>

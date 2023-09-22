@@ -30,7 +30,7 @@
             <li>
                 <a href="{{ url('Historial') }}">
                     <i class="fa fa-list"></i>
-                    <span>Historial Movilizacion</span>
+                    <span>Historial de movilizacion</span>
                 </a>
             </li>
      
