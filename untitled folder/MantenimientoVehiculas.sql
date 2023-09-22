@@ -41,9 +41,9 @@ CREATE TABLE vehiculos (
 -- Crear la tabla "dependencias" para gestionar las dependencias policiales
 CREATE TABLE dependencias (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  provincia VARCHAR(255),
+  provincia_id INT,
   num_distritos INT,
-  parroquia VARCHAR(255),
+  parroquia_id INT,
   cod_distrito VARCHAR(255),
   nombre_distrito VARCHAR(255),
   num_circuitos INT,
@@ -52,7 +52,34 @@ CREATE TABLE dependencias (
   num_subcircuitos INT,
   cod_subcircuito VARCHAR(255),
   nombre_subcircuito VARCHAR(255),
-  estado VARCHAR(15),
+  estado_ig VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (provincia_id) REFERENCES provincias(id),
+  FOREIGN KEY (parroquia_id) REFERENCES parroquias(id),
+  FOREIGN KEY (estado_id) REFERENCES estado(id)
+);
+
+-- Crear la tabla "provincias"
+CREATE TABLE provincias (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "parroquias"
+CREATE TABLE parroquias (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "estado"
+CREATE TABLE estado (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -104,3 +131,113 @@ CREATE TABLE solicitudes_mantenimiento (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id)
 );
+
+  -- Crear la tabla "tipo_mantenimiento"
+  CREATE TABLE tipo_mantenimiento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    detalle TEXT,
+    valor FLOAT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+-- Crear la tabla "ciudades"
+CREATE TABLE ciudades (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "tipo_sangre"
+CREATE TABLE tipo_sangre (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "rango"
+CREATE TABLE rango (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "marca"
+CREATE TABLE marca (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla "tipo_vehiculo"
+CREATE TABLE tipo_vehiculo (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+-- +++++++++++++++++++++++++++++++++
+-- Eliminar tabla dependencias existente (si existe)
+DROP TABLE IF EXISTS dependencias;
+
+-- Crear tabla dependencias mejorada
+CREATE TABLE dependencias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  provincia_id INT,
+  num_distritos INT,
+  parroquia_id INT,
+  cod_distrito VARCHAR(255),
+  nombre_distrito VARCHAR(255),
+  cod_circuito VARCHAR(255),
+  nombre_circuito VARCHAR(255),
+  cod_subcircuito VARCHAR(255),
+  nombre_subcircuito VARCHAR(255),
+  estado_id INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (provincia_id) REFERENCES provincias(id),
+  FOREIGN KEY (parroquia_id) REFERENCES parroquias(id)
+);
+
+-- Agregar columna circuito_id a la tabla dependencias
+ALTER TABLE dependencias ADD COLUMN circuito_id INT AFTER nombre_circuito;
+
+-- Agregar relación entre tabla dependencias y tabla circuitos
+ALTER TABLE dependencias ADD FOREIGN KEY (circuito_id) REFERENCES circuitos(id);
+
+
+
+
+-- Crear tabla reclamos
+CREATE TABLE reclamos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  dependecia_id INT,
+  tipo_reclamo_id INT,
+  detalle TEXT,
+  contacto VARCHAR(255),
+  apellidos VARCHAR(255),
+  nombres VARCHAR(255),
+  fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (dependencia_id) REFERENCES dependencias(id),
+  FOREIGN KEY (tipo_reclamo_id) REFERENCES tipos_reclamo(id)
+);
+
+-- Crear tabla tipos_reclamo
+CREATE TABLE tipos_reclamo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255)
+);
+
+-- Insertar registros iniciales en la tabla tipos_reclamo
+INSERT INTO tipos_reclamo (nombre) VALUES
+  ('Reclamo'),
+  ('Sugerencia'),
+  ('Pregunta');

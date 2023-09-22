@@ -18,21 +18,30 @@ class Policias extends Model
         'password',
         'cedula',
         'fecha_nacimiento',
-        'tipo_sangre',
-        'ciudad_nacimiento',
+        'tipo_sangre_id',
+        'ciudad_nacimiento_id',
         'celular',
-        'rango',
-        'rol',
+        'rango_id',
         'dependencia_id',
-        'estado'
-
+        'rol',
+        'estado_id'
     ];
 
     //public $timestamps = false;
 
     public function dependencia()
     {
-        return $this->belongsTo(Dependencias::class, 'dependencia_id');
+        return $this->belongsTo(Subcircuitos::class, 'dependencia_id');
+    }
+
+    public function tipoSangre()
+    {
+        return $this->belongsTo(TipoSangre::class, 'tipo_sangre_id');
+    }
+
+    public function rango()
+    {
+        return $this->belongsTo(Rangos::class, 'rango_id');
     }
     
 }

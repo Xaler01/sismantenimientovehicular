@@ -13,15 +13,18 @@
             </div>
             <div class="box-body">
                 <!--<form method="post" action="{{ url('Actualizar-Dependencia/'.$dependencia->id) }}">-->
-                <form method="POST" action="{{ url('Actualizar-Dependencia/' . $dependencia->id) }}">
+                <form method="POST" action="{{ url('Actualizar-Dependencia/'.$dependencia->id) }}">
                     @csrf
-                    @method('put')
+                    @method('PUT')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="provincia">Provincia:</label>
-                                <input type="text" class="form-control input-lg" name="provincia" id="provincia" value="{{$dependencia->provincia}}" required oninput="this.value = this.value.toUpperCase()">
-                                <!--<input type="hidden" id="dependenciaId" name="dependenciaId" value="">-->
+                                <select class="form-control" name="provincia" id="provincia" required>
+                                    @foreach($provincias as $provincia)
+                                        <option value="{{$provincia->id}}" {{ $dependencia->provincia_id == $provincia->id ? 'selected' : '' }}>{{ $provincia->nombre }}</option>
+                                    @endforeach
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label for="num_distritos">No. Distritos:</label>
@@ -29,7 +32,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="parroquia">Parroquia:</label>
-                                <input type="text" class="form-control input-lg" name="parroquia" id="parroquia" value="{{$dependencia->parroquia}}" required oninput="this.value = this.value.toUpperCase()">
+                                <select class="form-control" name="parroquia" id="parroquia" required>
+                                    @foreach($parroquias as $parroquia)
+                                        <option value="{{$parroquia->id}}" {{ $dependencia->parroquia_id == $parroquia->id ? 'selected' : '' }}>{{ $parroquia->nombre }}</option>
+                                    @endforeach
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label for="cod_distrito">Cod. Distrito:</label>

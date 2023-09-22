@@ -9,24 +9,35 @@ class Dependencias extends Model
 {
     use HasFactory;
 
-    protected $table ="dependencias";
+    protected $table ="dependencia";
      
 
     protected $fillable = [ 
-        'provincia',
-        'num_distritos',
-        'parroquia',
-        'cod_distrito',
-        'nombre_distrito',
-        'num_circuitos',
-        'cod_circuito',
-        'nombre_circuito',
-        'num_subcircuitos',
-        'cod_subcircuito',
-        'nombre_subcircuito',
-        'estado'     
+        'provincia_id',
+        'provincia_nombre',
+        'parroquia_id',
+        'parroquia_nombre',
+        'distrito_id',
+        'distrito_codigo',
+        'distrito_nombre',
+        'circuito_id',
+        'circuito_codigo',
+        'circuito_nombre',
+        'subcircuito_id',
+        'subcircuito_codigo',
+        'subcircuito_nombre'
     ];
 
     public $timestamp = false;
+
+    public function provincia()
+    {
+        return $this->belongsTo(Provincias::class, 'provincia_id');
+    }
+
+        public function parroquia()
+    {
+        return $this->belongsTo(Parroquias::class, 'parroquia_id');
+    }
     
 }

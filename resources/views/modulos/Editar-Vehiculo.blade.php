@@ -15,16 +15,16 @@
                 <form method="post" action="{{ url('Actualizar-Vehiculo/'.$vehiculo->id) }}">
                     @csrf
                     @method('put')
-                    @if(auth()->user()->rol == "Encargado")
+                    @if(auth()->user()->rol !== "Policia")
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tipo_vehiculo">Tipo Vehiculo: </label>
-                                <select type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" >
-                                    <option value="{{ $vehiculo->tipo_vehiculo }}">{{ $vehiculo->tipo_vehiculo }}</option>
-                                    <option value="Automovil">Automovil</option>
-                                    <option value="Moto">Moto</option>
-                                    <option value="Camioneta">Camioneta</option>
+                                <select class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" required>
+                                    @foreach($tipoVehiculo as $tipo_vehiculo)
+                                        <option value="{{ $tipo_vehiculo->id }}"{{ $vehiculo->tipo_vehiculo_id == $tipo_vehiculo->id ? 'selected' : '' }}>
+                                        {{ $tipo_vehiculo->nombre }}
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
@@ -40,7 +40,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="marca">Marca:</label>
-                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca}}" oninput="this.value = this.value.toUpperCase()">
+                                <select class="form-control" name="marca" id="marca" required>
+                                    @foreach($marca as $marca)
+                                        <option value="{{ $marca->id }}"{{ $vehiculo->marca_id == $marca->id ? 'selected' : '' }}>
+                                        {{ $marca->nombre }}
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="modelo">Modelo:</label>
@@ -94,8 +99,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="tipo_vehiculo">Tipo Vehiculo: </label>
-                                <input type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo }}" readonly>
+                                <label for="tipo_vehiculo">Tipo Vehicular: </label>
+                                <input type="text" class="form-control" name="tipo_vehiculo" id="tipo_vehiculo" value="{{ $vehiculo->tipo_vehiculo_id }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="placa">Placa:</label>
@@ -107,7 +112,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="marca">Marca:</label>
-                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca}}" readonly>
+                                <input type="text" class="form-control" name="marca" id="marca" value="{{$vehiculo->marca_id}}" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="modelo">Modelo:</label>
@@ -150,24 +155,4 @@
         </div>
     </section>
 </div>
-<script>
-    // Escuchar los cambios en el campo de selección de tipo de vehículo
-    document.getElementById('tipo_vehiculo').addEventListener('change', function() {
-        // Obtener el valor seleccionado
-        var tipoVehiculo = this.value;
-        // Obtener el campo de capacidad de pasajeros
-        var capacidadPasajeros = document.getElementById('capacidad_pasajeros');
-
-        // Si el tipo de vehículo es "Moto", establecer la capacidad de pasajeros en 2
-        if (tipoVehiculo === "Moto") {
-            capacidadPasajeros.value = "2";
-        }
-        // Si el tipo de vehículo es "Automovil", establecer la capacidad de pasajeros en 4
-        if (tipoVehiculo === "Automovil") {
-            capacidadPasajeros.value = "4";
-        } //else {
-            //capacidadPasajeros.value = ""; // Limpiar el campo si no se cumple ninguna condición
-        //}
-    });
-</script>
 @endsection

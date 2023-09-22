@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dependencias;
+use App\Models\Marcas;
+use App\Models\TipoVehiculos;
 use App\Models\Vehiculos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +26,13 @@ class VehiculosController extends Controller
             return redirect('Inicio');
 
         }
-        $vehiculos = DB::select('select * from vehiculos where estado = "Activo"');
-        return view('modulos.Vehiculos')->with('vehiculos',$vehiculos);
+
+        $dependencias = Dependencias::all();
+        $marca = Marcas::all();
+        $tipoVehiculo = TipoVehiculos::all();
+
+        $vehiculos = Vehiculos::where('estado_id', 1)->get();
+        return view('modulos.Vehiculos',compact('dependencias', 'marca', 'tipoVehiculo', 'vehiculos'));
     }
 
     /**
@@ -37,7 +45,11 @@ class VehiculosController extends Controller
             return redirect('Inicio');
 
         }
-        return view('modulos.Crear-Vehiculo');
+        $marca = Marcas::all();
+        $tipoVehiculo = TipoVehiculos::all();
+        //return view('modulos.Crear-Vehiculo');
+        $vehiculos = Vehiculos::where('estado_id', 1)->get();
+        return view('modulos.Crear-Vehiculo',compact('marca', 'tipoVehiculo', 'vehiculos'));
     }
 
     /**
@@ -45,6 +57,7 @@ class VehiculosController extends Controller
      */
     public function store(Request $request)
     {
+       
         $datos = request()-> validate([
             'tipo_vehiculo'=> ['required'],
             'placa' => ['required', 'string', 'unique:vehiculos'],
@@ -53,10 +66,10 @@ class VehiculosController extends Controller
         ]);
         
         Vehiculos::create([
-            'tipo_vehiculo' => $datos['tipo_vehiculo'],
+            'tipo_vehiculo_id' => $datos['tipo_vehiculo'],
             'placa' => $datos['placa'],
             'chasis' => $request->input('chasis') ?? 'desconocido',
-            'marca' => $request->input('marca') ?? 'policial',
+            'marca_id' => $request->input('marca') ?? 'policial',
             'modelo' => $request->input('modelo') ?? '2000',
             'motor' => $request->input('motor') ?? 'desconocido',
             'kilometraje' => $request->input('kilometraje') ?? 99999,
@@ -80,8 +93,11 @@ class VehiculosController extends Controller
             return redirect('Inicio');
 
         }
+        $dependencias = Dependencias::all();
+        $marca = Marcas::all();
+        $tipoVehiculo = TipoVehiculos::all();
         $vehiculo = Vehiculos::find($id->id);
-        return view('modulos.Editar-Vehiculo')->with('vehiculo', $vehiculo);
+        return view('modulos.Editar-Vehiculo', compact('dependencias', 'marca','tipoVehiculo', 'vehiculo'));
     }
     
     
@@ -95,10 +111,10 @@ class VehiculosController extends Controller
         ]);
 
         $vehiculo = Vehiculos::find($id);
-        $vehiculo->tipo_vehiculo = $request->input('tipo_vehiculo');
+        $vehiculo->tipo_vehiculo_id = $request->input('tipo_vehiculo');
         $vehiculo->placa = $request->input('placa');
         $vehiculo->chasis = $request->input('chasis') ?? 'desconocido';
-        $vehiculo->marca = $request->input('marca') ?? 'policial';
+        $vehiculo->marca_id = $request->input('marca') ?? 'policial';
         $vehiculo->modelo = $request->input('modelo') ?? '2000';
         $vehiculo->motor = $request->input('motor') ?? 'desconocido';
         $vehiculo->kilometraje = $request->input('kilometraje') ?? 99999;
@@ -115,7 +131,7 @@ class VehiculosController extends Controller
     public function destroy($id)
     {
         $vehiculo = Vehiculos::findOrFail($id);
-        $vehiculo->estado = 'Eliminado';
+        $vehiculo->estado_id = '0';
         $vehiculo->save();
 
         return redirect('Vehiculos')->with('eliminadoV', true);

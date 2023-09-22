@@ -24,9 +24,12 @@
                     <ul class="dropdown-menu">
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ url('Perfil') }}" class="btn btn-primary btn-flat">Perfil</a>
-                                
+                               <!--<button class="btn btn-primary btn-flat" data-toggle="modal" data-target="#EditarPerfil">Perfil</button> -->
+                                <a href="{{ url('Editar-Perfil/'. auth()->user()->id) }}" class="btn btn-primary btn-flat">Perfil</a>
+                                 
                             </div>
+
+
                             <div class="pull-right">
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger btn-flat">Cerrar Sesión</a>
                             </div>
@@ -36,7 +39,29 @@
                         </li>
                     </ul>
                 </li>
-            </ul>
+            </ul>   
         </div>
     </nav>
+
+    <div id="EditarPerfil" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                 <form method="post" action="{{ url('Actualizar-Perfil/' . auth()->user()->id) }}">
+                   @csrf
+                
+                    <div class="modal-body">
+                        <div class="box-body">
+                    
+                        </div>                    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+
 </header>

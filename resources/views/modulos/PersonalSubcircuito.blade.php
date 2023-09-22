@@ -20,16 +20,16 @@
                     </thead>
                     <tbody>
                         @foreach($policias as $policia)
-                            @if ($policia->rol=="Policia" && $policia->estado=="Activo")
                                 <tr>
                                     <td>{{ $policia->name }}</td>
                                     <td>{{ $policia->email }}</td>
                                     <td>{{ $policia->cedula }}</td>
-                                    <td>{{ $policia->rango }}</td>
+                                    <td>{{ $policia->rango -> nombre }}</td>
                                     <td>
                                         @if ($policia->dependencia_id)
-                                            @if ($policia->dependencia->estado == 'Activo')
-                                                {{ $policia->dependencia->nombre_subcircuito }}
+                                            @if ($policia && $policia->dependencia && $policia->dependencia->estado == 'Activo')
+                                            
+                                                {{ $policia->dependencia->nombre }}
                                             @else
                                                 No asignado
                                             @endif
@@ -41,7 +41,7 @@
                                         <button class="btn btn-success" data-toggle="modal" data-target="#EditarSubcircuito{{ $policia->id }}"><i class="fa fa-pencil"></i></button>
                                     </td>
                                 </tr>
-                            @endif
+                           
                         @endforeach
                     </tbody>
                 </table>
@@ -50,9 +50,9 @@
     </section>
 </div>
 @foreach($policias as $policia)
-    @if ($policia->rol=="Policia" && $policia->estado=="Activo")
+    
     @php
-        $dependenciaNombre = $policia->personalSubcircuito ? $policia->personalSubcircuito->dependencia->nombre_subcircuito : null;
+        $dependenciaNombre = $policia->personalSubcircuito ? $policia->personalSubcircuito->dependencia->nombre : null;
     @endphp
     
     <div class="modal fade" id="EditarSubcircuito{{ $policia->id }}" tabindex="-1" role="dialog" aria-labelledby="EditarSubcircuito{{ $policia->id }}Label" aria-hidden="true">
@@ -82,18 +82,18 @@
                 
                                 <div class="form-group">
                                     <label for="rango">Rango:</label>
-                                    <input type="text" class="form-control" id="rango" name="rango" value="{{ $policia->rango }}" disabled>
+                                    <input type="text" class="form-control" id="rango" name="rango" value="{{ $policia->rango -> nombre }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="dependencia">Dependencia:</label>
                                     <select class="form-control" id="dependencia" name="dependencia">
                                         <option value="">Seleccionar dependencia</option>
                                         @foreach($dependencias as $dependencia)
-                                            @if($dependencia->estado == 'Activo')
-                                                <option value="{{ $dependencia->id }}" {{ $policia->personalSubcircuito && $policia->personalSubcircuito->dependencia_id == $dependencia->id ? 'selected' : '' }}>
-                                                    {{ $dependencia->nombre_subcircuito }}
-                                                </option>
-                                            @endif
+                                            <option value="{{ $dependencia->id }}" {{ $dependencia->nombre}}>
+                                                {{ $dependencia->nombre }}
+                                            </option>
+                                            
+                                                
                                         @endforeach
                                     </select>
                                     
@@ -110,6 +110,6 @@
             </div>
         </div>
     </div>
-    @endif
+    
 @endforeach
 @endsection

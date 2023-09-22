@@ -36,6 +36,9 @@
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.min.css">
   <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
+  <!-- Select 2-->
+  <link rel="stylesheet" href="http://localhost/sismantenimientovehicular/public/bower_components/select2/dist/css/select2.min.css">
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -55,6 +58,12 @@
 
   @elseif (auth()->user()->rol == "Policia")
     @include('modulos.menuPolicia')
+
+  @elseif (auth()->user()->rol == "Auxiliar")
+    @include('modulos.menuAuxiliar')
+
+  @elseif (auth()->user()->rol == "Administrador")
+    @include('modulos.menuAdministrador') 
   @endif
 
   @yield('content')
@@ -109,6 +118,9 @@
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/fullcalendar/dist/locale/es.js"></script>
 <script src="http://localhost/sismantenimientovehicular/public/bower_components/moment/moment.js"></script>
 
+<!-- Select2  -->
+<script src="http://localhost/sismantenimientovehicular/public/bower_components/select2/dist/js/select2.js"></script>
+
 <script type="text/javascript">
 
   $(".table").DataTable({
@@ -133,6 +145,8 @@
 
    }
   });
+
+  $('#select2').select2();
 </script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!--Invoca de sweet alert para notificaciones "suaves"-->
@@ -146,10 +160,10 @@
         )
 
     </script>
-  @elseif(session('registradoD') == 'Si')
+  @elseif(session('registradoG') == 'Si')
   <script type="text/javascript">
   Swal.fire({
-    title: 'Subcircuito creado correctamente',
+    title: 'Registro creado correctamente',
     icon: 'success',
     showConfirmButton: false,
     timer: 1500
@@ -186,6 +200,8 @@
     }, 500);   
   </script>  
 
+ 
+
   @elseif(session('actualizado'))
   <script>
       Swal.fire({
@@ -204,11 +220,11 @@
           timer: 1500
       });
   </script>
-    @elseif(session('actualizadoDep'))
+    @elseif(session('actualizadoGen'))
   <script>
       Swal.fire({
           icon: 'success',
-          title: 'Subcircuito actualizado!',
+          title: 'Registro actualizado!',
           showConfirmButton: false,
           timer: 1500
       });
@@ -221,7 +237,7 @@
             icon: 'success',
             title: 'Vehículo eliminado',
             showConfirmButton: false,
-            timer: 5500
+            timer: 2000
         });
     }, 500);   
   </script>
@@ -237,13 +253,25 @@
     }, 500);   
   </script>     
 
-  @elseif(session('eliminadoDep'))   
+  @elseif(session('eliminadoGen'))   
   <script>
     setTimeout(function() {
         Swal.fire({
             icon: 'success',
-            title: 'Subcircuito eliminado',
+            title: 'Registro eliminado',
             showConfirmButton: false,
+            timer: 1500
+        });
+    }, 500);   
+  </script>
+  @elseif(session('erroruser'))   
+  <script>
+    setTimeout(function() {
+        var mensaje = '{{ session("erroruser") }}';
+        Swal.fire({
+            icon: 'warning',
+            title: mensaje,
+            showConfirmButton: true,
             timer: 1500
         });
     }, 500);   
@@ -259,7 +287,7 @@
 
       Swal.fire({
 
-        title: '¿Seguro que desea eliminar el Policia '+nombre+'?',
+        title: '¿Seguro que desea eliminar el usuario '+nombre+'?',
         icon: 'Warning',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
@@ -274,7 +302,7 @@
           //window.location = "Inicio";
           window.location = "Eliminar-Policia/"+Pid;
         }
-      })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      })
     })
 
     $('.table').on('click', '.EliminarVehiculo', function(){
@@ -300,17 +328,16 @@
         window.location = "EliminarVehiculo/"+Vid;
       }
     }) 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
   })
 
-  $('.table').on('click', '.EliminarDependencia', function(){
+  $('.table').on('click', '.EliminarParroquia', function(){
  
-    var Did = $(this).attr('Did');
+    var Prrid = $(this).attr('Prrid');
     var nombre = $(this).attr('nombre');
 
     Swal.fire({
 
-      title: '¿Seguro que desea eliminar el subcircuito '+nombre+'?',
+      title: '¿Seguro que desea eliminar el registro '+nombre+'?',
       icon: 'Warning',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -323,40 +350,247 @@
       if(result.isConfirmed){
 
         //window.location = "Inicio";
-        window.location = "Eliminar-Dependencia/"+Did;
+        window.location = "Eliminar-Parroquia/"+Prrid;
       }
-    })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+    })
+  })
+
+  $('.table').on('click', '.EliminarSubcircuito', function(){
+ 
+    var Subid = $(this).attr('Subid');
+    var nombre = $(this).attr('nombre');
+
+    Swal.fire({
+
+      title: '¿Seguro que desea eliminar el registro '+nombre+'?',
+      icon: 'Warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor : '#d33',
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: '#3085d6'
+
+    }).then((result)=> {
+
+      if(result.isConfirmed){
+
+        //window.location = "Inicio";
+        window.location = "Eliminar-Subcircuito/"+Subid;
+      }
+    })
   })
 
   </script>
 
-  <script type="text/javascript">
-    var date = new Date();
-    var d = date.getDate(),
-        m = date.getMonth(),
-        a = date.getFullYear()
-    
-    $('#calendario').fullCalendar({
-      defaultView: 'agendaWeek',
-      hiddenDays : [0,6],
-      scrollTime : "08:00:00",
-      minTime    : "08:00:00",
-      maxTime    : "18:00:00",
+<?php
+   
+   $exp = explode ("/", $_SERVER["REQUEST_URI"]);
+   
+?>
 
-      dayClick : function(date, jsEvent, view){
-        var fecha = date.format();
-        var hora = ("01:00:00").split(":");
-        Fechamantenimiento = fecha.split("T");
-        Horamantenimiento = fecha.split("T");
-        $('#MantenimientoModal').modal();
-        $("#fechamantenimiento").val(Fechamantenimiento[0]);
-        $("#horamantenimiento").val(Horamantenimiento[1]);
-      }
-    });
+<script></script>
 
-    
+@if (auth()->check())
+<script type="text/javascript">
   
-   </script> 
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      
+     
+        $('#calendario').fullCalendar({
+            defaultView: 'agendaWeek',
+            hiddenDays: [0, 6],
+            scrollTime: "08:00:00",
+            minTime: "08:00:00",
+            maxTime: "18:00:00",
+            events: function(start, end, timezone, callback) {
+                // Obtener las citas desde el servidor usando la ruta getCitasCalendario
+                $.ajax({
+                    url: "{{ route('getCitasCalendario') }}",
+                    dataType: "json",
+                    success: function(response) {
+                        // Devolver las citas al calendario
+                        callback(response);
+                    }
+                });
+            },
+
+            
+            eventClick: function(calEvent, jsEvent, view) {
+                $("#EventoModal").modal();
+                  $("#turno").val(calEvent.id);
+                  $("#usuario").val(calEvent.user);
+                  $("#polinombre").val(calEvent.polinombre);//Aumento
+                  $("#vehiculo").val(calEvent.vehiculo);
+                  $("#placa").val(calEvent.placa);
+                  $("#tipomantenimiento").val(calEvent.tipomantenimiento);
+                  $("#kilometraje").val(calEvent.kilometraje);
+                  $("#tipodeVehiculo").val(calEvent.tipodeVehiculo);
+                  $("#estado").val(calEvent.estado_solicitud);
+                  $("rol").val(calEvent.rol);
+                  $("#subcircuito").val(calEvent.subcircuito);
+            },
+        
+            dayClick: function(date, jsEvent, view) {
+              var fecha = date.format();
+              var hora = ("01:00:00").split(":");
+              Fechamantenimiento = fecha.split("T");
+              
+              n = new Date();
+              y = n.getFullYear();
+              m = n.getMonth()+1;
+              d = n.getDate();
+
+              if (m < 10) {
+                M="0"+m; 
+                if(d<10){
+                  D = "0"+d;
+                  diaActual = y + "-" + M + "-" + D;
+                }
+                else{
+                  diaActual = y + "-" +M+ "-"+ d;
+                }
+              }
+              else{
+                diaActual= y+"-" +m+ "-" +d;
+              }
+              if(diaActual<Fechamantenimiento[0]){
+                var rolUsuario = "{{ auth()->user()->rol }}";
+                if (rolUsuario === "Encargado" || rolUsuario === "Administrador")  { // Verifica el rol del usuario
+                    $("#MantenimientoModal").modal();
+                    $("#fechamantenimiento").val(Fechamantenimiento[0]);
+                } else if (rolUsuario === "Policia") {
+                    $("#MantenimientoPModal").modal();
+                    $("#fechamantenimientoP").val(Fechamantenimiento[0]);
+                }
+              }
+              $("#horamantenimiento").val(Fechamantenimiento[1]);
+              $("#horamantenimientoP").val(Fechamantenimiento[1]);
+            },
+        });
+    });
+</script>
+@endif
+
+  <script>
+    // Escuchar los cambios en el campo de selección de tipo de vehículo
+    document.getElementById('tipo_vehiculo').addEventListener('change', function() {
+        // Obtener el valor seleccionado
+        var tipoVehiculo = this.value;
+        // Obtener el campo de capacidad de pasajeros
+        var capacidadPasajeros = document.getElementById('capacidad_pasajeros');
+        // Si el tipo de vehículo es "Moto", establecer la capacidad de pasajeros en 2
+        if (tipoVehiculo === "3") {
+            capacidadPasajeros.value = "2";
+        }
+        else{
+            capacidadPasajeros.value = "4";
+        }
+    });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      // Cuando se cambia la selección del usuario
+      $("#user_id").on("change", function() {
+        // Obtener el valor seleccionado del usuario
+        var userId = $(this).val();
+
+        // Si no se ha seleccionado ningún usuario, limpiar los campos "vehiculomantenimiento" y "kilometrajeactual"
+        if (userId === "") {
+          $("#vehiculomantenimiento").val("");
+          $("#kilometrajeactual").val("");
+          $("#tipoVehiculo").val("");
+          return;
+        }
+
+        // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
+        $.ajax({
+          url: "{{ route('obtenerVehiculoUsuario', '') }}/" + userId, // Utiliza la ruta con el nombre definido en web.php
+          type: "GET",
+          dataType: "json",
+          success: function(response) {
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            console.log(response.vehiculo.placa)
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.placa) {
+                $("#vehiculomantenimiento").val(response.vehiculo.vehiculo.placa);
+                $("#vehiculo_id").val(response.vehiculo.vehiculo.id);
+            } else {
+                $("#vehiculomantenimiento").val("No asignado");
+            }
+
+            // Actualizar el campo "kilometrajeactual" con el valor del kilometraje recibido
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.kilometraje) {
+                $("#kilometrajeactual").val(response.vehiculo.vehiculo.kilometraje);
+                // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+                $("#kilometrajeactual").attr("min", response.vehiculo.vehiculo.kilometraje);
+            } else {
+                $("#kilometrajeactual").val("No disponible");
+            }
+
+            // Actualizar el campo "tipoVwhiculo" con el tipo de vehiculo recibido
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.tipo_vehiculo_id) {
+                
+                // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+                $("#tipoVehiculo").val(response.vehiculo.vehiculo.tipo_vehiculo_id);
+            } else {
+                $("#tipoVehiculo").val("No disponible");
+            }
+          },
+          error: function() {
+            // En caso de error, mostrar un mensaje o realizar alguna acción
+            $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+          }
+        });
+      });
+
+      
+        // Obtener el valor seleccionado del usuario
+        var userIdP = $("#user_idP").val();
+
+        // Realizar una solicitud AJAX para obtener la información del vehículo asignado al usuario
+        $.ajax({
+          url: "{{ route('obtenerVehiculoUsuario', '') }}/" + userIdP, // Utiliza la ruta con el nombre definido en web.php
+          type: "GET",
+          dataType: "json",
+          success: function(response) {
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            console.log(response.vehiculo.placa)
+            // Actualizar el campo "vehiculomantenimiento" con la placa del vehículo asignado al usuario
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.placa) {
+                $("#vehiculomantenimientoP").val(response.vehiculo.vehiculo.placa);
+                $("#vehiculo_idP").val(response.vehiculo.vehiculo.id);
+            } else {
+                $("#vehiculomantenimientoP").val("No asignado");
+            }
+
+            // Actualizar el campo "kilometrajeactual" con el valor del kilometraje recibido
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.kilometraje) {
+                $("#kilometrajeactualP").val(response.vehiculo.vehiculo.kilometraje);
+                // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+                $("#kilometrajeactualP").attr("min", response.vehiculo.vehiculo.kilometraje);
+            } else {
+                $("#kilometrajeactualP").val("No disponible");
+            }
+
+            // Actualizar el campo "tipoVwhiculo" con el tipo de vehiculo recibido
+            if (response.vehiculo && response.vehiculo.vehiculo && response.vehiculo.vehiculo.tipo_vehiculo_id) {
+                
+                // Establecer el atributo min del campo "kilometrajeactual" para que no permita cantidades inferiores al valor actual
+                $("#tipoVehiculoP").val(response.vehiculo.vehiculo.tipo_vehiculo_id);
+            } else {
+                $("#tipoVehiculoP").val("No disponible");
+            }
+          },
+          error: function() {
+            // En caso de error, mostrar un mensaje o realizar alguna acción
+            $("#vehiculomantenimiento").val("Error al obtener la información del vehículo");
+          }
+        });
+      
+    });
+  </script>
 
 
 

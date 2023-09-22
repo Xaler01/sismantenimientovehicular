@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SolicituMantenimiento extends Model
+class TipoSangre extends Model
 {
     use HasFactory;
+    protected $table = 'tipo_sangre';
+
+    protected $fillable = [
+        'nombre',
+    ];
 }
