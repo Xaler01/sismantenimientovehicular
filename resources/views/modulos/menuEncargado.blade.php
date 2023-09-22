@@ -64,10 +64,29 @@
                     <span>Solicitud de mantenimiento</span> 
                 </a>
             </li>
+            <li>
+                <!--<a href="{{ url('SolicitudMantenimiento/'.auth()->user()->id) }}">-->
+                <a href="{{ url('SolicitudMovilizacion') }}">
+                    <i class="fa fa-calendar-check-o"></i>
+                    <span>Solicitud de Movilizacion</span> 
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('Solicitudes') }}">
+                    <i class="fa fa-list"></i>
+                    <span>Gestion de Solicitudes</span> 
+                </a>
+            </li>
             <li >
                 <a href="{{ url('Ordenes') }}">                    
                     <i class="fa fa-cogs"></i>
                     <span>Ordenes de trabajo</span> 
+                </a>
+            </li>
+            <li >
+                <a href="{{ url('Autorizaciones') }}">                    
+                    <i class="fa fa-cogs"></i>
+                    <span>Autorizaciones</span> 
                 </a>
             </li>
            

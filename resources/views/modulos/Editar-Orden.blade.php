@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Orden de trabajo - {{ $orden->id }}</h3>
+        <h3>Orden - {{ $orden->id }}</h3>
     </section>
     <section class="content">
         <div class="box">
@@ -71,6 +71,7 @@
                                 <option value="Atendida" {{ $orden->estado_solicitud === 'Atendida' ? 'selected' : '' }}>Atendida</option>
                                 <option value="Rechazada" {{ $orden->estado_solicitud === 'Rechazada' ? 'selected' : '' }}>Rechazada</option>
                                 <option value="Revisando" {{ $orden->estado_solicitud === 'Revisando' ? 'selected' : '' }}>En revisión</option>
+                                <option value="Autorizada" {{ $orden->estado_solicitud === 'Autorizada' ? 'selected' : '' }}>Autorizada</option>
                             </select>
                         </div>
                     </div>

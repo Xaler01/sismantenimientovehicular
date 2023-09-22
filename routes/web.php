@@ -100,11 +100,13 @@ Route::put('PersonalVehiculo/{id}', [AsignarVehiculoController::class, 'update']
 
 //Route::get('SolicitudMantenimiento/{id}', [SolicitudMantenimientoController::class, 'index']);
 Route::get('SolicitudMantenimiento', [SolicitudMantenimientoController::class, 'index'])->name('modulos.SolicitudMantenimiento');
+Route::get('SolicitudMovilizacion', [SolicitudMantenimientoController::class, 'index2'])->name('modulos.SolicitudMovilizacion');
 Route::get('Solicitudes', [SolicitudMantenimientoController::class, 'solicitudes'])->name('Solicitudes');
 Route::post('actualizar-solicitud', [SolicitudMantenimientoController::class, 'actualizarSolicitud'])->name('actualizar-solicitud');
 Route::get('/tipo-mantenimiento/{id}', [SolicitudMantenimientoController::class, 'getDetalleMantenimiento']);
 Route::get('obtenerVehiculoUsuario/{userId}', [SolicitudMantenimientoController::class, 'obtenerVehiculoUsuario'])->name('obtenerVehiculoUsuario');
 Route::post('guardar-solicitud', [SolicitudMantenimientoController::class, 'store'])->name('guardar-solicitud');
+Route::post('guardar-solicitudM', [SolicitudMantenimientoController::class, 'storeM'])->name('guardar-solicitudP');
 Route::post('guardar-solicitudP', [SolicitudMantenimientoController::class, 'storeP'])->name('guardar-solicitudP');
 Route::get('getCitasCalendario', [SolicitudMantenimientoController::class, 'getCitasCalendario'])->name('getCitasCalendario');
 Route::post('cancelar-solicitud', [SolicitudMantenimientoController::class, 'cancelarsolicitud'])->name('cancelar-solicitud');
@@ -114,6 +116,7 @@ Route::get('Historial',[SolicitudMantenimientoController::class,'historial']);
 
 //Ordenes de trabajo
 Route::get('Ordenes', [SolicitudMantenimientoController::class, 'ordenes'])->name('Ordenes');
+Route::get('Autorizaciones', [SolicitudMantenimientoController::class, 'autorizaciones'])->name('Autorizaciones');
 Route::get('Editar-Orden/{id}', [SolicitudMantenimientoController::class,'edit']);
 Route::put('Actualizar-Orden/{id}', [SolicitudMantenimientoController::class,'update']);
 

@@ -56,22 +56,20 @@
                             <input type="time" class="form-control" name="horamantenimiento" id="horamantenimiento" readonly>
                         </div>                
                         <div class="form-group">
-                            <label for="mantenimiento">Tipo de Mantenimiento:</label>
-                            <select class="form-control" name="mantenimiento" id="mantenimiento">
-                                <option value="">Seleccionar tipo de mantenimiento</option>
-                                @foreach($tiposMantenimiento as $tipoMantenimiento)
-                                    <option value="{{ $tipoMantenimiento->id }}">{{ $tipoMantenimiento->nombre }}</option>
-                                @endforeach
-                            </select>
+                            
+                            
+                            <input type="hidden" class="form-control" name="mantenimiento" id="mantenimiento" value="1"readonly>
+
+                          
                         </div>
                         <div class="form-group">
-                            <label for="observaciones">Observaciones:</label>
+                            <label for="observacionesP">Motivo:</label>
                             <textarea  class="form-control" name="observaciones" id="observaciones" rows="4" ></textarea>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Solicitar Mantenimiento</button>
+                    <button type="submit" class="btn btn-primary">Solicitar Movilización</button>
                     <button type="button" class="btn btn-danger " data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
@@ -100,7 +98,7 @@
                             <input type="text" class="form-control" name="tipodeVehiculo" id="tipodeVehiculo" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="tipomantenimiento">Tipo de mantenimiento:</label>
+                            <label for="tipomantenimiento">Tipo de mantenimientoX:</label>
                             <input type="text" class="form-control" name="tipomantenimiento" id="tipomantenimiento" readonly>
                         </div>
                         <div class="form-group">
@@ -138,8 +136,7 @@
                         <div class="form-group">
                             <label for="user_idP">Usuario:</label>
                             <input type="text" class="form-control" value = "{{ auth() -> user()-> name  }}" readonly>  
-                            
-
+                            <input type="hidden" class="form-control" name="user_idP"  id="user_idP" value = "{{ auth() -> user()-> id  }}" readonly>  
                         </div>
                         <div class="form-group">
                             <label for="vehiculomantenimientop">Placa vehiculo:</label>
@@ -162,22 +159,20 @@
                             <input type="time" class="form-control" name="horamantenimientoP" id="horamantenimientoP" readonly>
                         </div>                
                         <div class="form-group">
-                            <label for="mantenimientoP">Tipo de Mantenimiento:</label>
-                            <select class="form-control" name="mantenimientoP" id="mantenimientoP">
-                                <option value="">Seleccionar tipo de mantenimiento</option>
-                                @foreach($tiposMantenimiento as $tipoMantenimiento)
-                                    <option value="{{ $tipoMantenimiento->id }}">{{ $tipoMantenimiento->nombre }}</option>
-                                @endforeach
-                            </select>
+                            
+                            
+                            <input type="hidden" class="form-control" name="mantenimiento" id="mantenimiento" value="1"readonly>
+
+                          
                         </div>
                         <div class="form-group">
-                            <label for="observacionesP">Observaciones:</label>
+                            <label for="observacionesP">Motivo:</label>
                             <textarea  class="form-control" name="observacionesP" id="observacionesP" rows="4" ></textarea>
                         </div> 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Pedir Mantenimiento</button>
+                    <button type="submit" class="btn btn-primary">Pedir Movilización</button>
                     <button type="button" class="btn btn-danger " data-dismiss="modal">Cancelar</button>
                 </div>
             </form>

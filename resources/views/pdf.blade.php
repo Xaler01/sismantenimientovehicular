@@ -3,7 +3,7 @@
     <title>Orden de trabajo: {{ $orden->id }}</title>
 </head>
 <body>
-    <h1>Detalle del Mantenimiento {{ $orden->id }}</h1>
+    <h1>Detalle de orden {{ $orden->id }}</h1>
     <div class="box-header">
                 
 
@@ -34,24 +34,20 @@
                         <p><b>Estado: </b>{{ $orden->estado_solicitud  }}</p>
                         <p><b>Fecha: </b>{{ $orden->fecha_solicitud }}</p>
                         <p><b>Hora: </b>{{ $orden->hora_solicitud }}</p>
-                        <p><b>Tipo Mantenimiento: </b>{{ $mantenimiento->nombre  }}</p>
+                        
                     </div>
                 </div>
                 <div class="col-md-12">
                     <p><b>Observaciones usuario: </b>{{ $orden->observaciones }}</p>
                 </div>
-                <div class="col-md-12">
-                    <p><b>Detalle del mantenimiento {{ $mantenimiento->nombre }}: </b></p>
-                    <p> {{ $mantenimiento->detallemantenimiento  }}</p>
-                    <p><b>Valor a pagar: </b>$  {{ $mantenimiento->valor }}</p>
-                </div>
+                
 
                 <div class="col-md-12">
-                    <p><b>Observaciones taller: </b>{{ $orden->observacionesTaller }}</p>
+                    <p><b>Observaciones Encargado: </b>{{ $orden->observacionesTaller }}</p>
                 </div>
                 <br>
                 <div class="col-md-12">
-                    <p>Estado de solicitud:<H2> {{ $orden->estado_solicitud  }}</H2></p>
+                    <p>Estado de orden:<H2> {{ $orden->estado_solicitud  }}</H2></p>
                 </div> 
 
                

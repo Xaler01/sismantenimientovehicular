@@ -138,8 +138,7 @@
                         <div class="form-group">
                             <label for="user_idP">Usuario:</label>
                             <input type="text" class="form-control" value = "{{ auth() -> user()-> name  }}" readonly>  
-                            
-
+                            <input type="hidden" class="form-control" name="user_idP"  id="user_idP" value = "{{ auth() -> user()-> id  }}" readonly>  
                         </div>
                         <div class="form-group">
                             <label for="vehiculomantenimientop">Placa vehiculo:</label>

@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h3>Historial de Mantenimientos</h3>
+        <h3>Historial de Movilización</h3>
     </section>
     <section class="content">
         <div class="box">
@@ -11,13 +11,16 @@
                 <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Motivo</th>
+                        <th>Fecha de Salida</th>
+                        <th>Hora Solicitud</th>
                         <th>Usuario</th>
                         <th>Vehículo</th>
-                        <th>Estado</th>
-                        <th>Fecha Solicitud</th>
-                        <th>Hora Solicitud</th>
+                        <th>Estado</th>                        
+                        
                         <th>Kilometraje Actual</th>
                         <th>Tipo Vehiculo</th>
+                        <th>Estado</th>
                         <th>Informe</th>
                         
                         
@@ -28,14 +31,17 @@
                     @foreach ($solicitud as $solicitudItem)
                     <tr>
                         <td>{{ $solicitudItem->id }}</td>
+                        <td>{{ $solicitudItem->observaciones }}</td>
+                        <td>{{ $solicitudItem->fecha_solicitud }}</td>
+                        <td>{{ $solicitudItem->hora_solicitud }}</td>
+                        <td>{{ $solicitudItem->hora_solicitud }}</td>
                         <td>{{ $solicitudItem->usuarios->name }}</td>
                         <td>{{ $solicitudItem->vehiculo->placa }}</td>
                         <td>{{ $solicitudItem->estado_solicitud }}</td>
-                        <td>{{ $solicitudItem->fecha_solicitud }}</td>
-                        <td>{{ $solicitudItem->hora_solicitud }}</td>
                         <td>{{ $solicitudItem->kilometraje_actual }}</td>
                         <!--<td>{{ $solicitudItem->observaciones }}</td>-->
                         <td>{{ $solicitudItem->vehiculo->tipoVehiculo->nombre }}</td>
+                        <td>{{ $solicitudItem->estado_solicitud }}</td>
                         <td>
                                 <a href="{{ url('/generar-pdf/' . $solicitudItem->id) }}">
                                     <button class="btn btn-primary"><i class="fa fa-eye"></i></button>
